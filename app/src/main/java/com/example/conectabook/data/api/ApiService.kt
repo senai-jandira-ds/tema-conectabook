@@ -1,12 +1,15 @@
 package com.example.conectabook.data.api
 
-import retrofit2.http.GET
+
+import com.example.conectabook.data.api.model.LoginRequest
+import com.example.conectabook.data.api.model.LoginResponse
+import retrofit2.http.Body
+import retrofit2.http.POST
 
 interface ApiService {
-//    @GET("livros")
-//    suspend fun  listarLivros(): List<>
 
-
-
-
+    @POST("login")
+    suspend fun login(
+        @Body request: LoginRequest
+    ): LoginResponse
 }
