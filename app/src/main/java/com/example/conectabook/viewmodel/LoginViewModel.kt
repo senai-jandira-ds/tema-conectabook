@@ -4,8 +4,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
+import com.example.conectabook.data.api.repository.AuthRepository
+import kotlinx.coroutines.launch
 
 class LoginViewModel: ViewModel() {
+
+    private val repository = AuthRepository()
 
     var email by mutableStateOf("")
     var senha by mutableStateOf("")
@@ -13,6 +18,9 @@ class LoginViewModel: ViewModel() {
     var emailErro by mutableStateOf(false)
     var senhaErro by mutableStateOf(false)
 
+    var carregando by mutableStateOf(false)
+    var loginSucesso by mutableStateOf(false)
+    var mensagemErro by mutableStateOf<String?>(null)
 
     private fun isEmailValido(): Boolean{
         return android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
@@ -30,17 +38,20 @@ class LoginViewModel: ViewModel() {
     val habilitarClicar: Boolean
         get() = email.isNotBlank() &&
                  isEmailValido() &&
-                senhaTamanhoValido
+                senhaTamanhoValido &&
+                !carregando
 
     fun onEmailChange(novoEmail: String) {
         email= novoEmail
         emailErro = false
+        mensagemErro = null
     }
 
     fun onSenhaChange(novaSenha: String) {
         if (novaSenha.length <=100) {
             senha = novaSenha
             senhaErro = false
+            mensagemErro = null
         }
     }
 
@@ -57,4 +68,26 @@ class LoginViewModel: ViewModel() {
         return emailValido && senhaValida
     }
 
+    fun login() {
+        if (!validarLogin()) return
+
+        viewModelScope.launch {
+            carregando = true
+            mensagemErro = null
+
+            try {
+                val resposta = repository.login(email, senha)
+
+                if (resposta.status && resposta.user != null){
+                    loginSucesso = true
+                } else {
+                    mensagemErro = "Email ou senha inválidos"
+                }
+            } catch (erro: Exception) {
+                mensagemErro = "Erro ao conectar com o servidor"
+            } finally {
+                carregando = false
+            }
+        }
+    }
 }

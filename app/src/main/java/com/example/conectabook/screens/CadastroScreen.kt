@@ -4,7 +4,9 @@ import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material.icons.outlined.Lock
@@ -20,28 +22,27 @@ import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.example.conectabook.R
 import com.example.conectabook.components.ValidadorSenhaItem
+import com.example.conectabook.viewmodel.CadastroViewModel
 
 @Composable
-fun CadastroScreen(modifier: Modifier = Modifier) {
+fun CadastroScreen(
+    onCadastroSucesso: () -> Unit = {},
+    onVoltarLoginClick: () -> Unit = {},
+    modifier: Modifier = Modifier) {
 
     val colors = MaterialTheme.colorScheme
-
-    var nome by remember { mutableStateOf("") }
-    var email by remember { mutableStateOf("") }
-    var senha by remember { mutableStateOf("") }
-    var confirmarSenha by remember { mutableStateOf("") }
-
-    val senhaTamanhoValido = senha.length in 8..100
-    val senhasIguais = senha == confirmarSenha && confirmarSenha.isNotEmpty()
+    val viewModel: CadastroViewModel = viewModel()
 
     Column(
         modifier = Modifier
             .fillMaxSize()
+            .verticalScroll(rememberScrollState())
             .background(colors.background)
             .padding(horizontal = 24.dp)
-            .padding(top = 48.dp),
+            .padding(top = 48.dp, bottom = 24.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
 
@@ -87,8 +88,8 @@ fun CadastroScreen(modifier: Modifier = Modifier) {
             ) {
 
                 TextField(
-                    value = nome,
-                    onValueChange = { nome = it },
+                    value = viewModel.nome,
+                    onValueChange = { viewModel.nome = it },
                     placeholder = { Text("Digite seu nome") },
                     leadingIcon = {
                         Icon(
@@ -113,8 +114,8 @@ fun CadastroScreen(modifier: Modifier = Modifier) {
                 Spacer(modifier = Modifier.height(16.dp))
 
                 TextField(
-                    value = email,
-                    onValueChange = { email = it },
+                    value = viewModel.email,
+                    onValueChange = { viewModel.email = it },
                     placeholder = { Text("Digite seu email") },
                     leadingIcon = {
                         Icon(
@@ -139,9 +140,9 @@ fun CadastroScreen(modifier: Modifier = Modifier) {
                 Spacer(modifier = Modifier.height(16.dp))
 
                 TextField(
-                    value = senha,
+                    value = viewModel.senha,
                     onValueChange = {
-                        if (it.length <= 100) senha = it
+                        if (it.length <= 100) viewModel.senha = it
                     },
                     placeholder = { Text("Digite sua senha") },
                     leadingIcon = {
@@ -165,11 +166,11 @@ fun CadastroScreen(modifier: Modifier = Modifier) {
                     )
                 )
 
-                if (senha.isNotEmpty()) {
+                if (viewModel.senha.isNotEmpty()) {
                     Spacer(modifier = Modifier.height(8.dp))
 
                     ValidadorSenhaItem(
-                        valido = senhaTamanhoValido,
+                        valido = viewModel.senhaTamanhoValido,
                         texto = "Deve ter entre 8 e 100 caracteres"
                     )
                 }
@@ -177,8 +178,8 @@ fun CadastroScreen(modifier: Modifier = Modifier) {
                 Spacer(modifier = Modifier.height(16.dp))
 
                 TextField(
-                    value = confirmarSenha,
-                    onValueChange = { confirmarSenha = it },
+                    value = viewModel.confirmarSenha,
+                    onValueChange = { viewModel.confirmarSenha = it },
                     placeholder = { Text("Confirme sua senha") },
                     leadingIcon = {
                         Icon(
@@ -201,11 +202,11 @@ fun CadastroScreen(modifier: Modifier = Modifier) {
                     )
                 )
 
-                if (confirmarSenha.isNotEmpty()) {
+                if (viewModel.confirmarSenha.isNotEmpty()) {
                     Spacer(modifier = Modifier.height(8.dp))
 
                     ValidadorSenhaItem(
-                        valido = senhasIguais,
+                        valido = viewModel.senhasIguais,
                         texto = "As senhas devem ser iguais"
                     )
                 }
@@ -214,12 +215,9 @@ fun CadastroScreen(modifier: Modifier = Modifier) {
 
                 Button(
                     onClick = {
-                        // TODO: lógica de cadastro
+                        viewModel.cadastrar()
                     },
-                    enabled = nome.isNotBlank() &&
-                            email.isNotBlank() &&
-                            senhaTamanhoValido &&
-                            senhasIguais,
+                    enabled = viewModel.habilitarCadastro,
                     modifier = Modifier
                         .fillMaxWidth()
                         .height(56.dp),
@@ -234,6 +232,20 @@ fun CadastroScreen(modifier: Modifier = Modifier) {
                         fontWeight = FontWeight.Bold,
                         color = colors.onPrimary
                     )
+                }
+
+                viewModel.mensagemErro?.let {
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    Text(
+                        text = it,
+                        color = MaterialTheme.colorScheme.error,
+                        fontSize = 12.sp
+                    )
+                }
+
+                if (viewModel.cadastroSucesso) {
+                    onCadastroSucesso()
                 }
             }
         }
@@ -263,9 +275,10 @@ fun CadastroScreen(modifier: Modifier = Modifier) {
 
         Spacer(modifier = Modifier.height(20.dp))
 
+        //voltar para o login
         Button(
             onClick = {
-                // TODO: voltar para login
+                onVoltarLoginClick()
             },
             modifier = Modifier
                 .fillMaxWidth()

@@ -15,8 +15,10 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.AccountBox
+import androidx.compose.material.icons.outlined.Book
 import androidx.compose.material.icons.outlined.Edit
 import androidx.compose.material.icons.outlined.Person
+import androidx.compose.material.icons.outlined.PhotoCamera
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -52,20 +54,20 @@ fun CriarPostcard(modifier: Modifier = Modifier) {
             Row(
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                Image(
-                    painter = painterResource(id = R.drawable.moca_lendo),
-                    contentDescription = "Foto do usuário",
-                    modifier = Modifier
-                        .size(42.dp)
-                        .clip(CircleShape)
-                        .background(colors.surfaceVariant)
-                )
+//                Image(
+//                    painter = painterResource(id = R.drawable.moca_lendo),
+//                    contentDescription = "Foto do usuário",
+//                    modifier = Modifier
+//                        .size(42.dp)
+//                        .clip(CircleShape)
+//                        .background(colors.surfaceVariant)
+//                )
 
                 Spacer(modifier = Modifier.width(12.dp))
 
                 Text(
                     text = "Compartilhe sua leitura...",
-                    fontSize = 14.sp,
+                    fontSize = 16.sp, //antes estava 14.dp
                     color = colors.onSurfaceVariant
                 )
             }
@@ -82,7 +84,7 @@ fun CriarPostcard(modifier: Modifier = Modifier) {
                 ) {
 
                     Icon(
-                        imageVector = Icons.Outlined.Person,
+                        imageVector = Icons.Outlined.PhotoCamera,
                         contentDescription = "Foto",
                         tint = colors.primary
                     )
@@ -101,7 +103,7 @@ fun CriarPostcard(modifier: Modifier = Modifier) {
                 ) {
 
                     Icon(
-                        imageVector = Icons.Outlined.AccountBox,
+                        imageVector = Icons.Outlined.Book,
                         contentDescription = "Livro",
                         tint = colors.primary
                     )

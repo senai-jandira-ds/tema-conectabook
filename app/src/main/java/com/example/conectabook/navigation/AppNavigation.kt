@@ -4,6 +4,7 @@ import androidx.compose.runtime.Composable
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.example.conectabook.screens.CadastroScreen
 import com.example.conectabook.screens.DetalhesLivroScreen
 import com.example.conectabook.screens.HomeScreen
 import com.example.conectabook.screens.LivrosScreen
@@ -20,7 +21,25 @@ fun AppNavigation() {
         composable(Routes.LOGIN) {
             LoginScreen(
                 onEntrarClick = {
-                    navController.navigate(Routes.HOME)
+                    navController.navigate(Routes.HOME) {
+                        popUpTo(Routes.LOGIN) { inclusive = true }
+                    }
+                },
+                    onCriarContaClick = {
+                        navController.navigate(Routes.CADASTRO)
+                }
+            )
+        }
+
+        composable(Routes.CADASTRO){
+            CadastroScreen(
+                onCadastroSucesso = {
+                    navController.navigate(Routes.LOGIN){
+                        popUpTo(Routes.CADASTRO) {inclusive = true}
+                    }
+                },
+                onVoltarLoginClick = {
+                    navController.popBackStack()
                 }
             )
         }

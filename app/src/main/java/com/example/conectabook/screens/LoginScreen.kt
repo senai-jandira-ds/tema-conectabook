@@ -3,6 +3,7 @@ package com.example.conectabook.screens
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -45,6 +46,7 @@ import com.example.conectabook.viewmodel.LoginViewModel
 @Composable
 fun LoginScreen(
     onEntrarClick: () -> Unit = {},
+    onCriarContaClick: () -> Unit = {},
     modifier: Modifier = Modifier) {
 
 
@@ -211,10 +213,8 @@ fun LoginScreen(
 
                 Button(
                     onClick = {
-//                        val valido = viewModel.validarLogin()
-//                        if (valido) {
-                            onEntrarClick()
-//                        }
+//                        viewModel.login()
+                        onEntrarClick()
                     },
                     enabled = viewModel.habilitarClicar,
                     modifier = Modifier
@@ -226,11 +226,25 @@ fun LoginScreen(
                     )
                 ) {
                     Text(
-                        text = "Entrar",
+                        text = if (viewModel.carregando) "Entrando..." else "Entrar",
                         fontSize = 16.sp,
                         fontWeight = FontWeight.Bold,
                         color = colors.onPrimary
                     )
+                }
+
+                viewModel.mensagemErro?.let {
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    Text(
+                        text = it,
+                        color = MaterialTheme.colorScheme.error,
+                        fontSize = 12.sp
+                    )
+                }
+
+                if (viewModel.loginSucesso){
+                    onEntrarClick()
                 }
             }
         }
@@ -301,6 +315,9 @@ fun LoginScreen(
                 color = colors.onSurfaceVariant
             )
             Text(
+                modifier = Modifier.clickable{
+                    onCriarContaClick()
+                },
                 text = "Criar conta",
                 fontSize = 14.sp,
                 color = colors.primary,

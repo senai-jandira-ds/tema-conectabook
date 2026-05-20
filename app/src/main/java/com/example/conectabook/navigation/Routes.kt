@@ -1,6 +1,8 @@
 package com.example.conectabook.navigation
 
 object Routes {
+
+    const val CADASTRO = "cadastro"
     const val LOGIN = "login"
     const val HOME = "home"
     const val LIVROS = "livros"

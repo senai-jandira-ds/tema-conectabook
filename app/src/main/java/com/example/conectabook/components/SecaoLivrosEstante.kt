@@ -28,6 +28,7 @@ data class LivroEstanteUi(
 fun SecaoLivrosEstante(
     titulo: String,
     livros: List<LivroEstanteUi>,
+    onLivroClick: () -> Unit = {},
     modifier: Modifier = Modifier
 ) {
     val colors = MaterialTheme.colorScheme
@@ -66,7 +67,8 @@ fun SecaoLivrosEstante(
                     capa = livro.capa,
                     titulo = livro.titulo,
                     autor = livro.autor,
-                    nota = livro.nota
+                    nota = livro.nota,
+                    onClick = onLivroClick
                 )
             }
         }

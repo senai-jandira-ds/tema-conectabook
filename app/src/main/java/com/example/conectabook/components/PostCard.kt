@@ -70,7 +70,7 @@ fun PostCard(
                         .clip(CircleShape)
                 )
 
-                Spacer(modifier = Modifier.width(12.dp))
+                Spacer(modifier = Modifier.width(14.dp))//era 12.dp
 
                 Column() {
                     Text(
@@ -88,7 +88,8 @@ fun PostCard(
                 }
             }
 
-            Spacer(modifier = Modifier.width(16.dp))
+//            Spacer(modifier = Modifier.width(16.dp))
+            Spacer(modifier = Modifier.height(16.dp))
 
             Text(
                 text = texto,
@@ -97,7 +98,7 @@ fun PostCard(
                 color = colors.onSurface
             )
 
-            Spacer(modifier = Modifier.width(16.dp))
+            Spacer(modifier = Modifier.height(16.dp))//era width
 
             Card(
                 modifier = Modifier.fillMaxWidth(),
@@ -147,7 +148,7 @@ fun PostCard(
                 }
             }
 
-            Spacer(modifier = Modifier.width(16.dp))
+            Spacer(modifier = Modifier.height(16.dp))//era width
 
 //            Row() {
 //                Text("<3 $curtidas")

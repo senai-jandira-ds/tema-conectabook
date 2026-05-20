@@ -7,10 +7,6 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.Book
-import androidx.compose.material.icons.outlined.Bookmark
-import androidx.compose.material.icons.outlined.MenuBook
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -28,9 +24,9 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import com.example.conectabook.R
 import com.example.conectabook.components.LivroEstanteUi
-import com.example.conectabook.components.ResumoEstanteCard
 import com.example.conectabook.components.SecaoLivrosEstante
 import com.example.conectabook.components.SecaoResumoEstante
+import com.example.conectabook.navigation.Routes
 
 @Composable
 fun LivrosScreen(
@@ -128,24 +124,33 @@ fun LivrosScreen(
             item {
                 SecaoLivrosEstante(
                     titulo = "Lidos",
-                    livros = livrosLidos
+                    livros = livrosLidos,
+                    onLivroClick = {
+                        navController.navigate(Routes.DETALHES_LIVRO)
+                    }
                 )
             }
 
             item {
                 SecaoLivrosEstante(
                     titulo = "Lendo",
-                    livros = livrosLendo
+                    livros = livrosLendo,
+                    onLivroClick = {
+                        navController.navigate(Routes.DETALHES_LIVRO)
+                    }
+
                 )
             }
 
             item {
                 SecaoLivrosEstante(
                     titulo = "Quero ler",
-                    livros = livrosQueroLer
+                    livros = livrosQueroLer,
+                    onLivroClick = {
+                        navController.navigate(Routes.DETALHES_LIVRO)
+                    }
                 )
             }
-
         }
     }
 }
