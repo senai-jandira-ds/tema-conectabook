@@ -35,7 +35,7 @@ fun LivroCard(
 
     Column(
         modifier = modifier
-            .width(118.dp)
+            .width(130.dp)// antes 118.dp
             .clickable{
                 onClick()
             }

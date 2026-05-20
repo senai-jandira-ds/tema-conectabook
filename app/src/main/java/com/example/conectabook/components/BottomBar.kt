@@ -95,8 +95,12 @@ fun BottomBar(
         )
 
         NavigationBarItem(
-            selected = false,
-            onClick = {},
+            selected = rotaAtual == Routes.PERFIL,
+            onClick = {
+                navController.navigate(Routes.PERFIL) {
+                    launchSingleTop = true
+                }
+            },
             icon = {
                 Icon(
                     imageVector = Icons.Outlined.Person,

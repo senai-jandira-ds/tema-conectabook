@@ -18,14 +18,16 @@ class AuthRepository{
         nome: String,
         nomeUsuario: String,
         email: String,
-        senha: String
+        senha: String,
+        dataNascimento: String
     ) =
         RetrofitClient.api.cadastrarUsuario(
             CadastroRequest(
                 nome = nome,
                 nome_usuario = nomeUsuario,
                 email = email,
-                senha = senha
+                senha = senha,
+                data_nascimento = dataNascimento
             )
         )
 

@@ -15,9 +15,9 @@ fun SecaoLivrosSemelhantes(modifier: Modifier = Modifier) {
     )
 
     SecaoLivrosEstante(
-        titulo = "Livros Semelhantes",
+        titulo = "Livros semelhantes",
         livros = livros,
-        modifier = Modifier
+        modifier = modifier
 
     )
 }

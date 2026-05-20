@@ -9,6 +9,7 @@ import com.example.conectabook.screens.DetalhesLivroScreen
 import com.example.conectabook.screens.HomeScreen
 import com.example.conectabook.screens.LivrosScreen
 import com.example.conectabook.screens.LoginScreen
+import com.example.conectabook.screens.PerfilScreen
 
 @Composable
 fun AppNavigation() {
@@ -54,6 +55,10 @@ fun AppNavigation() {
 
         composable(Routes.DETALHES_LIVRO) {
             DetalhesLivroScreen(navController = navController)
+        }
+
+        composable(Routes.PERFIL) {
+            PerfilScreen(navController = navController)
         }
     }
 }

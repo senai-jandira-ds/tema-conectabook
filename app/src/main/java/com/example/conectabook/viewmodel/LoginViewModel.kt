@@ -6,6 +6,7 @@ import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.conectabook.data.api.repository.AuthRepository
+import com.example.conectabook.data.api.session.UserSession
 import kotlinx.coroutines.launch
 
 class LoginViewModel: ViewModel() {
@@ -79,6 +80,7 @@ class LoginViewModel: ViewModel() {
                 val resposta = repository.login(email, senha)
 
                 if (resposta.status && resposta.user != null){
+                    UserSession.usuario = resposta.user
                     loginSucesso = true
                 } else {
                     mensagemErro = "Email ou senha inválidos"

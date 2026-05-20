@@ -53,7 +53,7 @@ fun HomeaHeader(modifier: Modifier = Modifier) {
         ) {
 
             Text(
-                text = "Olá Isabelle",
+                text = "Olá, Isabelle!",
                 fontSize = 18.sp,
                 fontWeight = FontWeight.Bold,
                 color = colors.onBackground

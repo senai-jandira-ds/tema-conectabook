@@ -6,8 +6,10 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.CalendarMonth
 import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material.icons.outlined.Lock
 import androidx.compose.material.icons.outlined.Person
@@ -18,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -136,6 +139,38 @@ fun CadastroScreen(
                         unfocusedIndicatorColor = Color.Transparent
                     )
                 )
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                TextField(
+                    value = viewModel.dataNascimento,
+                    onValueChange = { valor ->
+                            viewModel.dataNascimento = valor.take(10)
+                    },
+                    placeholder = { Text("DD/MM/AAAA") },
+                    leadingIcon = {
+                        Icon(
+                            imageVector = Icons.Outlined.CalendarMonth,
+                            contentDescription = null,
+                            tint = colors.primary
+                        )
+                    },
+                    keyboardOptions = KeyboardOptions(
+                        keyboardType = KeyboardType.Number
+                    ),
+                    singleLine = true,
+                    shape = RoundedCornerShape(12.dp),
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(56.dp),
+                    colors = TextFieldDefaults.colors(
+                        focusedContainerColor = colors.surfaceVariant,
+                        unfocusedContainerColor = colors.surfaceVariant,
+                        focusedIndicatorColor = colors.primary,
+                        unfocusedIndicatorColor = Color.Transparent
+                    )
+                )
+
 
                 Spacer(modifier = Modifier.height(16.dp))
 

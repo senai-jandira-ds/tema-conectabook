@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.example.conectabook.components.AppHeader
 import com.example.conectabook.components.BottomBar
+import com.example.conectabook.components.DetalhesLivroHeader
 import com.example.conectabook.components.SecaoComunidadeLivro
 import com.example.conectabook.components.SecaoHeroLivro
 import com.example.conectabook.components.SecaoLivrosSemelhantes
@@ -44,10 +45,8 @@ fun DetalhesLivroScreen(
         ) {
 
             item {
-            AppHeader(
-                titulo = "detalhes do livro",
-                mostrarVoltar = true,
-                mostrarAvatar = true
+                DetalhesLivroHeader(
+                    onVoltarClick = {navController.popBackStack()}
                 )
             }
 

@@ -59,7 +59,7 @@ fun SecaoLivrosEstante(
 
         LazyRow(
 //           /
-            horizontalArrangement = Arrangement.spacedBy(12.dp)
+            horizontalArrangement = Arrangement.spacedBy(14.dp)
         ) {
             items(livros) { livro ->
 

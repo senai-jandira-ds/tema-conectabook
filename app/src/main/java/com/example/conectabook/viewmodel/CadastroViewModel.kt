@@ -15,6 +15,8 @@ class CadastroViewModel : ViewModel() {
     var nome by mutableStateOf("")
     var nomeUsuario by mutableStateOf("")
     var email by mutableStateOf("")
+
+    var dataNascimento by mutableStateOf("")
     var senha by mutableStateOf("")
     var confirmarSenha by mutableStateOf("")
 
@@ -31,6 +33,7 @@ class CadastroViewModel : ViewModel() {
     val habilitarCadastro: Boolean
         get() = nome.isNotBlank() &&
                 email.isNotBlank() &&
+                dataNascimento.isNotBlank() &&
                 senhaTamanhoValido &&
                 senhasIguais &&
                 !carregando
@@ -47,7 +50,8 @@ class CadastroViewModel : ViewModel() {
                     nome = nome,
                     nomeUsuario = nomeUsuario.ifBlank { nome.lowercase().replace(" ", "_") },
                     email = email,
-                    senha = senha
+                    senha = senha,
+                    dataNascimento = dataNascimento.split("/").reversed().joinToString("-")
                 )
 
                 if (resposta.status){
