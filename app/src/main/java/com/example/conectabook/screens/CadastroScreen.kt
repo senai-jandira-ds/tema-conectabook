@@ -12,6 +12,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.CalendarMonth
 import androidx.compose.material.icons.outlined.Email
 import androidx.compose.material.icons.outlined.Lock
+import androidx.compose.material.icons.outlined.MenuBook
 import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -38,6 +39,12 @@ fun CadastroScreen(
 
     val colors = MaterialTheme.colorScheme
     val viewModel: CadastroViewModel = viewModel()
+
+    var expandirGeneros by remember { mutableStateOf(false) }
+
+    LaunchedEffect(Unit) {
+        viewModel.carregarGeneros()
+    }
 
     Column(
         modifier = Modifier
@@ -88,6 +95,7 @@ fun CadastroScreen(
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(20.dp)
+
             ) {
 
                 TextField(
@@ -171,6 +179,60 @@ fun CadastroScreen(
                     )
                 )
 
+                Spacer(modifier = Modifier.height(16.dp))
+
+//                ExposedDropdownMenuBox(
+//                    expanded = expandirGeneros,
+//                    onExpandedChange = {expandirGeneros = !expandirGeneros}
+//                ) {
+//                    TextField(
+//                        value = viewModel.generoSelecionado?.nome ?: "",
+//                        onValueChange = {},
+//                        readOnly = true,
+//                        placeholder = { Text("Gênero literário favorito")},
+//                        leadingIcon = {
+//                            Icon(
+//                                imageVector = Icons.Outlined.MenuBook,
+//                                contentDescription = null,
+//                                tint = colors.primary
+//                            )
+//                        },
+//                        trailingIcon = {
+//                            ExposedDropdownMenuDefaults.TrailingIcon(expanded = expandirGeneros)
+//                        },
+//                        modifier = Modifier
+//                            .menuAnchor()
+//                            .fillMaxWidth()
+//                            .height(56.dp),
+//                        shape = RoundedCornerShape(12.dp),
+//                        colors = TextFieldDefaults.colors(
+//                            focusedContainerColor = colors.surfaceVariant,
+//                            unfocusedContainerColor = colors.surfaceVariant,
+//                            focusedIndicatorColor = colors.primary,
+//                            unfocusedIndicatorColor = Color.Transparent
+//                        )
+//
+//                    )
+//
+//                    ExposedDropdownMenu(
+//                        expanded = expandirGeneros,
+//                        onDismissRequest = {expandirGeneros = false}
+//
+//                    ) {
+//                        viewModel.generos.forEach { genero ->
+//                            DropdownMenuItem(
+//                                text = {Text(genero.nome)},
+//                                onClick = {
+//                                    viewModel.generoSelecionado = genero
+//                                    expandirGeneros = false
+//                                }
+//                            )
+//                        }
+//                    }
+//                }
+
+
+
 
                 Spacer(modifier = Modifier.height(16.dp))
 
@@ -247,6 +309,7 @@ fun CadastroScreen(
                 }
 
                 Spacer(modifier = Modifier.height(24.dp))
+
 
                 Button(
                     onClick = {

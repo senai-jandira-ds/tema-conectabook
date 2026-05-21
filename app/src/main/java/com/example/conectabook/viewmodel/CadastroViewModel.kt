@@ -5,6 +5,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.conectabook.data.api.model.GeneroResponse
 import com.example.conectabook.data.api.repository.AuthRepository
 import kotlinx.coroutines.launch
 
@@ -38,6 +39,9 @@ class CadastroViewModel : ViewModel() {
                 senhasIguais &&
                 !carregando
 
+    var generos by mutableStateOf<List<GeneroResponse>>(emptyList())
+    var generoSelecionado by mutableStateOf<GeneroResponse?>(null)
+
     fun cadastrar(){
         if (!habilitarCadastro) return
 
@@ -66,4 +70,16 @@ class CadastroViewModel : ViewModel() {
             }
         }
     }
+
+    fun carregarGeneros(){
+
+        viewModelScope.launch {
+            try {
+                generos = repository.listarGeneros()
+            } catch (erro: Exception) {
+                mensagemErro = "Erro ao carregar gêneros"
+            }
+        }
+    }
+
 }

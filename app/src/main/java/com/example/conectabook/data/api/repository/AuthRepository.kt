@@ -31,5 +31,8 @@ class AuthRepository{
             )
         )
 
+    suspend fun listarGeneros() =
+        RetrofitClient.api.listarGeneros()
+
 
 }
