@@ -2,11 +2,20 @@ package com.example.conectabook.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.AssistChip
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -15,6 +24,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
@@ -22,43 +32,89 @@ import androidx.compose.ui.unit.sp
 
 @Composable
 fun ClubeCard(
-    capa: Int,
-    nome: String,
-    membros: String,
-    modifier: Modifier = Modifier
+    clube: ClubeUi,
+    onParticiparClick: () -> Unit
 ) {
     val colors = MaterialTheme.colorScheme
 
-    Column(
-        modifier = Modifier.width(110.dp),
-        horizontalAlignment = Alignment.CenterHorizontally
-
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        shape = RoundedCornerShape(16.dp),
+        colors = CardDefaults.cardColors(
+            containerColor = colors.surface
+        ),
+        elevation = CardDefaults.cardElevation(8.dp)
     ) {
-        Image(
-            painter = painterResource(id = capa),
-            contentDescription = nome,
-            contentScale = ContentScale.Crop,
-            modifier = Modifier
-                .size(72.dp)
-                .clip(CircleShape)
-        )
 
-        Spacer(modifier = Modifier.height(8.dp))
+        Column(
+            modifier = Modifier.padding(16.dp)
+        ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Image(
+                    painter = painterResource(id = clube.capa),
+                    contentDescription = "Capa do clube",
+                    contentScale = ContentScale.Crop,
+                    modifier = Modifier
+                        .size(88.dp)
+                        .clip(RoundedCornerShape(16.dp))
+                )
 
-        Text(
-            text = nome,
-            fontSize = 13.sp,
-            fontWeight = FontWeight.SemiBold,
-            color = colors.onBackground,
-            maxLines = 2,
-            lineHeight = 15.sp,
-            textAlign = TextAlign.Center
-        )
+                Spacer(modifier = Modifier.width(16.dp))
 
-        Text(
-            text = membros,
-            fontSize = 11.sp,
-            color = colors.onSurfaceVariant
-        )
+                Column(
+                    modifier = Modifier.weight(1f)
+                ) {
+                    Text(
+                        text = clube.nome,
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = colors.onSurface
+                    )
+
+                    Spacer(modifier = Modifier.height(4.dp))
+
+                    Text(
+                        text = "${clube.membros} membros",
+                        fontSize = 18.sp,
+                        color = colors.onSurfaceVariant
+                    )
+
+                    Spacer(modifier = Modifier.height(8.dp))
+
+                    AssistChip(
+                        onClick = {},
+                        label = {
+                            Text("")
+                        }
+                    )
+                }
+            }
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Text(
+                text = "descrição",
+                fontSize = 14.sp,
+                color = colors.onSurfaceVariant,
+                lineHeight = 20.sp
+            )
+
+            Spacer(modifier = Modifier.height(16.dp))
+
+            Button(
+                onClick = {},
+                modifier = Modifier.fillMaxWidth(),
+                shape = RoundedCornerShape(14.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = colors.primary
+                )
+            ) {
+
+                Text("Participar")
+
+            }
+        }
     }
 }
