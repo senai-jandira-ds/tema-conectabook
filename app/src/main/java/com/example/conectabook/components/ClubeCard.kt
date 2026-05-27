@@ -2,6 +2,7 @@ package com.example.conectabook.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -29,10 +30,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import com.example.conectabook.data.api.model.ClubeListaUi
 
 @Composable
 fun ClubeCard(
-    clube: ClubeUi,
+    clube: ClubeListaUi,
     onParticiparClick: () -> Unit
 ) {
     val colors = MaterialTheme.colorScheme
@@ -43,77 +45,100 @@ fun ClubeCard(
         colors = CardDefaults.cardColors(
             containerColor = colors.surface
         ),
-        elevation = CardDefaults.cardElevation(8.dp)
+        elevation = CardDefaults.cardElevation(6.dp)
     ) {
 
         Column(
-            modifier = Modifier.padding(16.dp)
+            modifier = Modifier.padding(12.dp)
         ) {
             Row(
-                verticalAlignment = Alignment.CenterVertically
+                verticalAlignment = Alignment.Top
             ) {
                 Image(
-                    painter = painterResource(id = clube.capa),
+                    painter = painterResource(id = clube.imagem),
                     contentDescription = "Capa do clube",
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
-                        .size(88.dp)
-                        .clip(RoundedCornerShape(16.dp))
+                        .size(74.dp)
+                        .clip(RoundedCornerShape(14.dp))
                 )
 
-                Spacer(modifier = Modifier.width(16.dp))
+                Spacer(modifier = Modifier.width(12.dp))
 
                 Column(
                     modifier = Modifier.weight(1f)
                 ) {
                     Text(
                         text = clube.nome,
-                        fontSize = 18.sp,
+                        fontSize = 16.sp,
                         fontWeight = FontWeight.Bold,
                         color = colors.onSurface
                     )
 
-                    Spacer(modifier = Modifier.height(4.dp))
+                    Spacer(modifier = Modifier.height(2.dp))
 
                     Text(
-                        text = "${clube.membros} membros",
-                        fontSize = 18.sp,
+                        text = "${clube.totalMembros} membros",
+                        fontSize = 12.sp,
                         color = colors.onSurfaceVariant
                     )
 
                     Spacer(modifier = Modifier.height(8.dp))
 
-                    AssistChip(
-                        onClick = {},
-                        label = {
-                            Text("")
+                    Row(
+                        verticalAlignment = Alignment.CenterVertically
+                    ) {
+
+                        Button(
+                            onClick = onParticiparClick,
+                            modifier = Modifier.height(34.dp),
+                            shape = RoundedCornerShape(10.dp),
+                            contentPadding = PaddingValues(horizontal = 12.dp),
+                            colors = ButtonDefaults.buttonColors(
+                                containerColor = colors.primary
+                            )
+                        ) {
+
+                            Text(
+                                text = if (clube.participando) "Participando" else "Participar",
+                                color =
+                                    if (clube.participando) colors.onSecondaryContainer else colors.onPrimary,
+                                fontSize = 12.sp
+                            )
                         }
-                    )
+
+                        Spacer(modifier = Modifier.width(8.dp))
+
+                        AssistChip(
+                            onClick = {},
+                            label = {
+                                Text(
+                                    text = clube.genero,
+                                    fontSize = 11.sp
+                                )
+                            }
+                        )
+                    }
                 }
             }
 
-            Spacer(modifier = Modifier.height(16.dp))
+            Spacer(modifier = Modifier.height(10.dp))
 
-            Text(
-                text = "descrição",
-                fontSize = 14.sp,
-                color = colors.onSurfaceVariant,
-                lineHeight = 20.sp
-            )
-
-            Spacer(modifier = Modifier.height(16.dp))
-
-            Button(
-                onClick = {},
+            Card(
                 modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(14.dp),
-                colors = ButtonDefaults.buttonColors(
-                    containerColor = colors.primary
-                )
+                shape = RoundedCornerShape(12.dp),
+                colors = CardDefaults.cardColors(
+                    containerColor = colors.surfaceVariant.copy(alpha = 0.35f)
+                ),
+                elevation = CardDefaults.cardElevation(0.dp)
             ) {
-
-                Text("Participar")
-
+                Text(
+                    text = clube.descricao,
+                    fontSize = 12.sp,
+                    color = colors.onSurfaceVariant,
+                    lineHeight = 16.sp,
+                    modifier = Modifier.padding(10.dp)
+               )
             }
         }
     }

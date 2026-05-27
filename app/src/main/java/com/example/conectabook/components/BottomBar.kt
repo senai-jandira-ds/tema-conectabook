@@ -34,8 +34,10 @@ fun BottomBar(
 
 
         NavigationBarItem(
-            selected = false,
-            onClick = {},
+            selected = rotaAtual == Routes.CLUBES,
+            onClick = {
+                navController.navigate(Routes.CLUBES)
+            },
             icon = {
                 Icon(
                     imageVector = Icons.Outlined.Groups,

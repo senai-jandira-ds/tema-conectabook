@@ -17,7 +17,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.conectabook.R
 
-data class ClubeUi(
+data class ClubeHomeUi(
     val capa: Int,
     val nome: String,
     val membros: String
@@ -29,25 +29,25 @@ fun SecaoClubes(modifier: Modifier = Modifier) {
     val colors = MaterialTheme.colorScheme
 
     val clubes = listOf(
-        ClubeUi(
+        ClubeHomeUi(
             capa = R.drawable.clubelobo,
             nome = "Clube dos Lobos",
             membros = "1,2 mil membros"
         ),
 
-        ClubeUi(
+        ClubeHomeUi(
             capa = R.drawable.clubecartas,
             nome = "Entre Cartas e Eternidade",
             membros = "850 membros"
         ),
 
-        ClubeUi(
+        ClubeHomeUi(
             capa = R.drawable.clubemar,
             nome = "Semideuses & Bruxos",
             membros = "2,1 mil membros"
         ),
 
-        ClubeUi(
+        ClubeHomeUi(
             capa = R.drawable.clubebruxos,
             nome = "Camp Hogwarts",
             membros = "980 membros"
@@ -82,14 +82,7 @@ fun SecaoClubes(modifier: Modifier = Modifier) {
             horizontalArrangement = Arrangement.spacedBy(12.dp)
         ) {
 
-            items(clubes) { clube ->
 
-                ClubeCard(
-                    capa = clube.capa,
-                    nome = clube.nome,
-                    membros = clube.membros
-                )
-            }
         }
     }
 }

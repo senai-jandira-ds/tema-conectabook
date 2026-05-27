@@ -1,6 +1,6 @@
 package com.example.conectabook.data.api.model
 
-data class ClubeUi(
+data class ClubeListaUi(
 
     val  id: Int,
     val nome: String,

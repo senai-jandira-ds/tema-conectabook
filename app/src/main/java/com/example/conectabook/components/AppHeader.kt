@@ -1,5 +1,7 @@
 package com.example.conectabook.components
 
+// Arquivo responsável pela criação do header do aplicativo
+
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
@@ -23,6 +25,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.conectabook.R
@@ -49,7 +52,7 @@ fun AppHeader(
 //                )
 //            )
             .background(colors.primary)
-            .padding(horizontal = 20.dp, vertical = 10.dp),
+            .padding(horizontal = 20.dp, vertical = 18.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         if (mostrarVoltar) {
@@ -75,8 +78,9 @@ fun AppHeader(
                 if (it.isNotBlank()) {
                     Text(
                         text = it,
-                        fontSize = 14.sp,
-                        color = colors.onPrimary.copy(alpha = 0.85f)
+                        fontSize = 20.sp,
+                        color = colors.onPrimary,
+                        fontWeight = FontWeight.Bold
                     )
                 }
             }
@@ -96,7 +100,7 @@ fun AppHeader(
 
         if (mostrarAvatar) {
             Image(
-                painter = painterResource(id = R.drawable.mascote),
+                painter = painterResource(id = R.drawable.moca_lendo),
                 contentDescription = "Foto do usuário",
                 modifier = Modifier
                     .size(44.dp)
