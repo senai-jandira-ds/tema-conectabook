@@ -10,6 +10,8 @@ object Routes {
 
     const val CLUBES = "clubes"
 
+    const val CRIAR_CLUBE = "criar_clube"
+
     const val CAFETERIAS = "cafeterias"
     const val PERFIL = "perfil"
 }

@@ -4,10 +4,12 @@ package com.example.conectabook.components
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -15,6 +17,7 @@ import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.ArrowBack
+import androidx.compose.material.icons.outlined.Menu
 import androidx.compose.material.icons.outlined.Notifications
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -42,22 +45,19 @@ fun AppHeader(
 ) {
     val colors = MaterialTheme.colorScheme
 
-    Row(
-        modifier = Modifier
+    Box(
+        modifier = modifier
             .fillMaxWidth()
-//            .clip(
-//                RoundedCornerShape(
-//                    bottomStart = 24.dp,
-//                    bottomEnd = 24.dp
-//                )
-//            )
+            .height(80.dp)
             .background(colors.primary)
-            .padding(horizontal = 20.dp, vertical = 18.dp),
-        verticalAlignment = Alignment.CenterVertically
+            .padding(horizontal = 20.dp),
+        contentAlignment = Alignment.Center
+
     ) {
         if (mostrarVoltar) {
             IconButton(
-                onClick = onVoltarClick
+                onClick = onVoltarClick,
+                modifier = Modifier.align(Alignment.CenterStart)
             ) {
                 Icon(
                     imageVector = Icons.Outlined.ArrowBack,
@@ -65,47 +65,35 @@ fun AppHeader(
                     tint = colors.onPrimary
                 )
             }
-
-            Spacer(modifier = Modifier.width(8.dp))
-        }
-
-        Column(
-            modifier = Modifier
-                .weight(1f),
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            titulo?.let {
-                if (it.isNotBlank()) {
-                    Text(
-                        text = it,
-                        fontSize = 20.sp,
-                        color = colors.onPrimary,
-                        fontWeight = FontWeight.Bold
-                    )
-                }
-            }
-        }
-
-
-        if (mostrarNotificacao) {
-            IconButton(onClick = {}) {
+        } else {
+            IconButton(
+                onClick = {},
+                modifier = Modifier.align(Alignment.CenterStart)
+            ) {
                 Icon(
-                    imageVector = Icons.Outlined.Notifications,
-                    contentDescription = "Icone de notificaçõs",
+                    imageVector = Icons.Outlined.Menu,
+                    contentDescription = "Menu",
                     tint = colors.onPrimary
                 )
             }
         }
 
+        Text(
+            text = titulo ?: "",
+            fontSize = 20.sp,
+            color = colors.onPrimary,
+            fontWeight = FontWeight.Bold
+        )
 
         if (mostrarAvatar) {
             Image(
-                painter = painterResource(id = R.drawable.moca_lendo),
+                painter = painterResource(id = R.drawable.perfil_lendo),
                 contentDescription = "Foto do usuário",
                 modifier = Modifier
                     .size(44.dp)
                     .clip(CircleShape)
                     .background(colors.surface)
+                    .align(Alignment.CenterEnd)
             )
         }
     }

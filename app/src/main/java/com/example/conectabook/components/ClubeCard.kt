@@ -12,11 +12,14 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.outlined.Group
 import androidx.compose.material3.AssistChip
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -98,6 +101,12 @@ fun ClubeCard(
                                 containerColor = colors.primary
                             )
                         ) {
+
+                            Icon(
+                                imageVector = Icons.Outlined.Group,
+                                contentDescription = "Grupo",
+                                modifier = Modifier.size(20.dp)
+                            )
 
                             Text(
                                 text = if (clube.participando) "Participando" else "Participar",
