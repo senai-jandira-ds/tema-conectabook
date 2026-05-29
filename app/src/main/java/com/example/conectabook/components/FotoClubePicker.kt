@@ -20,7 +20,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 
 
@@ -39,6 +38,10 @@ fun FotoClubePicker(
         onImagemSelecionada(uri)
     }
 
+    Box(modifier = modifier.size(150.dp),
+        contentAlignment = Alignment.Center
+        ) {
+
     Box(
         modifier = Modifier
             .size(140.dp)
@@ -49,21 +52,22 @@ fun FotoClubePicker(
             },
         contentAlignment = Alignment.Center
     ) {
-      if (imagemUri !=null) {
-          Image(
-              painter = rememberAsyncImagePainter (imagemUri),
-              contentDescription = "Foto do clube",
-              contentScale = ContentScale.Crop,
-              modifier = Modifier.matchParentSize()
-          )
-      } else {
-          Icon(
-              imageVector = Icons.Outlined.CameraAlt,
-              contentDescription = "Adicionar foto",
-              tint = colors.onSurfaceVariant,
-              modifier = Modifier.size(56.dp)
-          )
-      }
+        if (imagemUri != null) {
+            Image(
+                painter = rememberAsyncImagePainter(imagemUri),
+                contentDescription = "Foto do clube",
+                contentScale = ContentScale.Crop,
+                modifier = Modifier.matchParentSize()
+            )
+        } else {
+            Icon(
+                imageVector = Icons.Outlined.CameraAlt,
+                contentDescription = "Adicionar foto",
+                tint = colors.onSurfaceVariant,
+                modifier = Modifier.size(56.dp)
+            )
+        }
+    }
 
         Box(
             modifier = Modifier
@@ -79,6 +83,6 @@ fun FotoClubePicker(
                 tint = colors.onPrimary,
                 modifier = Modifier.size(22.dp)
             )
+            }
         }
     }
-}
