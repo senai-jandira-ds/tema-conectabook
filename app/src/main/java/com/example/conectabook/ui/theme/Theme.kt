@@ -20,12 +20,15 @@ private val DarkColorScheme = darkColorScheme(
 
 private val LightColorScheme = lightColorScheme(
     primary = PrimaryBlue,
+    secondary = Accent,
+    tertiary = PrimaryDark,
+
     background = Background,
     surface = Surface,
     onPrimary = Color.White,
     onBackground = TextPrimary,
     onSurface = TextPrimary,
-    surfaceVariant = InputBackground,
+    surfaceVariant = Background,
     onSurfaceVariant = TextSecondary,
     outline = BorderColor
 

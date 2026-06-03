@@ -12,14 +12,17 @@ val Pink40 = Color(0xFF7D5260)
 
 
 
-val PrimaryBlue = Color(0xFF4A82F0)
-val Background = Color(0xFFF9FAFB)
-val Surface = Color.White
-val TextPrimary = Color(0xFF111827)
-val TextSecondary = Color(0xFF6B7280)
-val BorderColor = Color(0xFFE5E7EB)
+val PrimaryBlue = Color(0xFF7B68EE)
+val PrimaryDark = Color(0xFF8078AD)
+val Background = Color(0xFFF4F2FB)
+val Surface = Color(0xFFFFFFFF)
+val TextPrimary = Color(0xFF615E6E)
+val TextSecondary = Color(0xFF989476)
+val BorderColor = Color(0xFFD8D4E8)
 
-val InputBackground = Color(0xFFF3F4F6)
+val Accent = Color(0xFFEDDC68)
+
+val InputBackground = Color(0xFFF0EDF9)
 
 // cores do info - tela esqueceu a senha
 val BlueInfoLight = Color(0xFFE8F1FF)

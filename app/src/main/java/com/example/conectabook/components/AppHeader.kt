@@ -85,16 +85,24 @@ fun AppHeader(
             fontWeight = FontWeight.Bold
         )
 
-        if (mostrarAvatar) {
-            Image(
-                painter = painterResource(id = R.drawable.perfil_lendo),
-                contentDescription = "Foto do usuário",
-                modifier = Modifier
-                    .size(44.dp)
-                    .clip(CircleShape)
-                    .background(colors.surface)
-                    .align(Alignment.CenterEnd)
-            )
-        }
+//        if (mostrarAvatar) {
+//            Image(
+//                painter = painterResource(id = R.drawable.perfil_lendo),
+//                contentDescription = "Foto do usuário",
+//                modifier = Modifier
+//                    .size(44.dp)
+//                    .clip(CircleShape)
+//                    .background(colors.surface)
+//                    .align(Alignment.CenterEnd)
+//            )
+//        }
+
+        Icon(
+            imageVector = Icons.Outlined.Notifications,
+            contentDescription = "Notificações",
+            tint = colors.onPrimary,
+            modifier = Modifier.size(26.dp)
+                .align(Alignment.CenterEnd)
+        )
     }
 }

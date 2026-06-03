@@ -133,7 +133,7 @@ fun SecaoHeroLivro(modifier: Modifier = Modifier) {
                 .height(56.dp),
             shape = RoundedCornerShape(16.dp),
             colors = ButtonDefaults.buttonColors(
-                containerColor = Color(0xFF1976D2)
+                containerColor = colors.primary //
             )
         ) {
             Icon(
