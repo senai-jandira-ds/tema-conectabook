@@ -60,7 +60,7 @@ fun ClubeScreen(
             imagem = R.drawable.clubelobo,
             genero = "Ficção",
             totalMembros = 1752,
-            participando = false,
+            participando = true,
             admin = false
         ),
 
@@ -88,7 +88,7 @@ fun ClubeScreen(
                 .padding(paddingValues)
         ) {
             AppHeader(
-                titulo = "Meus Clubes",
+                titulo = "Clubes",
                 mostrarVoltar = true,
                 mostrarAvatar = true
             )
@@ -121,8 +121,8 @@ fun ClubeScreen(
             items(clubes) { clube ->
                 ClubeCard(
                     clube = clube,
-                    onParticiparClick = {}
-
+                    onParticiparClick = {},
+                    onCardClick = {}
                     )
                 }
             }

@@ -1,6 +1,7 @@
 package com.example.conectabook.components
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
@@ -10,6 +11,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.widthIn
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -38,12 +40,15 @@ import com.example.conectabook.data.api.model.ClubeListaUi
 @Composable
 fun ClubeCard(
     clube: ClubeListaUi,
-    onParticiparClick: () -> Unit
+    onParticiparClick: () -> Unit,
+    onCardClick: () -> Unit
 ) {
     val colors = MaterialTheme.colorScheme
 
     Card(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable { onCardClick() },
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(
             containerColor = colors.surface
@@ -62,8 +67,8 @@ fun ClubeCard(
                     contentDescription = "Capa do clube",
                     contentScale = ContentScale.Crop,
                     modifier = Modifier
-                        .size(74.dp)
-                        .clip(RoundedCornerShape(14.dp))
+                        .size(96.dp)
+                        .clip(RoundedCornerShape(16.dp))
                 )
 
                 Spacer(modifier = Modifier.width(12.dp))
@@ -73,6 +78,7 @@ fun ClubeCard(
                 ) {
                     Text(
                         text = clube.nome,
+                        maxLines = 1,
                         fontSize = 16.sp,
                         fontWeight = FontWeight.Bold,
                         color = colors.onSurface
@@ -81,7 +87,7 @@ fun ClubeCard(
                     Spacer(modifier = Modifier.height(2.dp))
 
                     Text(
-                        text = "${clube.totalMembros} membros",
+                        text = "${clube.totalMembros} membros • ${clube.genero} ",
                         fontSize = 12.sp,
                         color = colors.onSurfaceVariant
                     )
@@ -105,50 +111,33 @@ fun ClubeCard(
                             Icon(
                                 imageVector = Icons.Outlined.Group,
                                 contentDescription = "Grupo",
-                                modifier = Modifier.size(20.dp)
+                                modifier = Modifier.size(16.dp)
                             )
 
+                            Spacer(modifier = Modifier.width(4.dp))
+
                             Text(
-                                text = if (clube.participando) "Participando" else "Participar",
+                                text = if (clube.participando) "Abrir" else "Entrar",
                                 color =
                                     if (clube.participando) colors.onSecondaryContainer else colors.onPrimary,
                                 fontSize = 12.sp
                             )
                         }
-
-                        Spacer(modifier = Modifier.width(8.dp))
-
-                        AssistChip(
-                            onClick = {},
-                            label = {
-                                Text(
-                                    text = clube.genero,
-                                    fontSize = 11.sp
-                                )
-                            }
-                        )
                     }
                 }
             }
 
             Spacer(modifier = Modifier.height(10.dp))
 
-            Card(
-                modifier = Modifier.fillMaxWidth(),
-                shape = RoundedCornerShape(12.dp),
-                colors = CardDefaults.cardColors(
-                    containerColor = colors.surfaceVariant.copy(alpha = 0.35f)
-                ),
-                elevation = CardDefaults.cardElevation(0.dp)
-            ) {
+
                 Text(
                     text = clube.descricao,
-                    fontSize = 12.sp,
+                    fontSize = 13.sp,
+                    maxLines = 3,
                     color = colors.onSurfaceVariant,
-                    lineHeight = 16.sp,
-                    modifier = Modifier.padding(10.dp)
+                    lineHeight = 20.sp,
+                    modifier = Modifier.fillMaxWidth()
                )
-            }
         }
     }
 }
