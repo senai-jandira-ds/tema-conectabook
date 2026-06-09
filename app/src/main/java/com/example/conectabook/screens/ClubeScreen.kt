@@ -10,6 +10,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -28,6 +29,7 @@ import com.example.conectabook.components.BottomBar
 import com.example.conectabook.components.ClubeCard
 import com.example.conectabook.components.SearchBarClubes
 import com.example.conectabook.data.api.model.ClubeListaUi
+import com.example.conectabook.data.api.repository.ClubeRepositoryFake
 import com.example.conectabook.navigation.Routes
 
 @Composable
@@ -39,7 +41,7 @@ fun ClubeScreen(
 
     var busca by remember { mutableStateOf("") }
 
-    val clubes = listOf(
+    val clubesFixos = listOf(
         ClubeListaUi(
             id = 1,
             nome = "Harry Potter",
@@ -60,12 +62,12 @@ fun ClubeScreen(
             imagem = R.drawable.clubelobo,
             genero = "Ficção",
             totalMembros = 1752,
-            participando = true,
+            participando = false,
             admin = false
         ),
 
         ClubeListaUi(
-            id = 1,
+            id = 3,
             nome = "Semideuses & Bruxos",
             descricao = "O ponto de encontro oficial dos filhos dos deuses (e agregados). Leituras coletivas, debates mitológicos e muito humor azul. " +
                     "Venha descobrir de qual chalé você é e debater as sagas do Rick Riordan com a gente. Não olhe para a Medusa e entre no bando!",
@@ -76,6 +78,8 @@ fun ClubeScreen(
             admin = false
         )
     )
+
+    val clubes = clubesFixos + ClubeRepositoryFake.clubes
 
     Scaffold(
         bottomBar = { BottomBar(navController = navController)}
@@ -89,7 +93,7 @@ fun ClubeScreen(
         ) {
             AppHeader(
                 titulo = "Clubes",
-                mostrarVoltar = true,
+                mostrarVoltar = false,
                 mostrarAvatar = true
             )
 

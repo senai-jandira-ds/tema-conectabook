@@ -1,6 +1,7 @@
 package com.example.conectabook.screens
 
 import android.net.Uri
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -25,6 +26,7 @@ import androidx.compose.material3.Text
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -32,11 +34,15 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.example.conectabook.R
 import com.example.conectabook.components.AppHeader
 import com.example.conectabook.components.BottomBar
 import com.example.conectabook.components.FotoClubePicker
+import com.example.conectabook.data.api.model.ClubeListaUi
+import com.example.conectabook.data.api.repository.ClubeRepositoryFake
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -45,6 +51,8 @@ fun CriarClubeScreen(
     modifier: Modifier = Modifier) {
 
     val colors = MaterialTheme.colorScheme
+
+    val context = LocalContext.current
 
     var imagemUri by remember { mutableStateOf<Uri?>(null) }
 
@@ -227,7 +235,30 @@ fun CriarClubeScreen(
 
                 item {
                     Button(
-                        onClick = {},
+                        onClick = {
+
+                            ClubeRepositoryFake.clubes.add(
+                                ClubeListaUi(
+                                    id = ClubeRepositoryFake.clubes.size +1,
+                                    nome = nome,
+                                    descricao = descricao,
+                                    imagem = R.drawable.clubecartas,
+                                    genero = genero,
+                                    totalMembros = 0,
+                                    participando = false,
+                                    admin = true
+                                )
+                            )
+
+                            Toast.makeText(
+                                context,
+                                "Clube criado com sucesso!",
+                                Toast.LENGTH_SHORT
+                            ).show()
+
+                            navController.popBackStack()
+
+                        },
                         modifier = Modifier
                             .fillMaxWidth()
                             .height(56.dp),
