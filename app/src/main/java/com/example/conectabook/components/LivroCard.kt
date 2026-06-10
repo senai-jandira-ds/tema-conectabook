@@ -21,14 +21,14 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 
 @Composable
 fun LivroCard(
     onClick: () -> Unit = {},
-    capa: Int,
+    capaUrl: String?,
     titulo: String,
     autor: String,
-    nota: String,
     modifier: Modifier = Modifier
 ) {
     val colors = MaterialTheme.colorScheme
@@ -42,8 +42,9 @@ fun LivroCard(
             .background(colors.surface, RoundedCornerShape(12.dp))
             .padding(8.dp)
     ) {
-        Image(
-            painter = painterResource(id = capa),
+
+        AsyncImage(
+            model = capaUrl,
             contentDescription = titulo,
             contentScale = ContentScale.Crop,
             modifier = Modifier
@@ -72,10 +73,10 @@ fun LivroCard(
 
         Spacer(modifier = Modifier.height(4.dp))
 
-        Text(
-            text = " $nota",
-            fontSize = 11.sp,
-            color = colors.primary
-        )
+//        Text(
+//            text = " $nota",
+//            fontSize = 11.sp,
+//            color = colors.primary
+//        )
     }
 }
