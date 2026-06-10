@@ -21,67 +21,27 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.conectabook.R
 import com.example.conectabook.components.LivroEstanteUi
 import com.example.conectabook.components.SecaoLivrosEstante
 import com.example.conectabook.components.SecaoResumoEstante
 import com.example.conectabook.navigation.Routes
+import com.example.conectabook.viewmodel.LivroViewModel
 
 @Composable
 fun LivrosScreen(
     navController: NavController,
-    modifier: Modifier = Modifier) {
+    modifier: Modifier = Modifier,
+    viewModel: LivroViewModel = viewModel()
+) {
 
     val colors = MaterialTheme.colorScheme
     var busca by remember { mutableStateOf("") }
 
-    val livrosLidos = listOf(
-        LivroEstanteUi(
-            capa = R.drawable.diariobanana,
-            titulo = "O Pequeno Príncipe",
-            autor = "Antoine de Saint-Exupéry",
-            nota = "4,8"
-        ),
-        LivroEstanteUi(
-            capa = R.drawable.diariobanana,
-            titulo = "A Revolução dos Bichos",
-            autor = "George Orwell",
-            nota = "4,6"
-        ),
-        LivroEstanteUi(
-            capa = R.drawable.quemqueijo,
-            titulo = "Quem Mexeu no Meu Queijo?",
-            autor = "Spencer Johnson",
-            nota = "4,8"
-        )
+    val livros = viewModel.livros
 
-    )
-
-    val livrosLendo = listOf(
-        LivroEstanteUi(
-            capa = R.drawable.diariobanana,
-            titulo = "A Cabana",
-            autor = "William P. Young",
-            nota = "4,9"
-        ),
-
-        LivroEstanteUi(
-            capa = R.drawable.sopaletrinhas,
-            titulo = "A Cabana",
-            autor = "William P. Young",
-            nota = "4,9"
-    )
-    )
-
-    val livrosQueroLer = listOf(
-        LivroEstanteUi(
-            capa = R.drawable.diariobanana,
-            titulo = "Lady Killers",
-            autor = "Tori Telfer",
-            nota = "4,8"
-        )
-    )
 
     Scaffold(
         bottomBar = {
@@ -102,9 +62,14 @@ fun LivrosScreen(
             item {
                 SearchBarLivros(
                     busca = busca,
-                    onBuscaChange = {busca = it},
-                    onCameraClick = {
-                    }
+                    onBuscaChange = {
+                        busca = it
+
+                        if (it.isNotBlank()) {
+                            viewModel.buscarLivros(it)
+                        }
+                                    },
+                    onCameraClick = {}
                 )
             }
 
@@ -121,36 +86,17 @@ fun LivrosScreen(
                 SecaoResumoEstante()
             }
 
-            item {
-                SecaoLivrosEstante(
-                    titulo = "Lidos",
-                    livros = livrosLidos,
-                    onLivroClick = {
-                        navController.navigate(Routes.DETALHES_LIVRO)
-                    }
-                )
-            }
+//            items(livros) { livro ->
+//
+//                Text(
+//                    text = livro.title,
+//                    style = MaterialTheme.typography.titleMedium
+//                )
+//
+//                Text(
+//                    text = livro.author_name?.firstOrNull() ?: "Autor desconhecido"
+//                )
 
-            item {
-                SecaoLivrosEstante(
-                    titulo = "Lendo",
-                    livros = livrosLendo,
-                    onLivroClick = {
-                        navController.navigate(Routes.DETALHES_LIVRO)
-                    }
-
-                )
-            }
-
-            item {
-                SecaoLivrosEstante(
-                    titulo = "Quero ler",
-                    livros = livrosQueroLer,
-                    onLivroClick = {
-                        navController.navigate(Routes.DETALHES_LIVRO)
-                    }
-                )
-            }
         }
     }
 }
