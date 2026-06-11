@@ -86,14 +86,9 @@ fun LivrosScreen(
             items(livros) { livro ->
 
                 LivroCard(
-                    capaUrl = livro.cover_i?.let {
-                        "https://covers.openlibrary.org/b/id/$it-L.jpg"
-                    },
-                    titulo = livro.title,
-                    autor = livro.author_name?.firstOrNull()
-                        ?: "Autor desconhecido",
-//                    ano = livro.first_publish_year?.toString()
-//                        ?: "-",
+                    capaUrl = livro.capaUrl,
+                    titulo = livro.titulo,
+                    autor = livro.autor,
                     onClick = {}
                 )
 

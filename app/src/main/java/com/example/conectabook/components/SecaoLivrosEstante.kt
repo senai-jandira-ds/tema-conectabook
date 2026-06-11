@@ -57,20 +57,16 @@ fun SecaoLivrosEstante(
 
         Spacer(modifier = Modifier.height(12.dp))
 
-        LazyRow(
-//           /
-            horizontalArrangement = Arrangement.spacedBy(14.dp)
-        ) {
-            items(livros) { livro ->
-
-                LivroCard(
-                    capa = livro.capa,
-                    titulo = livro.titulo,
-                    autor = livro.autor,
-                    nota = livro.nota,
-                    onClick = onLivroClick
-                )
             }
         }
-    }
-}
+//        LazyRow(
+////           /
+//            horizontalArrangement = Arrangement.spacedBy(14.dp)
+//        ) {
+//            items(livros) { livro ->
+//
+//                LivroCard(
+//                    capaUrl = livro.
+//                )
+//    }
+//}

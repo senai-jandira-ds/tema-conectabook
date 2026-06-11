@@ -1,4 +1,4 @@
-package com.example.conectabook.viewmodel
+package com.example.conectabook.data.api.model
 
 data class Livro (
     val id: String,

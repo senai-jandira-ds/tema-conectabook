@@ -16,63 +16,26 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.example.conectabook.R
-
-data class LivroUi(
-    val capa:Int,
-    val título: String,
-    val autor: String,
-    val nota: String
-)
+import com.example.conectabook.data.api.model.Livro
 
 @Composable
-fun SecaoTitulosSugeridos(modifier: Modifier = Modifier) {
+fun SecaoTitulosSugeridos(
+    livros: List<Livro>,
+    modifier: Modifier = Modifier
+) {
 
-    val colors = MaterialTheme.colorScheme
+    LazyRow(
+        horizontalArrangement = Arrangement.spacedBy(12.dp)
+    ) {
+        items(livros) { livro ->
 
-
-    val livros = listOf(
-        LivroUi (R.drawable.kallocaina,"Kallocaína", "Karin Boye", "4,7"),
-        LivroUi(R.drawable.blade, "Blade Runner","Philip k. Dick", "4,6"),
-        LivroUi(R.drawable.circle, "Blade Runner", "Dave Eggers", "3,8"),
-        LivroUi (R.drawable.kallocaina,"Kallocaína", "Karin Boye", "4,7")
-    )
-
-    Column(modifier = Modifier
-        .fillMaxWidth()) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth(),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            Text(
-                text = "Títulos Sugeridos",
-                fontSize = 20.sp,
-                fontWeight = FontWeight.Bold,
-                color = colors.onBackground
+            LivroCard(
+                capaUrl = livro.capaUrl,
+                titulo = livro.titulo,
+                autor = livro.autor,
+                onClick = {}
             )
 
-            Text(
-                text = "Ver todos",
-                fontSize = 13.sp,
-                fontWeight = FontWeight.SemiBold,
-                color = colors.primary
-            )
-        }
-
-        Spacer(modifier = Modifier.height(12.dp))
-
-        LazyRow(
-            horizontalArrangement = Arrangement.spacedBy(12.dp)
-        ) {
-
-            items(livros) { livro ->
-                LivroCard(
-                    capa = livro.capa,
-                    titulo = livro.título,
-                    autor = livro.autor,
-                    nota = livro.nota
-                )
-            }
         }
     }
 }

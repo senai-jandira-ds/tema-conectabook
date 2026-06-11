@@ -12,6 +12,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.conectabook.R
 import com.example.conectabook.components.BottomBar
@@ -27,6 +28,7 @@ fun HomeScreen(
     modifier: Modifier = Modifier) {
 
     val colors = MaterialTheme.colorScheme
+
 
     Scaffold(
         bottomBar = {
