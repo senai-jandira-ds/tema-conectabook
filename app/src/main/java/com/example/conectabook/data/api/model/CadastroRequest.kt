@@ -5,5 +5,6 @@ data class CadastroRequest (
     val nome_usuario: String,
     val email: String,
     val senha: String,
-    val data_nascimento: String
+    val data_nascimento: String,
+    val genero_favorito: Int
 )

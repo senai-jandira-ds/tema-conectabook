@@ -10,6 +10,9 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
@@ -21,6 +24,7 @@ import com.example.conectabook.components.HomeaHeader
 import com.example.conectabook.components.PostCard
 import com.example.conectabook.components.SecaoClubes
 import com.example.conectabook.components.SecaoTitulosSugeridos
+import com.example.conectabook.viewmodel.SugestoesViewModel
 
 @Composable
 fun HomeScreen(
@@ -29,6 +33,12 @@ fun HomeScreen(
 
     val colors = MaterialTheme.colorScheme
 
+    val viewModel: SugestoesViewModel = viewModel()
+    val livrosSugeridos by viewModel.livrosSugeridos.collectAsState()
+
+    LaunchedEffect(Unit) {
+        viewModel.carregarSugestoes("fantasy")
+    }
 
     Scaffold(
         bottomBar = {
@@ -59,7 +69,9 @@ fun HomeScreen(
             }
 
             item {
-                SecaoTitulosSugeridos()
+                SecaoTitulosSugeridos(
+                    livros = livrosSugeridos
+                )
             }
 
             item {

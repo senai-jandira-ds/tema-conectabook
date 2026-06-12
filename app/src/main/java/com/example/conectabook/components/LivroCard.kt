@@ -29,6 +29,7 @@ fun LivroCard(
     capaUrl: String?,
     titulo: String,
     autor: String,
+    ano: Int?,
     modifier: Modifier = Modifier
 ) {
     val colors = MaterialTheme.colorScheme
@@ -69,6 +70,12 @@ fun LivroCard(
             color = colors.onSurfaceVariant,
             maxLines = 2,
             overflow = TextOverflow.Ellipsis
+        )
+
+        Text(
+            text = ano?.toString() ?: "Ano desconhecido",
+            fontSize = 11.sp,
+            color = colors.primary
         )
 
         Spacer(modifier = Modifier.height(4.dp))

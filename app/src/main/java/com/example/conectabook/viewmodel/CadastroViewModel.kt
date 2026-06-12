@@ -37,6 +37,7 @@ class CadastroViewModel : ViewModel() {
                 dataNascimento.isNotBlank() &&
                 senhaTamanhoValido &&
                 senhasIguais &&
+                generoSelecionado != null &&
                 !carregando
 
     var generos by mutableStateOf<List<GeneroResponse>>(emptyList())
@@ -52,10 +53,16 @@ class CadastroViewModel : ViewModel() {
             try {
                 val resposta = repository.cadastrar(
                     nome = nome,
-                    nomeUsuario = nomeUsuario.ifBlank { nome.lowercase().replace(" ", "_") },
+                    nomeUsuario = nomeUsuario.ifBlank {
+                        nome.lowercase().replace(" ", "_")
+                    },
                     email = email,
                     senha = senha,
-                    dataNascimento = dataNascimento.split("/").reversed().joinToString("-")
+                    dataNascimento = dataNascimento
+                        .split("/")
+                        .reversed()
+                        .joinToString("-"),
+                    generoFavorito = generoSelecionado!!.id_genero
                 )
 
                 if (resposta.status){

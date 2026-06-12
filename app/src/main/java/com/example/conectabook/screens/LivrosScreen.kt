@@ -89,6 +89,7 @@ fun LivrosScreen(
                     capaUrl = livro.capaUrl,
                     titulo = livro.titulo,
                     autor = livro.autor,
+                    ano = livro.anoPublicacao,
                     onClick = {}
                 )
 

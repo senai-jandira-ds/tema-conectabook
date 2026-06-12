@@ -33,6 +33,7 @@ fun SecaoTitulosSugeridos(
                 capaUrl = livro.capaUrl,
                 titulo = livro.titulo,
                 autor = livro.autor,
+                ano = livro.anoPublicacao,
                 onClick = {}
             )
 
