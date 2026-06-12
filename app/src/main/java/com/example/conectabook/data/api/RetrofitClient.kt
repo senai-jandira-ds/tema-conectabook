@@ -6,13 +6,13 @@ import retrofit2.create
 
 
 object RetrofitClient {
-    private const val BASE_URL = "https://conectabook.onrender.com"
+    private const val BASE_URL = "https://conectabook.azurewebsites.net/"
 
     val api: ApiService by lazy {
         Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .create()
+            .create(ApiService::class.java)
     }
 }

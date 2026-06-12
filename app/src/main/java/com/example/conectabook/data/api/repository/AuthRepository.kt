@@ -2,6 +2,7 @@ package com.example.conectabook.data.api.repository
 
 import com.example.conectabook.data.api.RetrofitClient
 import com.example.conectabook.data.api.model.CadastroRequest
+import com.example.conectabook.data.api.model.GeneroResponse
 import com.example.conectabook.data.api.model.GeneroUsuarioRequest
 import com.example.conectabook.data.api.model.LoginRequest
 
@@ -34,8 +35,9 @@ class AuthRepository{
             )
         )
 
-    suspend fun listarGeneros() =
-        RetrofitClient.api.listarGeneros()
+    suspend fun listarGeneros(): List<GeneroResponse> {
+        return RetrofitClient.api.listarGeneros().response
+    }
 
     suspend fun salvarGeneroUsuario(
         idUsuario: Int,

@@ -84,7 +84,11 @@ class CadastroViewModel : ViewModel() {
             try {
                 generos = repository.listarGeneros()
             } catch (erro: Exception) {
-                mensagemErro = "Erro ao carregar gêneros"
+//                mensagemErro = "Erro ao carregar gêneros"
+
+                erro.printStackTrace()
+
+                mensagemErro = erro.message
             }
         }
     }

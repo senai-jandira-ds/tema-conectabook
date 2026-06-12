@@ -183,13 +183,16 @@ fun CadastroScreen(
 
 //                ExposedDropdownMenuBox(
 //                    expanded = expandirGeneros,
-//                    onExpandedChange = {expandirGeneros = !expandirGeneros}
+//                    onExpandedChange = {
+//                        expandirGeneros = !expandirGeneros
+//                    }
 //                ) {
+//
 //                    TextField(
 //                        value = viewModel.generoSelecionado?.nome ?: "",
 //                        onValueChange = {},
 //                        readOnly = true,
-//                        placeholder = { Text("Gênero literário favorito")},
+//                        placeholder = { Text("Gênero literário favorito") },
 //                        leadingIcon = {
 //                            Icon(
 //                                imageVector = Icons.Outlined.MenuBook,
@@ -198,38 +201,38 @@ fun CadastroScreen(
 //                            )
 //                        },
 //                        trailingIcon = {
-//                            ExposedDropdownMenuDefaults.TrailingIcon(expanded = expandirGeneros)
+//                            ExposedDropdownMenuDefaults.TrailingIcon(
+//                                expanded = expandirGeneros
+//                            )
 //                        },
 //                        modifier = Modifier
-//                            .menuAnchor()
-//                            .fillMaxWidth()
-//                            .height(56.dp),
-//                        shape = RoundedCornerShape(12.dp),
-//                        colors = TextFieldDefaults.colors(
-//                            focusedContainerColor = colors.surfaceVariant,
-//                            unfocusedContainerColor = colors.surfaceVariant,
-//                            focusedIndicatorColor = colors.primary,
-//                            unfocusedIndicatorColor = Color.Transparent
-//                        )
-//
+//                            .menuAnchor(MenuAnchorType.PrimaryNotEditable)
+//                            .fillMaxWidth(),
+//                        shape = RoundedCornerShape(12.dp)
 //                    )
 //
 //                    ExposedDropdownMenu(
 //                        expanded = expandirGeneros,
-//                        onDismissRequest = {expandirGeneros = false}
-//
+//                        onDismissRequest = {
+//                            expandirGeneros = false
+//                        }
 //                    ) {
+//
 //                        viewModel.generos.forEach { genero ->
+//
 //                            DropdownMenuItem(
-//                                text = {Text(genero.nome)},
+//                                text = {
+//                                    Text(genero.nome)
+//                                },
 //                                onClick = {
 //                                    viewModel.generoSelecionado = genero
 //                                    expandirGeneros = false
 //                                }
 //                            )
+//
 //                        }
 //                    }
-//                }
+                }
 
 
 
@@ -395,4 +398,4 @@ fun CadastroScreen(
             )
         }
     }
-}
+//}

@@ -5,6 +5,7 @@ import com.example.conectabook.data.api.model.CadastroRequest
 import com.example.conectabook.data.api.model.CadastroResponse
 import com.example.conectabook.data.api.model.GeneroResponse
 import com.example.conectabook.data.api.model.GeneroUsuarioRequest
+import com.example.conectabook.data.api.model.GenerosApiResponse
 import com.example.conectabook.data.api.model.LoginRequest
 import com.example.conectabook.data.api.model.LoginResponse
 import retrofit2.http.Body
@@ -27,7 +28,7 @@ interface ApiService {
     ): CadastroResponse
 
     @GET("v1/conectaBook/generos")
-    suspend fun listarGeneros(): List<GeneroResponse>
+    suspend fun listarGeneros(): GenerosApiResponse
 
     @Headers("Content-Type: application/json")
     @POST("v1/conectaBook/genero-usuario")
