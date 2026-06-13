@@ -35,6 +35,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 import com.example.conectabook.data.api.model.ClubeListaUi
 
 @Composable
@@ -62,8 +63,8 @@ fun ClubeCard(
             Row(
                 verticalAlignment = Alignment.Top
             ) {
-                Image(
-                    painter = painterResource(id = clube.imagem),
+                AsyncImage(
+                    model = clube.imagemUrl,
                     contentDescription = "Capa do clube",
                     contentScale = ContentScale.Crop,
                     modifier = Modifier

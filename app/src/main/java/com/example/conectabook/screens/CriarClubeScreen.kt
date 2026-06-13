@@ -26,7 +26,6 @@ import androidx.compose.material3.Text
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -42,7 +41,7 @@ import com.example.conectabook.components.AppHeader
 import com.example.conectabook.components.BottomBar
 import com.example.conectabook.components.FotoClubePicker
 import com.example.conectabook.data.api.model.ClubeListaUi
-import com.example.conectabook.data.api.repository.ClubeRepositoryFake
+import com.example.conectabook.data.api.repository.ClubeRepository
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -237,18 +236,18 @@ fun CriarClubeScreen(
                     Button(
                         onClick = {
 
-                            ClubeRepositoryFake.clubes.add(
-                                ClubeListaUi(
-                                    id = ClubeRepositoryFake.clubes.size +1,
-                                    nome = nome,
-                                    descricao = descricao,
-                                    imagem = R.drawable.clubecartas,
-                                    genero = genero,
-                                    totalMembros = 0,
-                                    participando = false,
-                                    admin = true
-                                )
-                            )
+//                            ClubeRepository.clubes.add(
+//                                ClubeListaUi(
+//                                    id = ClubeRepository.clubes.size +1,
+//                                    nome = nome,
+//                                    descricao = descricao,
+//                                    imagem = R.drawable.clubecartas,
+//                                    genero = genero,
+//                                    totalMembros = 0,
+//                                    participando = false,
+//                                    admin = true
+//                                )
+//                            )
 
                             Toast.makeText(
                                 context,

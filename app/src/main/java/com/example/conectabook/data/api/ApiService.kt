@@ -3,6 +3,7 @@ package com.example.conectabook.data.api
 
 import com.example.conectabook.data.api.model.CadastroRequest
 import com.example.conectabook.data.api.model.CadastroResponse
+import com.example.conectabook.data.api.model.ClubeApiResponse
 import com.example.conectabook.data.api.model.GeneroResponse
 import com.example.conectabook.data.api.model.GeneroUsuarioRequest
 import com.example.conectabook.data.api.model.GenerosApiResponse
@@ -35,5 +36,8 @@ interface ApiService {
     suspend fun salvarGeneroUsuario(
         @Body request: GeneroUsuarioRequest
     ): CadastroResponse
+
+    @GET("v1/conectaBook/clubes")
+    suspend fun listarClubes(): ClubeApiResponse
 
 }

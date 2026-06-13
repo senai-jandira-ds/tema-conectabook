@@ -157,9 +157,6 @@ fun LivrosScreen(
                         autor = livro.autor,
                         ano = livro.anoPublicacao,
                         onClick = {
-//                            navController.navigate(
-//                                "detalhes_livro/${Uri.encode(livro.id)}"
-//                            )
 
                             viewModel.selecionarLivro(livro)
 

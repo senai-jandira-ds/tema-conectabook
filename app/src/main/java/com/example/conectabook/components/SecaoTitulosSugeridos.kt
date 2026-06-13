@@ -24,8 +24,37 @@ fun SecaoTitulosSugeridos(
     modifier: Modifier = Modifier
 ) {
 
+    val colors = MaterialTheme.colorScheme
+
+    Column(modifier = Modifier
+        .fillMaxWidth()) {
+
+        Row(
+            modifier = Modifier
+                .fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween
+        ) {
+            Text(
+                text = "Titulos sugeridos",
+                fontSize = 20.sp,
+                fontWeight = FontWeight.Bold,
+                color = colors.onBackground
+            )
+
+            Text(
+                text = "Ver todos",
+                fontSize = 13.sp,
+                fontWeight = FontWeight.SemiBold,
+                color = colors.primary
+            )
+        }
+    }
+
+    Spacer(modifier = Modifier.height(12.dp))
+
     LazyRow(
         horizontalArrangement = Arrangement.spacedBy(12.dp)
+
     ) {
         items(livros) { livro ->
 
@@ -36,7 +65,6 @@ fun SecaoTitulosSugeridos(
                 ano = livro.anoPublicacao,
                 onClick = {}
             )
-
         }
     }
 }
