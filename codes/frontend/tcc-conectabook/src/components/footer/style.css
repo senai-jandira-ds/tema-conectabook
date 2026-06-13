@@ -1,0 +1,124 @@
+.footer-conteudo{
+    display: flex;
+    justify-content: space-between;
+
+    padding: 2rem;
+
+    background-color: var(--color-surface);
+
+    border-top: 1px solid var(--color-border);
+
+    color: var(--color-text);
+}
+
+.footer-conteudo span{
+    color: var(--color-primary);
+    font-weight: 600;
+}
+
+.footer-logo{
+    height: 5rem;
+}
+
+.conectabook-footer{
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+}
+
+.footer-left{
+    width: 20rem;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    text-align: center;
+
+    color: var(--color-text-light);
+}
+
+/* ==========================
+   NAVEGAÇÃO
+========================== */
+
+.navegacao{
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+}
+
+.institucional{
+    display: flex;
+    flex-direction: column;
+    gap: .5rem;
+}
+
+/* ==========================
+   REDES SOCIAIS
+========================== */
+
+.redesSociais{
+    width: 10rem;
+
+    display: flex;
+    flex-direction: column;
+    gap: .75rem;
+}
+
+.div-redeSocial{
+    display: flex;
+    gap: 1rem;
+}
+
+/* ==========================
+   ÍCONES
+========================== */
+
+.redeSocial{
+    height: 3rem;
+    width: 3rem;
+
+    display: grid;
+    place-content: center;
+
+    border: 1px solid var(--color-border);
+    border-radius: 50%;
+
+    background-color: var(--color-background);
+
+    transition: .3s ease;
+
+    cursor: pointer;
+}
+
+.redeSocial:hover{
+    background-color: var(--color-primary);
+
+    border-color: var(--color-primary);
+
+    transform: translateY(-2px);
+}
+
+.redeSocial:hover .icon{
+    filter: brightness(0) invert(1);
+}
+
+.icon{
+    height: 1.3rem;
+    width: auto;
+}
+
+/* ==========================
+   LINKS
+========================== */
+
+.link-footer{
+    color: var(--color-text);
+
+    transition: .2s ease;
+}
+
+.link-footer:hover{
+    color: var(--color-primary);
+}

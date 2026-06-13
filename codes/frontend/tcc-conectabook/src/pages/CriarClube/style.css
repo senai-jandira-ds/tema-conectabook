@@ -1,0 +1,129 @@
+/* Variáveis para consistência de cores e design */
+:root {
+    --primary-color: #4f46e5; /* Um azul/roxo moderno */
+    --bg-color: #f8fafc;
+    --card-bg: #ffffff;
+    --border-color: #e2e8f0;
+    --text-main: #334155;
+    --text-muted: #94a3b8;
+    --radius: 12px;
+}
+
+.container-criarClube {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background-color: var(--bg-color);
+    font-family: system-ui, -apple-system, sans-serif;
+    color: var(--text-main);
+}
+
+.main-criarClube {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+}
+
+/* O Card/Formulário Principal */
+.formulario-criarClube {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    max-width: 800px; /* Evita que fique gigante em telas muito grandes */
+    background-color: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    padding: 2.5rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.titulo-criarClube {
+    width: 100%;
+    margin-bottom: 2rem;
+    font-size: 1.75rem;
+    font-weight: 700;
+    text-align: center;
+}
+
+/* Container que divide em duas colunas (Esquerda e Direita) */
+.criarClube-card {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2.5rem; /* Espaço moderno entre as colunas */
+    width: 100%;
+}
+
+/* Colunas Proporcionais */
+.left-criarClube, 
+.right-criarClube {
+    flex: 1; /* Cada uma ocupa exatamente metade do espaço */
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem; /* Espaçamento vertical constante */
+}
+
+/* Inputs e Questionários globais */
+.questionario-criarClube, 
+.comboBox {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 100%;
+}
+
+/* Reset de Inputs para ficarem bonitos */
+.right-criarClube input,
+.input-criarClube {
+    width: 100%; /* Ocupa 100% do container pai, sem vazar */
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: all 0.2s;
+}
+
+.right-criarClube input:focus,
+.input-criarClube:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.15);
+}
+
+/* Seção de Upload Customizada */
+.upload-box input {
+    display: none;
+}
+
+.upload-label {
+    width: 100%;
+    height: 180px;
+    border: 2px dashed var(--text-muted);
+    border-radius: var(--radius);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2.5rem;
+    font-weight: 300;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: all 0.2s ease;
+    background-color: #f8fafc;
+    overflow: hidden;
+}
+
+.upload-label:hover {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+    background-color: rgba(79, 70, 229, 0.02);
+}
+
+.preview-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}

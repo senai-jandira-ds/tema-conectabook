@@ -1,0 +1,65 @@
+.mainClube{
+    display: flex;
+    justify-content: center;
+    padding: 1rem;
+    gap: 7rem;
+}
+
+.rightClube{
+    width: 70vw;
+}
+
+.titulo{
+    margin: 1rem;
+    padding-left: 3rem;
+}
+
+.leftClube{
+    display: flex;
+    flex-direction: column;
+    height: 50rem;
+    width: 20vw;
+    gap: 1rem;
+}
+
+.filtroClubes{
+    border: 2px solid #f1f5f9;
+    border-radius: 10px;
+    padding: 10px;
+}
+
+.meuClube{
+    display: flex;
+    justify-content: space-between;
+    padding: 0.5rem;
+    font-weight: 450;
+    margin: 1rem;
+    border-radius: 8px;
+}
+
+.meuClube:hover{
+    transition: 0.5s;
+    background-color: #e8f1ff;
+    color: #2d7ff9;
+    font-weight: 600;
+}
+
+.ativo{
+    background-color: #e8f1ff;
+    color: #2d7ff9;
+    font-weight: 600;
+}
+
+.dicasLayout{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+    border: 2px solid #f1f5f9;
+    border-radius: 10px;
+}
+
+.dica{
+    display: flex;
+    gap: 1rem;
+}

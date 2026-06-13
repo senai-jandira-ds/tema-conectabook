@@ -1,0 +1,90 @@
+.mainAvaliacao{
+    display: grid;
+    place-content: center;
+}
+
+.conteudoAvaliacao{
+    display: flex;
+    margin-top: 3rem;
+    gap: 10rem;
+}
+
+.livroTitulo{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 40vw;
+}
+
+.user{
+    border: 1px solid black;
+    margin: 0.5rem 0px;
+    border-radius: 8px;
+    width: 40vw;
+    padding: 1rem;
+    gap: 1rem;
+}
+
+.userPost{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.users{
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.infoLivro{
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+}
+
+.infosLivro{
+    display: flex;
+    gap: 1rem;
+    flex-direction: column;
+}
+
+.user img{
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+
+
+.avaliacao textarea {
+    width: 100%;
+    min-height: 140px;
+    padding: 12px 16px;
+    border: 0.5px solid var(--color-border-secondary, #ccc);
+    border-radius: 8px;
+    font-size: 15px;
+    font-family: inherit;
+    line-height: 1.6;
+    resize: vertical;
+    background: var(--color-background-primary, #fff);
+    color: var(--color-text-primary, #111);
+    transition: border-color 0.2s, box-shadow 0.2s;
+    outline: none;
+    box-sizing: border-box;
+    margin-top: 12px;
+}
+
+.mainAvaliacao textarea::placeholder {
+    color: var(--color-text-tertiary, #aaa);
+}
+
+.mainAvaliacao textarea:hover {
+    border-color: var(--color-border-primary, #999);
+}
+
+.mainAvaliacao textarea:focus {
+    border-color: #7F77DD;
+    box-shadow: 0 0 0 3px rgba(127, 119, 221, 0.15);
+}

@@ -1,0 +1,142 @@
+.leftMain{
+    width: 20vw;
+    height: 50rem;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #dcdcdc;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    border-radius: 20px;
+    align-items: center;
+}
+
+
+.infoClubeText{
+    width: 100%;
+}
+
+.mainOrganizacao{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.rightMain{
+    width: 75%;
+    height: 50.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.mainEditarClube{
+    width: 100%;
+    padding: 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.rightUpMain{
+    display: flex;
+    justify-content: space-between;
+    padding: 2rem;
+    border: 1px solid #dcdcdc;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    border-radius: 20px;
+    gap: 1rem;
+}
+
+.rightUpMain input{
+    width: 30vw;
+}
+
+.select{
+    min-width: 30vw;
+}
+
+.input{
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.RightMeioMain{
+    height: 41rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2rem;
+    border: 1px solid #dcdcdc;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    border-radius: 20px;
+    padding-top: 1rem;
+}
+
+.RightMeioMain textarea{
+    width: 63vw;
+    border-radius: 8px;
+    border: 1px solid #dcdcdc;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    height: 10rem;
+    resize: none;
+    font-size: 1rem;
+    margin: 1rem;
+}
+
+.leftUpMain img{
+    height: 15vw;
+    width: 15vw;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
+.inputFile{
+    display: none;
+    width: 200px;
+}
+
+.leftUpMain{
+    height: 42rem;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.leftDownMain{
+    display: flex;
+    flex-direction: column;
+    margin: 2rem;
+    gap: 2rem;
+    height: 45%;
+    width: 100%;
+}
+
+
+.ladosMain{
+    display: flex;
+    gap: 3rem;
+}
+
+.infoClube{
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    width: 100%;
+    margin: 1rem;
+}
+
+.infoClubeText{
+    gap: 1rem;
+}
+
+.downMain{
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid #dcdcdc;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+    border-radius: 20px;
+    width: 90%;
+    padding: 1rem;
+    margin: 2rem;
+}

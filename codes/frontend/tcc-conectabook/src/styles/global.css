@@ -1,0 +1,106 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    /* Cores */
+    --color-primary: #7B68EE;
+    --color-primary-dark: #8078AD;
+
+    --color-background: #F4F2FB;
+    --color-surface: #FFFFFF;
+
+    --color-text: #615E6E;
+    --color-text-light: #989476;
+
+    --color-border: #D8D4E8;
+
+    --color-accent: #EDDC68;
+    
+    /* Fonte */
+    --font-main: "Segoe UI", sans-serif;
+
+    /* Tipografia */
+    --font-size-xs: 0.75rem;    /* 12px */
+    --font-size-sm: 0.875rem;   /* 14px */
+    --font-size-md: 1rem;       /* 16px */
+    --font-size-lg: 1.25rem;    /* 20px */
+    --font-size-xl: 1.5rem;     /* 24px */
+    --font-size-2xl: 2rem;      /* 32px */
+    --font-size-3xl: 2.5rem;    /* 40px */
+
+    /* Pesos */
+    --font-weight-regular: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+
+    /* Espaçamento de linha */
+    --line-height-sm: 1.4;
+    --line-height-md: 1.6;
+    --line-height-lg: 1.8;
+}
+
+
+body {
+    width: 100%;
+    min-height: 100vh;
+
+    font-family: var(--font-main);
+    font-size: var(--font-size-md);
+    line-height: var(--line-height-md);
+
+    color: var(--color-text);
+
+    background: linear-gradient(
+        to bottom,
+        lavender,
+        var(--color-background)
+    );
+}
+
+h1{
+    font-size: var(--font-size-3xl);
+    font-weight: var(--font-weight-bold);
+}
+
+h2{
+    font-size: var(--font-size-2xl);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text);
+}
+
+h3{
+    font-size: var(--font-size-xl);
+    font-weight: var(--font-weight-semibold);
+    color: var(--color-text);
+}
+
+h4{
+    font-size: var(--font-size-lg);
+    font-weight: var(--font-weight-medium);
+    color: var(--color-text);
+}
+
+p{
+    font-size: var(--font-size-md);
+}
+
+header {
+    width: 100%;
+    height: 6rem;
+    background-color: var(--color-primary);
+}
+
+main {
+    min-height: calc(100dvh - 18rem);
+    padding: var(--spacing-lg);
+}
+
+footer {
+    width: 100%;
+    height: 12rem;
+    background-color: lavender;
+}

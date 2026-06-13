@@ -1,0 +1,62 @@
+.app {
+    margin: 0 auto;
+    padding: 1rem;
+    font-family: sans-serif;
+    min-height: 78vh;
+}
+
+.search-bar {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 1rem;
+}
+
+.search-bar input {
+    flex: 1;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+}
+
+.cafeteriaDiv{
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 2rem;
+}
+
+.tagCafeteria{
+    color: black;
+}
+
+.status {
+    margin: 8px 0;
+    color: #555;
+}
+
+.status.erro {
+    color: #c0392b;
+}
+
+.lista {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+    gap: 12px;
+    margin-top: 1rem;
+}
+
+.cafe-card {
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 12px;
+}
+
+.cafe-card h3 {
+    margin: 0 0 8px;
+    font-size: 15px;
+}
+
+.cafe-card p {
+    margin: 4px 0;
+    font-size: 13px;
+    color: #555;
+}

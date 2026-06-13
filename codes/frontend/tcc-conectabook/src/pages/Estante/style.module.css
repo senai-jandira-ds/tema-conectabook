@@ -1,0 +1,12 @@
+.livros{
+    display: flex;
+    gap: 2rem;
+
+}
+
+.mainLivros{
+    margin: 1rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+}

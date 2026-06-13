@@ -1,0 +1,36 @@
+
+.input-group {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  .input-group label {
+    display: block;
+    font-weight: 500;
+    color: #333;
+  }
+  
+  .input-group input {
+    width: 100%;
+    padding: 12px 16px;
+    font-size: 16px;
+    border: 2px solid #e0e0e0;
+    border-radius: 8px;
+    outline: none; 
+    transition: all 0.3s ease;
+  }
+  
+  .input-group input:focus {
+    border-color: #4a90e2; 
+    background-color: #fff;
+    box-shadow: 0 0 8px rgba(74, 144, 226, 0.2); 
+  }
+  
+  .input-group input::placeholder {
+    color: #aaa;
+  }
+  
+  .label{
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }

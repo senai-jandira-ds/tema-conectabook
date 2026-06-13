@@ -1,0 +1,130 @@
+.up-perfil {
+    display: flex;
+    justify-content: space-between;
+    margin: 2rem;
+    padding-inline: 2rem;
+}
+
+.left-perfil {
+    width: 30rem;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    padding: 2rem;
+    border: 1px solid #eeecec;
+    border-radius: 8px;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
+    height: 49rem;
+    justify-content: space-between;
+}
+
+.img-user {
+    border-radius: 50%;
+    object-fit: cover;
+    height: 10rem;
+    width: 10rem;
+}
+
+.user-icon{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+}
+
+.stats-livro{
+    font-weight: 700;
+    font-size: 1.5rem;
+}
+
+.excluir-conta{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.button-excluir{
+    background-color: #fafafa;
+    color: red;
+    border: 1px solid red;
+}
+
+.button-excluir:hover{
+    background-color: red;
+    color: #fafafa;
+    border: 1px solid #fafafa;
+}
+
+.info-perfil {
+    display: flex;
+    align-items: center;
+    width: 20rem;
+    gap: 1.5rem;
+}
+
+.informacoes-perfil {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.icone-perfil {
+    height: 2rem;
+    width: auto;
+}
+
+.right-perfil {
+    width: 60vw;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #eeecec;
+    border-radius: 8px;
+    box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.1);
+    height: 49rem;
+}
+
+.inputs-perfil{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 1rem;
+    padding: 0px 3rem;
+
+}
+
+.apresentacao-perfil{
+    padding: 2rem;
+}
+
+.input-perfil{
+    width: 35rem;
+}
+
+.down-perfil {
+    display: flex;
+    justify-content: center;
+    padding-inline: 3rem;
+    gap: 2rem;
+    min-height: 66vh;
+    padding-bottom: 3rem;
+}
+
+.seguranca{
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    margin: 1rem;
+    gap: 1.5rem;
+    border: 1px solid #242424;
+    border-radius: 8px;
+    background-color: #e8f1ff;
+}
+
+.seguranca h4{
+    color: #1976d2;
+}
+
+.seguranca p{
+    color: #242424;
+    font-size: 0.8rem;
+}
+

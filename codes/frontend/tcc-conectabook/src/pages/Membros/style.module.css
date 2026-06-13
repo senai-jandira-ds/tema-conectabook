@@ -1,0 +1,53 @@
+.mainMembro{
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    justify-content: start;
+}
+
+.membro img{
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+    width: 50px;
+}
+
+.buttons{
+    width: 100%;
+    display: flex;
+    gap: 1rem;
+    margin: 1rem;
+}
+
+.membrosButton{
+    display: flex;
+    justify-content: space-between;
+}
+
+.titulo{
+    margin: 1rem;
+}
+
+.membros{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    padding: 1rem;
+}
+
+.membro{
+    padding: 1rem;
+    border: 1px solid black;
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 25vw;
+}
+
+.container{
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+

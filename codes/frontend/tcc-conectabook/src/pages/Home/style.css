@@ -1,0 +1,266 @@
+/* RESET */
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+}
+
+/* HEADER */
+.headerHome {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-inline: 64px;
+}
+
+.entrar {
+    padding: 10px;
+}
+
+.logo {
+    height: 100px;
+}
+
+/* HERO / MAIN */
+.home-main {
+    margin: 0;
+    padding: 32px;
+    display: flex;
+    width: 100%;
+    align-items: center;
+    justify-content: space-around;
+    background-color: #0A0A1A;
+    color: #fafafa;
+}
+
+.info {
+    height: 500px;
+    width: 600px;
+    display: flex;
+    flex-direction: column;
+    gap: 64px;
+}
+
+.textos {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.image {
+    height: 800px;
+}
+
+.buttons {
+    display: flex;
+    gap: 16px;
+}
+
+/* ===================== */
+/* CLUBES */
+/* ===================== */
+
+.clubesSection {
+    padding-inline: 64px;
+    padding: 6rem 64px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.clubes-home {
+    margin-top: 32px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    max-width: 100%;
+}
+
+.clubeText {
+    display: flex;
+    justify-content: space-between;
+}
+
+.clube {
+    display: flex;
+    flex-direction: column;
+    border-radius: 8px;
+    text-align: center;
+    box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.3);
+    width: 20%;
+}
+
+.clube img {
+    height: auto;
+    max-width: 100%;
+    border-radius: 8px;
+}
+
+/* ===================== */
+/* OPINIÕES */
+/* ===================== */
+
+.feedbackSection {
+    width: 100%;
+    padding: 6rem 64px;
+    padding-inline: 64px;
+    background-color: #F5F5F5;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.opinioes {
+    margin-top: 32px;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.opiniao {
+    display: flex;
+    width: 25rem;
+    padding: 16px;
+    margin: 8px;
+    background-color: white;
+    box-shadow: 2px 2px 2px 2px rgba(0, 0, 0, 0.3);
+    border-radius: 8px;
+    font-size: 0.95rem;
+}
+
+.opiniao img {
+    width: 60px;
+    height: 60px;
+    border-radius: 100%;
+    object-fit: cover;
+}
+
+.feedbackLivro {
+    font-size: 14px;
+    color: #CDCDCD;
+}
+
+.leitorLivro {
+    display: flex;
+    align-items: center;
+    padding-bottom: 8px;
+    gap: 8px;
+}
+
+.infoPessoa {
+    padding-inline-start: 8px;
+}
+
+/* ===================== */
+/* LIVROS */
+/* ===================== */
+
+.bookSection {
+    padding-inline: 32px;
+    padding: 6rem 64px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.livros {
+    margin-top: 32px;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+
+.livro {
+    width: 20%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.livro img {
+    width: 90%;
+    height: auto;
+    border-radius: 8px;
+}
+
+/* ===================== */
+/* EVENTOS */
+/* ===================== */
+
+.eventSection {
+    padding-inline: 64px;
+    padding: 6rem 64px;
+    display: flex;
+    flex-direction: column;
+    background-color: #F5F5F5;
+    padding-top: 16px;
+    gap: 16px;
+    justify-content: center;
+}
+
+.eventos {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+}
+
+.evento {
+    width: 30%;
+}
+
+.evento img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+/* ===================== */
+/* CAFETERIA */
+/* ===================== */
+
+.cafeteriaSection {
+    padding-inline: 64px;
+    padding: 6rem 64px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-top: 16px;
+    gap: 16px;
+    width: 100%;
+}
+
+.cafeterias {
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.cafeteria {
+    width: 30%;
+}
+
+.cafeteria img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+/* FOOTER */
+
+footer {
+    background-color: #1976d2;
+    height: 100px;
+    color: #fafafa;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}

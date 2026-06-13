@@ -1,0 +1,94 @@
+
+.listLivros{
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+}
+
+.button{
+    width: 100%;
+    margin-top: 1rem;
+}
+
+.livros{
+    width: 90%;
+}
+
+.livro{
+    display: flex;
+    flex-direction: column;
+    width: 15vw;
+    margin: 1rem;
+    border: 1px solid black;
+    border-radius: 8px;
+    padding: 1rem;
+}
+
+.bodyLivro{
+    padding: 0px 3vw;
+}
+
+.livro img{
+    height: auto;
+    width: 200px;
+    object-fit: cover;
+}
+
+
+.buttons{
+    width: 400px;
+    gap: 0.5rem;
+    display: flex;
+    flex-direction: column;
+}
+
+.avaliacaoButtons{
+    display: flex;
+    justify-content: space-between;
+}
+
+.titulosSemelhantesText{
+    display: flex;
+    justify-content: space-between;
+}
+
+.titulosSemelhantes{
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 4rem;
+}
+
+.sobreLivro{
+    display: flex;
+    flex-wrap: wrap;
+    width: 50vw;
+    white-space: pre-line;
+}
+
+.tituloSemelhante{
+    width: 150px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.tituloSemelhante img{
+    width: 100%;
+    object-fit: cover;
+}
+
+h2{
+    color: #4D8ED0;
+}
+
+.infosLivro{
+    display: flex;
+    gap: 1rem;
+}
+
+.infoLivro{
+    border: 1px solid gray;
+    border-radius: 4px;
+    width: auto;
+    padding: 4px 1rem;
+}

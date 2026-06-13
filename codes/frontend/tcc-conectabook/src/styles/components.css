@@ -1,0 +1,12 @@
+.btn-primary{
+    background: var(--primary);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: .3s;
+}
+
+.btn-primary:hover{
+    background: var(--primary-hover);
+}

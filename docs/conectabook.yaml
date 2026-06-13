@@ -1,0 +1,239 @@
+openapi: 3.0.3
+info:
+  title: API ConectaBook
+  description: |-
+    API especializada para a rede social literária ConectaBook. 
+    Permite a gestão completa de usuários, estantes, clubes, avaliações e interações.
+  contact:
+    email: conectabook@gmail.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:8080
+    description: Servidor de Desenvolvimento
+
+  - url: https://conectabook-api-ulz3.onrender.com
+    description: Servidor Final
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+
+  parameters:
+    acceptLanguage:
+      name: Accept-Language
+      in: header
+      description: Idioma para mensagens de erro.
+      required: false
+      schema:
+        type: string
+        default: pt-BR
+
+  schemas:
+    # --- Especificações dos dados---
+    Notificacao:
+      type: object
+      properties:
+        idNotificacao: { type: integer }
+        titulo: { type: string, maxLength: 50 }
+        mensagem: { type: string, maxLength: 100 }
+        dataEnvio: { type: string, format: date-time }
+        dataAcesso: { type: string, format: date-time, nullable: true }
+        idUsuario: { type: integer }
+    
+    Usuario:
+      type: object
+      properties:
+        idUsuario: { type: integer }
+        nome: { type: string, maxLength: 100 }
+        nomeUsuario: { type: string, maxLength: 100 }
+        email: { type: string, maxLength: 100 }
+        senha: { type: string, maxLength: 100 }
+        dataNascimento: { type: string, maxLength: 10 }
+        fotoPerfil: { type: string }
+
+    Genero:
+      type: object
+      properties:
+        idGenero: { type: integer }
+        nome: { type: string, maxLength: 30 }
+        descricao: { type: string, maxLength: 100 }
+
+    Livro:
+      type: object
+      properties:
+        idLivro: { type: integer }
+        isbn: { type: string, maxLength: 20 }
+        titulo: { type: string, maxLength: 50 }
+        autor: { type: string, maxLength: 50 }
+        descricao: { type: string, maxLength: 300 }
+
+    Clube:
+      type: object
+      properties:
+        idClube: { type: integer }
+        nome: { type: string, maxLength: 100 }
+        sobre: { type: string }
+        regras: { type: string }
+        foto: { type: string }
+        idMembros: { type: integer }
+        idGenero: { type: integer }
+
+    Cafeteria:
+      type: object
+      properties:
+        idCafeteria: { type: integer }
+        nome: { type: string, maxLength: 100 }
+        endereco: { type: string }
+        horarioFuncionamento: { type: string, maxLength: 100 }
+        redeSocial: { type: string }
+        foto: { type: string }
+
+    Avaliacao:
+      type: object
+      properties:
+        idAvaliacao: { type: integer }
+        estrelas: { type: integer }
+        mensagem: { type: string }
+        idUsuario: { type: integer }
+        dataAvaliacao: { type: string, format: date-time }
+
+    # Erro Padrão
+    Error:
+      type: object
+      properties:
+        code: { type: string }
+        message: { type: string }
+
+  responses:
+    NotFound:
+      description: Recurso não encontrado.
+      content:
+        application/json:
+          schema: { $ref: '#/components/schemas/Error' }
+
+# ---  ENDPOINTS  ---
+paths:
+  /v1/conectabook/usuarios:
+    get:
+      tags: [Usuário]
+      summary: Lista usuários
+      responses:
+        '200':
+          description: Sucesso
+          content:
+            application/json:
+              schema: { type: array, items: { $ref: '#/components/schemas/Usuario' } }
+    post:
+      tags: [Usuário]
+      summary: Cria usuário
+      requestBody:
+        content:
+          application/json:
+            schema: { $ref: '#/components/schemas/Usuario' }
+      responses:
+        '201': { description: Criado }
+
+  /v1/conectabook/usuario/{id}:
+    parameters: [{ name: id, in: path, required: true, schema: { type: integer } }]
+    get:
+      tags: [Usuário]
+      summary: Busca usuário
+      responses: { '200': { description: OK }, '404': { $ref: '#/components/responses/NotFound' } }
+    put:
+      tags: [Usuário]
+      summary: Atualiza usuário
+      requestBody:
+        content: { application/json: { schema: { $ref: '#/components/schemas/Usuario' } } }
+      responses: { '200': { description: Atualizado } }
+    delete:
+      tags: [Usuário]
+      summary: Deleta usuário
+      responses: { '204': { description: Deletado } }
+
+  /v1/conectabook/livros:
+    get:
+      tags: [Livro]
+      summary: Lista livros
+      responses: { '200': { description: OK } }
+    post:
+      tags: [Livro]
+      summary: Cria livro
+      requestBody:
+        content: { application/json: { schema: { $ref: '#/components/schemas/Livro' } } }
+      responses: { '201': { description: Criado } }
+
+  /v1/conectabook/livro/{id}:
+    parameters: [{ name: id, in: path, required: true, schema: { type: integer } }]
+    get: { tags: [Livro], responses: { '200': { description: OK } } }
+    put:
+      tags: [Livro]
+      requestBody:
+        content: { application/json: { schema: { $ref: '#/components/schemas/Livro' } } }
+      responses: { '200': { description: OK } }
+    delete: { tags: [Livro], responses: { '204': { description: OK } } }
+
+  /v1/conectabook/notificacao:
+    get: { tags: [Notificação], responses: { '200': { description: OK } } }
+    post:
+      tags: [Notificação]
+      requestBody:
+        content: { application/json: { schema: { $ref: '#/components/schemas/Notificacao' } } }
+      responses: { '201': { description: OK } }
+
+  /v1/conectabook/notificacao/{id}:
+    parameters: [{ name: id, in: path, required: true, schema: { type: integer } }]
+    get: { tags: [Notificação], responses: { '200': { description: OK } } }
+    put: { tags: [Notificação], responses: { '200': { description: OK } } }
+    delete: { tags: [Notificação], responses: { '204': { description: OK } } }
+
+  /v1/conectabook/clube:
+    get: { tags: [Clube], responses: { '200': { description: OK } } }
+    post:
+      tags: [Clube]
+      requestBody:
+        content: { application/json: { schema: { $ref: '#/components/schemas/Clube' } } }
+      responses: { '201': { description: OK } }
+
+  /v1/conectabook/clube/{id}:
+    parameters: [{ name: id, in: path, required: true, schema: { type: integer } }]
+    get: { tags: [Clube], responses: { '200': { description: OK } } }
+    put: { tags: [Clube], responses: { '200': { description: OK } } }
+    delete: { tags: [Clube], responses: { '204': { description: OK } } }
+
+  /v1/conectabook/cafeteria:
+    get: { tags: [Cafeteria], responses: { '200': { description: OK } } }
+    post:
+      tags: [Cafeteria]
+      requestBody:
+        content: { application/json: { schema: { $ref: '#/components/schemas/Cafeteria' } } }
+      responses: { '201': { description: OK } }
+
+  /v1/conectabook/cafeteria/{id}:
+    parameters: [{ name: id, in: path, required: true, schema: { type: integer } }]
+    get: { tags: [Cafeteria], responses: { '200': { description: OK } } }
+    put: { tags: [Cafeteria], responses: { '200': { description: OK } } }
+    delete: { tags: [Cafeteria], responses: { '204': { description: OK } } }
+
+  /v1/conectabook/avaliacao:
+    get: { tags: [Avaliação], responses: { '200': { description: OK } } }
+    post:
+      tags: [Avaliação]
+      requestBody:
+        content: { application/json: { schema: { $ref: '#/components/schemas/Avaliacao' } } }
+      responses: { '201': { description: OK } }
+
+  /v1/conectabook/avaliacao/{id}:
+    parameters: [{ name: id, in: path, required: true, schema: { type: integer } }]
+    get: { tags: [Avaliação], responses: { '200': { description: OK } } }
+    put: { tags: [Avaliação], responses: { '200': { description: OK } } }
+    delete: { tags: [Avaliação], responses: { '204': { description: OK } } }
+
+security:
+  - bearerAuth: []

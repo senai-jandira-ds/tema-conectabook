@@ -1,0 +1,108 @@
+/* ===== CONTAINER PRINCIPAL ===== */
+
+.main-clube {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    padding: 2rem;
+    padding-bottom: 3rem;
+    align-items: flex-start;
+}
+
+/* ===== SIDEBAR ===== */
+
+.left-clube {
+    width: 100%;
+    max-width: 25rem;
+    min-height: 35rem;
+
+    display: flex;
+    flex-direction: column;
+    gap: 3rem;
+
+    margin: 1.5rem;
+    padding: 2rem;
+
+    background-color: var(--color-surface);
+
+    border: 1px solid var(--color-border);
+    border-radius: 12px;
+
+    box-shadow: 0 4px 12px rgba(97, 94, 110, 0.1);
+}
+
+/* ===== TITULO ===== */
+
+.titulo-acess {
+    display: flex;
+    align-items: center;
+    gap: .5rem;
+
+    color: var(--color-text);
+}
+
+/* ===== LISTA CLUBES ===== */
+
+.meus-clubes {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* ===== CARD CLUBE ===== */
+
+.clube-acess {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    padding: 1rem;
+
+    background-color: var(--color-background);
+
+    border: 1px solid var(--color-border);
+    border-radius: 10px;
+
+    transition: .2s ease;
+    cursor: pointer;
+}
+
+.clube-acess:hover {
+    transform: translateY(-2px);
+
+    border-color: var(--color-primary);
+
+    box-shadow: 0 4px 10px rgba(123, 104, 238, 0.15);
+}
+
+.clubePage {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.clubePage h3 {
+    color: var(--color-text);
+}
+
+.clubePage p {
+    color: var(--color-text-light);
+}
+
+/* ===== IMAGEM ===== */
+
+.clube-acess img {
+    width: 70px;
+    height: 70px;
+
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* ===== TEXTO ===== */
+
+.clube-acess-text {
+    display: flex;
+    flex-direction: column;
+    gap: .3rem;
+}
