@@ -20,6 +20,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImage
 import com.example.conectabook.R
 
 @Composable
@@ -39,8 +40,8 @@ fun SecaoHeroLivro(
             modifier = Modifier.fillMaxWidth(),
             verticalAlignment = Alignment.Top
         ) {
-            Image(
-                painter = painterResource(id = R.drawable.georgeorwell),
+            AsyncImage(
+                model = capaUrl,
                 contentDescription = "Capa do livro",
                 contentScale = ContentScale.Crop,
                 modifier = Modifier
@@ -50,6 +51,7 @@ fun SecaoHeroLivro(
                         elevation = 12.dp,
                         shape = RoundedCornerShape(16.dp)
                     )
+                    .clip(RoundedCornerShape(16.dp))
             )
 
             Spacer(modifier = Modifier.width(16.dp))
@@ -58,14 +60,14 @@ fun SecaoHeroLivro(
                 modifier = Modifier.weight(1f)
             ) {
                 Text(
-                    text = "1984",
+                    text = titulo,
                     fontSize = 32.sp,
                     fontWeight = FontWeight.Bold,
                     color = colors.onBackground
                 )
 
                 Text(
-                    text = "George Orwell",
+                    text = autor,
                     fontSize = 16.sp,
                     fontWeight = FontWeight.Medium,
                     color = colors.onSurfaceVariant
