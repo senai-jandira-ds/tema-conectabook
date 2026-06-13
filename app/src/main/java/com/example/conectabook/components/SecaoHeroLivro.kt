@@ -23,7 +23,12 @@ import androidx.compose.ui.unit.sp
 import com.example.conectabook.R
 
 @Composable
-fun SecaoHeroLivro(modifier: Modifier = Modifier) {
+fun SecaoHeroLivro(
+    titulo: String,
+    autor: String,
+    capaUrl: String?,
+    ano: Int?,
+    modifier: Modifier = Modifier) {
 
     val colors = MaterialTheme.colorScheme
 

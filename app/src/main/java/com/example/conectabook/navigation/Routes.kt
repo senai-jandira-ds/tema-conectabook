@@ -6,7 +6,10 @@ object Routes {
     const val LOGIN = "login"
     const val HOME = "home"
     const val LIVROS = "livros"
-    const val DETALHES_LIVRO = "detalhes_livro"
+    const val DETALHES_LIVRO = "detalhes_livro/{id}"
+
+    fun detalhesLivroRoute(id: String) =
+        "detalhes_livro/$id"
 
     const val CLUBES = "clubes"
 

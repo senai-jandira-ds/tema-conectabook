@@ -1,9 +1,12 @@
 package com.example.conectabook.navigation
 
+import android.net.Uri
 import androidx.compose.runtime.Composable
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.example.conectabook.screens.CadastroScreen
 import com.example.conectabook.screens.ClubeScreen
 import com.example.conectabook.screens.CriarClubeScreen
@@ -56,8 +59,18 @@ fun AppNavigation() {
             LivrosScreen(navController = navController)
         }
 
-        composable(Routes.DETALHES_LIVRO) {
-            DetalhesLivroScreen(navController = navController)
+        composable(
+            route = "detalhes_livro/{livroId}"
+        ) { backStackEntry ->
+
+            val livroId = Uri.decode(
+                backStackEntry.arguments?.getString("livroId") ?: ""
+            )
+
+            DetalhesLivroScreen(
+                navController = navController,
+                livroId = livroId
+            )
         }
 
         composable(Routes.PERFIL) {

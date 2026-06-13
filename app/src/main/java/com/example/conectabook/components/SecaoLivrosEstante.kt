@@ -16,19 +16,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-
-data class LivroEstanteUi(
-    val capa: Int,
-    val titulo: String,
-    val autor: String,
-    val nota: String
-)
+import com.example.conectabook.data.api.model.Livro
 
 @Composable
 fun SecaoLivrosEstante(
     titulo: String,
-    livros: List<LivroEstanteUi>,
-    onLivroClick: () -> Unit = {},
+    livros: List<Livro>,
     modifier: Modifier = Modifier
 ) {
     val colors = MaterialTheme.colorScheme
@@ -57,16 +50,20 @@ fun SecaoLivrosEstante(
 
         Spacer(modifier = Modifier.height(12.dp))
 
+        LazyRow(
+            horizontalArrangement = Arrangement.spacedBy(14.dp)
+        ) {
+
+            items(livros) { livro ->
+
+                LivroCard(
+                    capaUrl = livro.capaUrl,
+                    titulo = livro.titulo,
+                    autor = livro.autor,
+                    ano = livro.anoPublicacao,
+                    onClick = {}
+                )
             }
         }
-//        LazyRow(
-////           /
-//            horizontalArrangement = Arrangement.spacedBy(14.dp)
-//        ) {
-//            items(livros) { livro ->
-//
-//                LivroCard(
-//                    capaUrl = livro.
-//                )
-//    }
-//}
+    }
+}

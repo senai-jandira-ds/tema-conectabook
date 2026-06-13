@@ -1,5 +1,6 @@
 package com.example.conectabook.screens
 
+import android.net.Uri
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
@@ -25,6 +26,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.conectabook.components.LivroCard
 import com.example.conectabook.components.SecaoResumoEstante
+import com.example.conectabook.navigation.Routes
 import com.example.conectabook.viewmodel.LivroViewModel
 
 @Composable
@@ -38,6 +40,18 @@ fun LivrosScreen(
     var busca by remember { mutableStateOf("") }
 
     val livros by viewModel.livros.collectAsState()
+
+
+    val livrosLendo = listOf(
+        "1984",
+        "O Hobbit"
+    )
+
+    val livrosQueroLer = listOf(
+        "Duna",
+        "Neuromancer",
+        "Percy Jackson"
+    )
 
 
     Scaffold(
@@ -83,16 +97,77 @@ fun LivrosScreen(
                 SecaoResumoEstante()
             }
 
-            items(livros) { livro ->
+//            items(livros) { livro ->
+//
+//                LivroCard(
+//                    capaUrl = livro.capaUrl,
+//                    titulo = livro.titulo,
+//                    autor = livro.autor,
+//                    ano = livro.anoPublicacao,
+//                    onClick = {}
+//                )
+//
+//            }
 
-                LivroCard(
-                    capaUrl = livro.capaUrl,
-                    titulo = livro.titulo,
-                    autor = livro.autor,
-                    ano = livro.anoPublicacao,
-                    onClick = {}
-                )
+            if (busca.isBlank()) {
 
+                item {
+
+                    Text(
+                        text = "Lendo",
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.SemiBold
+                    )
+                }
+
+                items(livrosLendo) { livro ->
+
+                    Text(
+                        text = livro,
+                        fontSize = 16.sp,
+                        color = colors.onBackground
+                    )
+                }
+
+                item {
+
+                    Text(
+                        text = "Quero Ler",
+                        fontSize = 18.sp,
+                        fontWeight = FontWeight.SemiBold
+                    )
+                }
+
+                items(livrosQueroLer) { livro ->
+
+                    Text(
+                        text = livro,
+                        fontSize = 16.sp,
+                        color = colors.onBackground
+                    )
+                }
+            }
+            else {
+
+                items(livros) { livro ->
+
+                    LivroCard(
+                        capaUrl = livro.capaUrl,
+                        titulo = livro.titulo,
+                        autor = livro.autor,
+                        ano = livro.anoPublicacao,
+                        onClick = {
+//                            navController.navigate(
+//                                "detalhes_livro/${Uri.encode(livro.id)}"
+//                            )
+
+                            viewModel.selecionarLivro(livro)
+
+                            navController.navigate("detalhes_livro/${Uri.encode(livro.id)}")
+
+                        }
+                    )
+                }
             }
         }
     }
