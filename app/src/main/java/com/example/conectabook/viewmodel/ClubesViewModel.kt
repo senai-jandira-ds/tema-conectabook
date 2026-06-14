@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import kotlin.collections.emptyList
 
-class ClubeViewModel : ViewModel() {
+class ClubesViewModel : ViewModel() {
 
     private val repository = ClubeRepository()
 
@@ -28,12 +28,17 @@ class ClubeViewModel : ViewModel() {
                 val resultado = repository.listarClubes()
 
                 println("CLUBES RECEBIDOS = ${resultado.size}")
-ss
                 _clubes.value = resultado
 
             } catch (e: Exception) {
                 e.printStackTrace()
             }
+        }
+    }
+
+    fun buscarPorId(id: Int): ClubeResponse? {
+        return clubes.value.find {
+            it.id_clube == id
         }
     }
 }

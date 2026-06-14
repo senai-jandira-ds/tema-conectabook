@@ -11,6 +11,7 @@ import com.example.conectabook.screens.CadastroScreen
 import com.example.conectabook.screens.ClubeScreen
 import com.example.conectabook.screens.CriarClubeScreen
 import com.example.conectabook.screens.DetalhesLivroScreen
+import com.example.conectabook.screens.FeedClubeScreen
 import com.example.conectabook.screens.HomeScreen
 import com.example.conectabook.screens.LivrosScreen
 import com.example.conectabook.screens.LoginScreen
@@ -79,6 +80,23 @@ fun AppNavigation() {
 
         composable(Routes.CLUBES) {
             ClubeScreen(navController = navController)
+        }
+
+        composable(
+            route = "feed_clube/{clubeId}",
+            arguments = listOf(
+                navArgument("clubeId") {
+                    type = NavType.IntType
+                }
+            )
+        ) { backStackEntry ->
+
+            val clubeId =
+                backStackEntry.arguments?.getInt("clubeId") ?: 0
+
+            FeedClubeScreen(
+                clubeId = clubeId
+            )
         }
 
         composable(Routes.CRIAR_CLUBE) {

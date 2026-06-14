@@ -24,15 +24,13 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import com.example.conectabook.R
 import com.example.conectabook.components.AppHeader
 import com.example.conectabook.components.BottomBar
 import com.example.conectabook.components.ClubeCard
 import com.example.conectabook.components.SearchBarClubes
 import com.example.conectabook.data.api.model.ClubeListaUi
-import com.example.conectabook.data.api.repository.ClubeRepository
 import com.example.conectabook.navigation.Routes
-import com.example.conectabook.viewmodel.ClubeViewModel
+import com.example.conectabook.viewmodel.ClubesViewModel
 
 @Composable
 fun ClubeScreen(
@@ -41,9 +39,12 @@ fun ClubeScreen(
 
     val colors = MaterialTheme.colorScheme
 
-    val viewModel: ClubeViewModel = viewModel()
+    val viewModel: ClubesViewModel = viewModel()
 
     val clubes by viewModel.clubes.collectAsState()
+
+    fun feedClubeRoute(id: Int) =
+        "feed_clube/$id"
 
     LaunchedEffect(Unit) {
         viewModel.carregarClubes()
@@ -65,8 +66,7 @@ fun ClubeScreen(
         )
     }
 
-
-//    val clubes = clubesFixos + ClubeRepository.clubes
+    //    val clubes = clubesFixos + ClubeRepository.clubes
 
     Scaffold(
         bottomBar = { BottomBar(navController = navController)}
@@ -113,8 +113,11 @@ fun ClubeScreen(
 
                 ClubeCard(
                     clube = clube,
-                    onParticiparClick = {},
-                    onCardClick = {}
+                    onParticiparClick = {
+                        navController.navigate("feed_clube/${clube.id}")
+                    },
+                    onCardClick = {
+                    }
                 )
             }
 

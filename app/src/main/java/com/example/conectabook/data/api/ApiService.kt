@@ -9,6 +9,7 @@ import com.example.conectabook.data.api.model.GeneroUsuarioRequest
 import com.example.conectabook.data.api.model.GenerosApiResponse
 import com.example.conectabook.data.api.model.LoginRequest
 import com.example.conectabook.data.api.model.LoginResponse
+import com.example.conectabook.data.api.model.MensagemApiResponse
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Headers
@@ -39,5 +40,8 @@ interface ApiService {
 
     @GET("v1/conectaBook/clubes")
     suspend fun listarClubes(): ClubeApiResponse
+
+    @GET("v1/conectaBook/mensagem")
+    suspend fun listarMensagens(): MensagemApiResponse
 
 }

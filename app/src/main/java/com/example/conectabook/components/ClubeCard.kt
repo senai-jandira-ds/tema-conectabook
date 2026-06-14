@@ -48,8 +48,7 @@ fun ClubeCard(
 
     Card(
         modifier = Modifier
-            .fillMaxWidth()
-            .clickable { onCardClick() },
+            .fillMaxWidth(),
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(
             containerColor = colors.surface

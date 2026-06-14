@@ -22,10 +22,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import com.example.conectabook.R
 
 @Composable
-fun ClubeHeader(modifier: Modifier = Modifier) {
+fun ClubeHeader(
+    nome: String,
+    genero: String,
+    totalMembros: Int,
+    fotoUrl: String?,
+    modifier: Modifier = Modifier) {
 
     val colors = MaterialTheme.colorScheme
 
@@ -34,10 +40,9 @@ fun ClubeHeader(modifier: Modifier = Modifier) {
         horizontalArrangement = Arrangement.spacedBy(16.dp)
     ) {
 
-        //Capa do clube
-        Image(
-            painter = painterResource(id = R.drawable.clubelobo),
-            contentDescription = null,
+        AsyncImage(
+            model = fotoUrl,
+                    contentDescription = nome,
             modifier = Modifier
                 .size(96.dp)
                 .clip(CircleShape)
