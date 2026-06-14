@@ -95,6 +95,7 @@ fun AppNavigation() {
                 backStackEntry.arguments?.getInt("clubeId") ?: 0
 
             FeedClubeScreen(
+                navController = navController,
                 clubeId = clubeId
             )
         }

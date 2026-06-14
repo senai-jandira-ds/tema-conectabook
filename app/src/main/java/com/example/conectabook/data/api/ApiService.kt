@@ -1,6 +1,7 @@
 package com.example.conectabook.data.api
 
 
+import com.example.conectabook.data.api.dto.CriarClubeResponse
 import com.example.conectabook.data.api.model.CadastroRequest
 import com.example.conectabook.data.api.model.CadastroResponse
 import com.example.conectabook.data.api.model.ClubeApiResponse
@@ -10,10 +11,15 @@ import com.example.conectabook.data.api.model.GenerosApiResponse
 import com.example.conectabook.data.api.model.LoginRequest
 import com.example.conectabook.data.api.model.LoginResponse
 import com.example.conectabook.data.api.model.MensagemApiResponse
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
+import okhttp3.Response
 import retrofit2.http.Body
 import retrofit2.http.GET
 import retrofit2.http.Headers
+import retrofit2.http.Multipart
 import retrofit2.http.POST
+import retrofit2.http.Part
 
 interface ApiService {
 
@@ -40,6 +46,20 @@ interface ApiService {
 
     @GET("v1/conectaBook/clubes")
     suspend fun listarClubes(): ClubeApiResponse
+
+    @Multipart
+    @POST("v1/conectaBook/clubes")
+    suspend fun criarClube(
+     @Part("nome") nome: RequestBody,
+
+     @Part("sobre") sobre: RequestBody,
+
+     @Part("regras") regras: RequestBody,
+
+     @Part("id_genero") idGenero: RequestBody,
+
+     @Part foto: MultipartBody.Part?
+   ): CriarClubeResponse
 
     @GET("v1/conectaBook/mensagem")
     suspend fun listarMensagens(): MensagemApiResponse

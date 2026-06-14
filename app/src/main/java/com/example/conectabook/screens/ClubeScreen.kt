@@ -41,10 +41,10 @@ fun ClubeScreen(
 
     val viewModel: ClubesViewModel = viewModel()
 
-    val clubes by viewModel.clubes.collectAsState()
-
     fun feedClubeRoute(id: Int) =
         "feed_clube/$id"
+
+    val clubes by viewModel.clubes.collectAsState()
 
     LaunchedEffect(Unit) {
         viewModel.carregarClubes()

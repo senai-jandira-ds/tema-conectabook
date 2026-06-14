@@ -25,6 +25,8 @@ import androidx.compose.material3.Text
 
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -35,6 +37,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.conectabook.R
 import com.example.conectabook.components.AppHeader
@@ -42,6 +45,9 @@ import com.example.conectabook.components.BottomBar
 import com.example.conectabook.components.FotoClubePicker
 import com.example.conectabook.data.api.model.ClubeListaUi
 import com.example.conectabook.data.api.repository.ClubeRepository
+import com.example.conectabook.navigation.Routes
+import com.example.conectabook.viewmodel.CriarClubeViewModel
+import com.example.conectabook.viewmodel.GeneroViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -65,15 +71,19 @@ fun CriarClubeScreen(
 
     var expandido by remember { mutableStateOf(false) }
 
-    val generos = listOf(
-        "Fantasia",
-        "Romance",
-        "Ficção científica",
-        "Mistério",
-        "Terror",
-        "Aventura"
+    val generoViewModel: GeneroViewModel = viewModel()
 
-    )
+    val generos by generoViewModel.generos.collectAsState()
+
+    var idGenero by remember {
+        mutableStateOf(0)
+    }
+
+    val criarClubeViewModel: CriarClubeViewModel = viewModel()
+
+    LaunchedEffect(Unit) {
+        generoViewModel.carregarGeneros()
+    }
 
     Scaffold(
         bottomBar = {
@@ -190,10 +200,11 @@ fun CriarClubeScreen(
 
                                 DropdownMenuItem(
                                     text = {
-                                        Text(generoSelecionado)
+                                        Text(generoSelecionado.nome)
                                     },
                                     onClick = {
-                                        genero = generoSelecionado
+                                        genero = generoSelecionado.nome
+                                        idGenero = generoSelecionado.id_genero
                                         expandido = false
                                     }
                                 )
@@ -233,30 +244,30 @@ fun CriarClubeScreen(
                 }
 
                 item {
+
                     Button(
                         onClick = {
+                            criarClubeViewModel.criarClube(
+                                context = context,
+                                nome = nome,
+                                sobre = descricao,
+                                regras = regras,
+                                idGenero = idGenero,
+                                imagemUri = imagemUri
+                            ) {
 
-//                            ClubeRepository.clubes.add(
-//                                ClubeListaUi(
-//                                    id = ClubeRepository.clubes.size +1,
-//                                    nome = nome,
-//                                    descricao = descricao,
-//                                    imagem = R.drawable.clubecartas,
-//                                    genero = genero,
-//                                    totalMembros = 0,
-//                                    participando = false,
-//                                    admin = true
-//                                )
-//                            )
+                                Toast.makeText(
+                                    context,
+                                    "Clube criado com sucesso!",
+                                    Toast.LENGTH_SHORT
+                                ).show()
 
-                            Toast.makeText(
-                                context,
-                                "Clube criado com sucesso!",
-                                Toast.LENGTH_SHORT
-                            ).show()
-
-                            navController.popBackStack()
-
+                                navController.navigate(Routes.CLUBES) {
+                                    popUpTo(Routes.CLUBES) {
+                                        inclusive = true
+                                    }
+                                }
+                            }
                         },
                         modifier = Modifier
                             .fillMaxWidth()

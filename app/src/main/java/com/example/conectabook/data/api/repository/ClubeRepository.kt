@@ -5,6 +5,8 @@ import com.example.conectabook.data.api.RetrofitClient
 import com.example.conectabook.data.api.RetrofitInstance
 import com.example.conectabook.data.api.dto.ClubeResponse
 import com.example.conectabook.data.api.model.ClubeListaUi
+import okhttp3.MultipartBody
+import okhttp3.RequestBody
 
 class ClubeRepository {
 
@@ -14,5 +16,20 @@ class ClubeRepository {
 
         return resposta.response
     }
+
+    suspend fun criarClube(
+        nome: RequestBody,
+        sobre: RequestBody,
+        regras: RequestBody,
+        idGenero: RequestBody,
+        foto: MultipartBody.Part?
+    ) =
+        RetrofitClient.api.criarClube(
+            nome,
+            sobre,
+            regras,
+            idGenero,
+            foto
+        )
 
 }
