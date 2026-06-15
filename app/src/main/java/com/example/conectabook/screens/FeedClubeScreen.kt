@@ -33,12 +33,14 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
 import com.example.conectabook.components.AppHeader
+import com.example.conectabook.components.BottomBar
 import com.example.conectabook.components.ClubeHeader
 import com.example.conectabook.components.CriarPostcard
 import com.example.conectabook.components.PostCard
@@ -83,145 +85,164 @@ fun FeedClubeScreen(
         }
 
     Scaffold(
-        topBar = {
+        bottomBar = { BottomBar(navController = navController)}
+    ) { paddingValues ->
+
+        Column(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(colors.primary)
+                .padding(paddingValues)
+        ) {
             AppHeader(
                 titulo = "",
                 mostrarVoltar = true,
-                mostrarAvatar = false,
-                onVoltarClick = {navController.popBackStack()}
+                mostrarAvatar = false
             )
-        }
-    ) { padding ->
 
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(padding)
-                .background(MaterialTheme.colorScheme.background),
-            contentPadding = PaddingValues(
-                start = 16.dp,
-                end = 16.dp,
-                top = 16.dp,
-                bottom = 100.dp
-            ),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
-        ) {
+            LazyColumn(
+//                modifier = Modifier
+////                    .fillMaxSize()
+////                    .padding(paddingValues)
+////                    .background(MaterialTheme.colorScheme.background),
+////                contentPadding = PaddingValues(
+////                    start = 16.dp,
+////                    end = 16.dp,
+////                    top = 16.dp,
+////                    bottom = 100.dp
+////                ),
+////                verticalArrangement = Arrangement.spacedBy(16.dp)
 
-        // Header do clube
-            item {
-
-                Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(bottom = 12.dp)
-                ) {
-
-                    // Banner
-                    Image(
-                        painter = rememberAsyncImagePainter(clube.foto),
-                        contentDescription = null,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .height(180.dp),
-                        contentScale = ContentScale.Crop
-                    )
-
-                    // Card branco por cima
-                    Card(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(top = 140.dp),
-                        shape = RoundedCornerShape(16.dp),
-                        elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
-                        colors = CardDefaults.cardColors(
-                            containerColor = MaterialTheme.colorScheme.surface
+                modifier = Modifier
+                    .fillMaxSize()
+                    .clip(
+                        RoundedCornerShape(
+                            topStart = 24.dp,
+                            topEnd = 24.dp
                         )
+                    )
+                    .background(Color(0xFFF8FAFC))
+                    .padding(horizontal = 24.dp),
+                verticalArrangement = Arrangement.spacedBy(20.dp),
+                contentPadding = PaddingValues(top = 20.dp, bottom = 24.dp)
+            ) {
+
+                // Header do clube
+                item {
+
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(bottom = 12.dp)
                     ) {
 
-                        Column(
-                            modifier = Modifier.padding(16.dp)
+                        // Banner
+                        Image(
+                            painter = rememberAsyncImagePainter(clube.foto),
+                            contentDescription = null,
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(180.dp),
+                            contentScale = ContentScale.Crop
+                        )
+
+                        // Card branco por cima
+                        Card(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .padding(top = 140.dp),
+                            shape = RoundedCornerShape(16.dp),
+                            elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
+                            colors = CardDefaults.cardColors(
+                                containerColor = MaterialTheme.colorScheme.surface
+                            )
                         ) {
 
-                            Row(
-                                verticalAlignment = Alignment.CenterVertically
+                            Column(
+                                modifier = Modifier.padding(16.dp)
                             ) {
 
-                                Image(
-                                    painter = rememberAsyncImagePainter(clube.foto),
-                                    contentDescription = null,
-                                    modifier = Modifier
-                                        .size(72.dp)
-                                        .clip(CircleShape),
-                                    contentScale = ContentScale.Crop
-                                )
+                                Row(
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
 
-                                Spacer(modifier = Modifier.width(12.dp))
+                                    Image(
+                                        painter = rememberAsyncImagePainter(clube.foto),
+                                        contentDescription = null,
+                                        modifier = Modifier
+                                            .size(72.dp)
+                                            .clip(CircleShape),
+                                        contentScale = ContentScale.Crop
+                                    )
 
-                            Column {
+                                    Spacer(modifier = Modifier.width(12.dp))
 
-                                Text(
-                                    text = clube.nome,
-                                    style = MaterialTheme.typography.titleLarge
-                                )
+                                    Column {
 
-                                Text(
-                                    text = "${clube.total_membros} membros • ${clube.genero}",
-                                    style = MaterialTheme.typography.bodySmall
-                                )
-                            }
+                                        Text(
+                                            text = clube.nome,
+                                            style = MaterialTheme.typography.titleLarge
+                                        )
+
+                                        Text(
+                                            text = "${clube.total_membros} membros • ${clube.genero}",
+                                            style = MaterialTheme.typography.bodySmall
+                                        )
+                                    }
                                 }
 
-                            Spacer(modifier = Modifier.height(12.dp))
+                                Spacer(modifier = Modifier.height(12.dp))
 
-                            Row(
-                                horizontalArrangement = Arrangement.spacedBy(12.dp)
-                            ) {
-                                Button(onClick = {}) {
-                                    Text("Editar Clube")
-                                }
+                                Row(
+                                    horizontalArrangement = Arrangement.spacedBy(12.dp)
+                                ) {
+                                    Button(onClick = {}) {
+                                        Text("Editar Clube")
+                                    }
 
-                                OutlinedButton(onClick = {}) {
-                                    Text("Membros")
+                                    OutlinedButton(onClick = {}) {
+                                        Text("Membros")
+                                    }
                                 }
                             }
                         }
                     }
                 }
+
+                // Card para criar postagem
+                item {
+                    androidx.compose.material3.Card(
+                        colors = androidx.compose.material3.CardDefaults.cardColors(
+                            containerColor = MaterialTheme.colorScheme.surface
+                        )
+                    ) {
+                        CriarPostcard()
+                    }
+                }
+
+                // Divisor visual
+                item {
+                    Text(
+                        text = "Discussões recentes",
+                        style = MaterialTheme.typography.titleMedium,
+                        color = MaterialTheme.colorScheme.onBackground,
+                        modifier = Modifier.padding(top = 16.dp, bottom = 8.dp)
+                    )
+                }
+
+                // Lista de posts
+                items(postsDoClube) { post ->
+
+                    PostClubeCard(
+                        modifier = Modifier
+                            .padding(12.dp),
+                        nomeUsuario = "Usuário",
+                        comentario = post.comentario ?: "",
+                        imagemUrl = post.arquivo,
+                        data = post.data_postagem
+                    )
+                }
             }
-
-        // Card para criar postagem
-        item {
-            androidx.compose.material3.Card(
-                colors = androidx.compose.material3.CardDefaults.cardColors(
-                    containerColor = MaterialTheme.colorScheme.surface
-                )
-            ) {
-                CriarPostcard()
-            }
-        }
-
-        // Divisor visual
-        item {
-            Text(
-                text = "Discussões recentes",
-                style = MaterialTheme.typography.titleMedium,
-                color = MaterialTheme.colorScheme.onBackground,
-                modifier = Modifier.padding(top = 16.dp, bottom = 8.dp)
-            )
-        }
-
-        // Lista de posts
-        items(postsDoClube) { post ->
-
-            PostClubeCard(
-                modifier = Modifier
-                    .padding(12.dp),
-                nomeUsuario = "Usuário",
-                comentario = post.comentario ?: "",
-                imagemUrl = post.arquivo,
-                data = post.data_postagem
-            )
-        }
         }
     }
 }
