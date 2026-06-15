@@ -149,11 +149,15 @@ fun PerfilScreen(
                     PerfilInfoItem(
                         Icons.Outlined.CalendarMonth,
                         "Data de nascimento",
-                        "27/08/2010")
+                        "27/08/2007")
+//                        usuario?.data_nascimento ?: "Não informado")
 
                     PerfilInfoItem(Icons.Outlined.MenuBook,
                         "Gênero favorito",
                         "Fantasia")
+
+                        //Genero literario favorito do usuario
+//                        usuario?.genero_favorito ?: "Não informado")
 
                     PerfilInfoItem(Icons.Outlined.Lock,
                         "Senha",
@@ -164,17 +168,18 @@ fun PerfilScreen(
             Spacer(modifier = Modifier.height(20.dp))
 
             Button(
-                onClick = {},
+                onClick = { },
                 modifier = Modifier
                     .fillMaxWidth()
                     .height(56.dp),
                 shape = RoundedCornerShape(14.dp),
-                colors = ButtonDefaults.buttonColors(containerColor = colors.primary)
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = colors.primary
+                )
             ) {
                 Icon(
                     imageVector = Icons.Outlined.Edit,
-                    contentDescription = null,
-                    tint = colors.onPrimary
+                    contentDescription = null
                 )
 
                 Spacer(modifier = Modifier.width(8.dp))
@@ -182,9 +187,34 @@ fun PerfilScreen(
                 Text(
                     text = "Editar informações",
                     fontSize = 16.sp,
-                    fontWeight = FontWeight.Bold,
-                    color = colors.onPrimary
+                    fontWeight = FontWeight.Bold
                 )
+            }
+
+            Spacer(modifier = Modifier.height(12.dp))
+
+            OutlinedButton(
+                onClick = {
+
+                    UserSession.logout()
+
+                    navController.navigate("login") {
+                        popUpTo(0)
+                    }
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(56.dp),
+                shape = RoundedCornerShape(14.dp)
+            ) {
+                Icon(
+                    imageVector = Icons.Outlined.Logout,
+                    contentDescription = null
+                )
+
+                Spacer(modifier = Modifier.width(8.dp))
+
+                Text("Sair")
             }
         }
     }

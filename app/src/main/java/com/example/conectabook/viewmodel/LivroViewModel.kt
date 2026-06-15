@@ -2,7 +2,9 @@ package com.example.conectabook.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.conectabook.data.api.RetrofitClient
 import com.example.conectabook.data.api.model.Livro
+import com.example.conectabook.data.api.repository.EstanteRepository
 import com.example.conectabook.data.api.repository.LivroRepository
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -11,6 +13,8 @@ import kotlinx.coroutines.launch
 class LivroViewModel : ViewModel() {
 
     private val repository = LivroRepository()
+
+    private val estanteRepository = EstanteRepository(RetrofitClient.api)
 
     private val _livros = MutableStateFlow<List<Livro>>(emptyList())
     val livros: StateFlow<List<Livro>> = _livros
@@ -62,6 +66,38 @@ class LivroViewModel : ViewModel() {
             try {
                 val livro = repository.buscarLivroPorIdApi(cleanId)
                 _livroSelecionado.value = livro
+            } catch (e: Exception) {
+                e.printStackTrace()
+            }
+        }
+    }
+
+    fun adicionarNaEstante(livroId: String, status: String) {
+        // Converte a string do Dialog/UI para o ID numérico que o backend exige
+        val idStatusLivro = when (status.lowercase()) {
+            "quero ler" -> 1
+            "lendo" -> 2
+            "lido" -> 3
+            else -> 1 // Fallback caso venha algo diferente
+        }
+
+        val cleanId = livroId.replace("/works/", "")
+        val idUsuarioLogado = 31 // ID fixo que você mapeou no seu fluxo para testes
+
+        viewModelScope.launch {
+            try {
+                val sucesso = estanteRepository.adicionarLivro(
+                    idUsuario = idUsuarioLogado,
+                    idStatus = idStatusLivro,
+                    idLivro = cleanId
+                )
+
+                if (sucesso) {
+                    // Opcional: Você pode postar um estado de sucesso para a UI mostrar um Toast
+                    println("Livro adicionado com sucesso à estante!")
+                } else {
+                    println("Falha ao adicionar livro à estante.")
+                }
             } catch (e: Exception) {
                 e.printStackTrace()
             }

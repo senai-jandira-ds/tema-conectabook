@@ -12,6 +12,8 @@ data class UserResponse(
     val nome_usuario: String?,
     val email: String,
     val foto_perfil: String?,
+    val data_nascimento: String?,
+    val genero_favorito: String?,
     val token: String?
 
 )

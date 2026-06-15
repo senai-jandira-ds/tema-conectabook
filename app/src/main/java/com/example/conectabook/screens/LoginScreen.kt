@@ -213,8 +213,8 @@ fun LoginScreen(
 
                 Button(
                     onClick = {
-//                        viewModel.login()
-                        onEntrarClick()
+                        viewModel.login()
+//                        onEntrarClick()
                     },
                     enabled = viewModel.habilitarClicar,
                     modifier = Modifier
@@ -245,7 +245,7 @@ fun LoginScreen(
 
                 if (viewModel.loginSucesso){
                     onEntrarClick()
-                }
+                } //verificar
             }
         }
 

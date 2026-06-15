@@ -10,6 +10,10 @@ import androidx.compose.material.icons.outlined.LibraryBooks
 import androidx.compose.material.icons.outlined.Star
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -29,9 +33,14 @@ fun SecaoHeroLivro(
     autor: String,
     capaUrl: String?,
     ano: Int?,
+    onAdicionarEstante: (String) -> Unit,
     modifier: Modifier = Modifier) {
 
     val colors = MaterialTheme.colorScheme
+
+    var expandirMenu by remember {
+        mutableStateOf(false)
+    }
 
     Column(
         modifier = modifier.fillMaxWidth()
@@ -134,7 +143,9 @@ fun SecaoHeroLivro(
         Spacer(modifier = Modifier.height(20.dp))
 
         Button(
-            onClick = {},
+            onClick = {
+                expandirMenu = true
+            },
             modifier = Modifier
                 .fillMaxWidth()
                 .height(56.dp),
@@ -157,6 +168,38 @@ fun SecaoHeroLivro(
                 color = colors.onPrimary,
                 fontSize = 14.sp,
                 fontWeight = FontWeight.SemiBold
+            )
+        }
+
+        DropdownMenu(
+            expanded = expandirMenu,
+            onDismissRequest = {
+                expandirMenu = false
+            }
+        ) {
+
+            DropdownMenuItem(
+                text = { Text("Lido") },
+                onClick = {
+                    onAdicionarEstante("LIDO")
+                    expandirMenu = false
+                }
+            )
+
+            DropdownMenuItem(
+                text = { Text("Lendo") },
+                onClick = {
+                    onAdicionarEstante("LENDO")
+                    expandirMenu = false
+                }
+            )
+
+            DropdownMenuItem(
+                text = { Text("Quero Ler") },
+                onClick = {
+                    onAdicionarEstante("QUERO_LER")
+                    expandirMenu = false
+                }
             )
         }
 

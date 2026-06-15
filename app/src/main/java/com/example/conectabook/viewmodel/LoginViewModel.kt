@@ -86,7 +86,11 @@ class LoginViewModel: ViewModel() {
                     mensagemErro = "Email ou senha inválidos"
                 }
             } catch (erro: Exception) {
-                mensagemErro = "Erro ao conectar com o servidor"
+
+                erro.printStackTrace()
+
+                mensagemErro =
+                    erro.message ?:"Erro ao conectar com o servidor"
             } finally {
                 carregando = false
             }

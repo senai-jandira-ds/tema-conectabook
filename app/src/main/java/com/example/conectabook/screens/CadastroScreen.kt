@@ -31,6 +31,7 @@ import com.example.conectabook.R
 import com.example.conectabook.components.ValidadorSenhaItem
 import com.example.conectabook.viewmodel.CadastroViewModel
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun CadastroScreen(
     onCadastroSucesso: () -> Unit = {},
@@ -39,6 +40,12 @@ fun CadastroScreen(
 
     val colors = MaterialTheme.colorScheme
     val viewModel: CadastroViewModel = viewModel()
+
+    LaunchedEffect(viewModel.cadastroSucesso) {
+        if (viewModel.cadastroSucesso) {
+            onCadastroSucesso()
+        }
+    }
 
     var expandirGeneros by remember { mutableStateOf(false) }
 
@@ -125,6 +132,30 @@ fun CadastroScreen(
                 Spacer(modifier = Modifier.height(16.dp))
 
                 TextField(
+                    value = viewModel.nomeUsuario,
+                    onValueChange = { viewModel.nomeUsuario = it },
+                    placeholder = { Text("Nome de usuário") },
+                    leadingIcon = {
+                        Icon(
+                            imageVector = Icons.Outlined.Person,
+                            contentDescription = null,
+                            tint = colors.primary
+                        )
+                    },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(56.dp),
+                    colors = TextFieldDefaults.colors(
+                        focusedContainerColor = colors.surfaceVariant,
+                        unfocusedContainerColor = colors.surfaceVariant,
+                        focusedIndicatorColor = colors.primary,
+                        unfocusedIndicatorColor = Color.Transparent
+                    )
+                )
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                TextField(
                     value = viewModel.email,
                     onValueChange = { viewModel.email = it },
                     placeholder = { Text("Digite seu email") },
@@ -152,8 +183,8 @@ fun CadastroScreen(
 
                 TextField(
                     value = viewModel.dataNascimento,
-                    onValueChange = { valor ->
-                            viewModel.dataNascimento = valor.take(10)
+                    onValueChange = {
+                        viewModel.atualizarDataNascimento(it)
                     },
                     placeholder = { Text("DD/MM/AAAA") },
                     leadingIcon = {
@@ -181,57 +212,69 @@ fun CadastroScreen(
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-//                ExposedDropdownMenuBox(
-//                    expanded = expandirGeneros,
-//                    onExpandedChange = {
-//                        expandirGeneros = !expandirGeneros
-//                    }
-//                ) {
-//
-//                    TextField(
-//                        value = viewModel.generoSelecionado?.nome ?: "",
-//                        onValueChange = {},
-//                        readOnly = true,
-//                        placeholder = { Text("Gênero literário favorito") },
-//                        leadingIcon = {
-//                            Icon(
-//                                imageVector = Icons.Outlined.MenuBook,
-//                                contentDescription = null,
-//                                tint = colors.primary
-//                            )
-//                        },
-//                        trailingIcon = {
-//                            ExposedDropdownMenuDefaults.TrailingIcon(
-//                                expanded = expandirGeneros
-//                            )
-//                        },
-//                        modifier = Modifier
-//                            .menuAnchor(MenuAnchorType.PrimaryNotEditable)
-//                            .fillMaxWidth(),
-//                        shape = RoundedCornerShape(12.dp)
-//                    )
-//
-//                    ExposedDropdownMenu(
-//                        expanded = expandirGeneros,
-//                        onDismissRequest = {
-//                            expandirGeneros = false
-//                        }
-//                    ) {
-//
-//                        viewModel.generos.forEach { genero ->
-//
-//                            DropdownMenuItem(
-//                                text = {
-//                                    Text(genero.nome)
-//                                },
-//                                onClick = {
-//                                    viewModel.generoSelecionado = genero
-//                                    expandirGeneros = false
-//                                }
-//                            )
-//
-//                        }
-//                    }
+                ExposedDropdownMenuBox(
+                    expanded = expandirGeneros,
+                    onExpandedChange = {
+                        expandirGeneros = !expandirGeneros
+                    }
+                ) {
+
+                    OutlinedTextField(
+                        value = viewModel.generoSelecionado?.nome ?: "",
+                        onValueChange = {},
+                        readOnly = true,
+                        placeholder = {
+                            Text("Gênero literário favorito")
+                        },
+                        leadingIcon = {
+                            Icon(
+                                imageVector = Icons.Outlined.MenuBook,
+                                contentDescription = null,
+                                tint = colors.primary
+                            )
+                        },
+                        trailingIcon = {
+                            ExposedDropdownMenuDefaults.TrailingIcon(
+                                expanded = expandirGeneros
+                            )
+                        },
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .menuAnchor()
+                    )
+
+                    ExposedDropdownMenu(
+                        expanded = expandirGeneros,
+                        onDismissRequest = {
+                            expandirGeneros = false
+                        }
+                    ) {
+
+                        if (viewModel.generos.isEmpty()) {
+
+                            DropdownMenuItem(
+                                text = {
+                                    Text("Nenhum gênero encontrado")
+                                },
+                                onClick = {}
+                            )
+
+                        } else {
+
+                            viewModel.generos.forEach { genero ->
+
+                                DropdownMenuItem(
+                                    text = {
+                                        Text(genero.nome)
+                                    },
+                                    onClick = {
+                                        viewModel.generoSelecionado = genero
+                                        expandirGeneros = false
+                                    }
+                                )
+                            }
+                        }
+                    }
                 }
 
 
@@ -328,7 +371,11 @@ fun CadastroScreen(
                     )
                 ) {
                     Text(
-                        text = "Criar conta",
+                        text =
+                            if (viewModel.carregando)
+                                "Criando..."
+                            else
+                                "Criar conta",
                         fontSize = 16.sp,
                         fontWeight = FontWeight.Bold,
                         color = colors.onPrimary
@@ -344,58 +391,55 @@ fun CadastroScreen(
                         fontSize = 12.sp
                     )
                 }
+            }
 
-                if (viewModel.cadastroSucesso) {
-                    onCadastroSucesso()
-                }
+            Spacer(modifier = Modifier.height(24.dp))
+
+            Row(
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                Divider(
+                    modifier = Modifier.weight(1f),
+                    color = colors.outline
+                )
+
+                Text(
+                    text = "ou",
+                    fontSize = 12.sp,
+                    color = colors.onSurfaceVariant,
+                    modifier = Modifier.padding(horizontal = 8.dp)
+                )
+
+                Divider(
+                    modifier = Modifier.weight(1f),
+                    color = colors.outline
+                )
+            }
+
+            Spacer(modifier = Modifier.height(20.dp))
+
+            //voltar para o login
+            Button(
+                onClick = {
+                    onVoltarLoginClick()
+                },
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(56.dp),
+                shape = RoundedCornerShape(14.dp),
+                colors = ButtonDefaults.buttonColors(
+                    containerColor = colors.surface
+                ),
+                border = BorderStroke(1.dp, colors.primary)
+            ) {
+                Text(
+                    text = "Voltar para o login",
+                    color = colors.primary,
+                    fontSize = 14.sp,
+                    fontWeight = FontWeight.SemiBold
+                )
+
             }
         }
-
-        Spacer(modifier = Modifier.height(24.dp))
-
-        Row(
-            verticalAlignment = Alignment.CenterVertically
-        ) {
-            Divider(
-                modifier = Modifier.weight(1f),
-                color = colors.outline
-            )
-
-            Text(
-                text = "ou",
-                fontSize = 12.sp,
-                color = colors.onSurfaceVariant,
-                modifier = Modifier.padding(horizontal = 8.dp)
-            )
-
-            Divider(
-                modifier = Modifier.weight(1f),
-                color = colors.outline
-            )
-        }
-
-        Spacer(modifier = Modifier.height(20.dp))
-
-        //voltar para o login
-        Button(
-            onClick = {
-                onVoltarLoginClick()
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(56.dp),
-            shape = RoundedCornerShape(14.dp),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = colors.surface
-            ),
-            border = BorderStroke(1.dp, colors.primary)
-        ) {
-            Text(
-                text = "Voltar para o login",
-                color = colors.primary,
-                fontSize = 14.sp,
-                fontWeight = FontWeight.SemiBold
-            )
-        }
     }
-//}
+}

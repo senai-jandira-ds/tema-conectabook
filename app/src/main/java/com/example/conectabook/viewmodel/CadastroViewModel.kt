@@ -3,10 +3,13 @@ package com.example.conectabook.viewmodel
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.text.TextRange
+import androidx.compose.ui.text.input.TextFieldValue
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.conectabook.data.api.model.GeneroResponse
 import com.example.conectabook.data.api.repository.AuthRepository
+import com.example.conectabook.data.api.session.UserSession
 import kotlinx.coroutines.launch
 
 class CadastroViewModel : ViewModel() {
@@ -15,9 +18,26 @@ class CadastroViewModel : ViewModel() {
 
     var nome by mutableStateOf("")
     var nomeUsuario by mutableStateOf("")
+
     var email by mutableStateOf("")
 
-    var dataNascimento by mutableStateOf("")
+    var dataNascimento by mutableStateOf(
+        TextFieldValue("")
+    )
+
+    val dataNascimentoValida: Boolean
+        get() {
+            return try {
+                java.time.LocalDate.parse(
+                    dataNascimento.text,
+                    java.time.format.DateTimeFormatter.ofPattern("dd/MM/yyyy")
+                )
+                true
+            } catch (e: Exception) {
+                false
+            }
+        }
+
     var senha by mutableStateOf("")
     var confirmarSenha by mutableStateOf("")
 
@@ -34,7 +54,7 @@ class CadastroViewModel : ViewModel() {
     val habilitarCadastro: Boolean
         get() = nome.isNotBlank() &&
                 email.isNotBlank() &&
-                dataNascimento.isNotBlank() &&
+                dataNascimentoValida &&
                 senhaTamanhoValido &&
                 senhasIguais &&
                 generoSelecionado != null &&
@@ -58,7 +78,7 @@ class CadastroViewModel : ViewModel() {
                     },
                     email = email,
                     senha = senha,
-                    dataNascimento = dataNascimento
+                    dataNascimento = dataNascimento.text
                         .split("/")
                         .reversed()
                         .joinToString("-"),
@@ -66,12 +86,25 @@ class CadastroViewModel : ViewModel() {
                 )
 
                 if (resposta.status){
+
+                    try {
+                        val login = repository.login(email, senha)
+
+                        if (login.status && login.user != null) {
+                            UserSession.usuario = login.user
+                        }
+                    } catch (e: Exception) {
+                        e.printStackTrace()
+                    }
+
                     cadastroSucesso = true
+
                 } else {
                     mensagemErro = resposta.message ?: "Erro ao criar conta"
                 }
             } catch (erro: Exception) {
-                mensagemErro = erro.message ?: "Erro desconhecido"
+                erro.printStackTrace()
+                mensagemErro = "Erro ao conectar com o servidor"
             } finally {
                 carregando = false
             }
@@ -91,6 +124,32 @@ class CadastroViewModel : ViewModel() {
                 mensagemErro = erro.message
             }
         }
+    }
+
+    fun atualizarDataNascimento(valor: TextFieldValue) {
+
+        val numeros = valor.text
+            .filter { it.isDigit() }
+            .take(8)
+
+        val formatado = buildString {
+
+            numeros.forEachIndexed { index, c ->
+
+                append(c)
+
+                if ((index == 1 || index == 3) &&
+                    index < numeros.lastIndex
+                ) {
+                    append("/")
+                }
+            }
+        }
+
+        dataNascimento = TextFieldValue(
+            text = formatado,
+            selection = TextRange(formatado.length)
+        )
     }
 
 }

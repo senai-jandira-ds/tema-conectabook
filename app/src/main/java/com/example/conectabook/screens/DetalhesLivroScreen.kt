@@ -16,6 +16,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -40,6 +43,10 @@ fun DetalhesLivroScreen(
 
     val viewModel: LivroViewModel = viewModel()
     val livro by viewModel.livroSelecionado.collectAsState()
+
+    var mostrarDialog by remember {
+        mutableStateOf(false)
+    }
 
     LaunchedEffect(livroId) {
         viewModel.buscarLivroPorId(livroId)
@@ -83,7 +90,14 @@ fun DetalhesLivroScreen(
                     titulo = livroAtual.titulo,
                     autor = livroAtual.autor,
                     capaUrl = livroAtual.capaUrl,
-                    ano = livroAtual.anoPublicacao
+                    ano = livroAtual.anoPublicacao,
+                    onAdicionarEstante = { status ->
+
+                        viewModel.adicionarNaEstante(
+                            livroId = livroId,
+                            status = status
+                        )
+                    }
                 )
             }
 
