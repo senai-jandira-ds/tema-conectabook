@@ -8,6 +8,7 @@ import com.example.conectabook.data.api.model.CadastroRequest
 import com.example.conectabook.data.api.model.CadastroResponse
 import com.example.conectabook.data.api.model.ClubeApiResponse
 import com.example.conectabook.data.api.dto.EstanteResponse
+import com.example.conectabook.data.api.dto.UsuarioApiResponse
 import com.example.conectabook.data.api.model.GeneroUsuarioRequest
 import com.example.conectabook.data.api.model.GenerosApiResponse
 import com.example.conectabook.data.api.model.LoginRequest
@@ -84,4 +85,8 @@ interface ApiService {
      @POST("v1/conectaBook/estante")
      suspend fun adicionarLivro(@Body request: AdicionarLivroRequest): EstanteResponse
 
+    @GET("v1/conectaBook/usuarios/{id}")
+    suspend fun buscarUsuarioPorId(
+        @Path("id") id: Int
+    ): UsuarioApiResponse
 }

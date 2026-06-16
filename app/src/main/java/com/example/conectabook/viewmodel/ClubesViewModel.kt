@@ -19,6 +19,7 @@ class ClubesViewModel : ViewModel() {
     val clubes: StateFlow<List<ClubeResponse>> =
         _clubes
 
+
     fun carregarClubes() {
 
         viewModelScope.launch {

@@ -2,34 +2,13 @@ package com.example.conectabook.screens
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.offset
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.Button
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -39,14 +18,12 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import coil.compose.rememberAsyncImagePainter
-import com.example.conectabook.components.AppHeader
-import com.example.conectabook.components.BottomBar
-import com.example.conectabook.components.ClubeHeader
-import com.example.conectabook.components.CriarPostcard
-import com.example.conectabook.components.PostCard
-import com.example.conectabook.components.PostClubeCard
+import com.example.conectabook.components.*
 import com.example.conectabook.viewmodel.ClubesViewModel
 import com.example.conectabook.viewmodel.MensagemViewModel
+import com.example.conectabook.viewmodel.UsuarioViewModel
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 @Composable
 fun FeedClubeScreen(
@@ -59,33 +36,48 @@ fun FeedClubeScreen(
     val colors = MaterialTheme.colorScheme
 
     val clubeViewModel: ClubesViewModel = viewModel()
+    val usuarioViewModel: UsuarioViewModel = viewModel()
 
     val clubes by clubeViewModel.clubes.collectAsState()
-
     val mensagens by viewModel.mensagens.collectAsState()
+
+    // ✅ CORRETO: StateFlow precisa ser coletado
+    val usuariosCache by usuarioViewModel.usuariosCache.collectAsState()
+
+    fun formatarData(data: String): String {
+        return try {
+            val input = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS")
+            val output = DateTimeFormatter.ofPattern("dd/MM/yyyy")
+
+            val parsed = LocalDateTime.parse(data, input)
+            parsed.format(output)
+        } catch (e: Exception) {
+            data
+        }
+    }
+
+    fun carregarUsuario(id: Int) {
+        if (!usuariosCache.containsKey(id)) {
+            usuarioViewModel.buscarUsuarioPorId(id)
+        }
+    }
 
     LaunchedEffect(clubeId) {
         viewModel.carregarMensagens()
         clubeViewModel.carregarClubes()
     }
 
-
-    val clube = clubes.find {
-        it.id_clube == clubeId
-    }
+    val clube = clubes.find { it.id_clube == clubeId }
 
     if (clube == null) {
         Text("Carregando...")
         return
     }
 
-    val postsDoClube =
-        mensagens.filter {
-            it.id_clube == clubeId
-        }
+    val postsDoClube = mensagens.filter { it.id_clube == clubeId }
 
     Scaffold(
-        bottomBar = { BottomBar(navController = navController)}
+        bottomBar = { BottomBar(navController = navController) }
     ) { paddingValues ->
 
         Column(
@@ -94,6 +86,7 @@ fun FeedClubeScreen(
                 .background(colors.primary)
                 .padding(paddingValues)
         ) {
+
             AppHeader(
                 titulo = "",
                 mostrarVoltar = true,
@@ -101,42 +94,23 @@ fun FeedClubeScreen(
             )
 
             LazyColumn(
-//                modifier = Modifier
-////                    .fillMaxSize()
-////                    .padding(paddingValues)
-////                    .background(MaterialTheme.colorScheme.background),
-////                contentPadding = PaddingValues(
-////                    start = 16.dp,
-////                    end = 16.dp,
-////                    top = 16.dp,
-////                    bottom = 100.dp
-////                ),
-////                verticalArrangement = Arrangement.spacedBy(16.dp)
-
                 modifier = Modifier
                     .fillMaxSize()
-                    .clip(
-                        RoundedCornerShape(
-                            topStart = 24.dp,
-                            topEnd = 24.dp
-                        )
-                    )
+                    .clip(RoundedCornerShape(topStart = 24.dp, topEnd = 24.dp))
                     .background(Color(0xFFF8FAFC))
                     .padding(horizontal = 24.dp),
                 verticalArrangement = Arrangement.spacedBy(20.dp),
                 contentPadding = PaddingValues(top = 20.dp, bottom = 24.dp)
             ) {
 
-                // Header do clube
+                // HEADER
                 item {
-
                     Box(
                         modifier = Modifier
                             .fillMaxWidth()
                             .padding(bottom = 12.dp)
                     ) {
 
-                        // Banner
                         Image(
                             painter = rememberAsyncImagePainter(clube.foto),
                             contentDescription = null,
@@ -146,25 +120,17 @@ fun FeedClubeScreen(
                             contentScale = ContentScale.Crop
                         )
 
-                        // Card branco por cima
                         Card(
                             modifier = Modifier
                                 .fillMaxWidth()
                                 .padding(top = 140.dp),
                             shape = RoundedCornerShape(16.dp),
-                            elevation = CardDefaults.cardElevation(defaultElevation = 6.dp),
-                            colors = CardDefaults.cardColors(
-                                containerColor = MaterialTheme.colorScheme.surface
-                            )
+                            elevation = CardDefaults.cardElevation(6.dp)
                         ) {
 
-                            Column(
-                                modifier = Modifier.padding(16.dp)
-                            ) {
+                            Column(Modifier.padding(16.dp)) {
 
-                                Row(
-                                    verticalAlignment = Alignment.CenterVertically
-                                ) {
+                                Row(verticalAlignment = Alignment.CenterVertically) {
 
                                     Image(
                                         painter = rememberAsyncImagePainter(clube.foto),
@@ -178,68 +144,48 @@ fun FeedClubeScreen(
                                     Spacer(modifier = Modifier.width(12.dp))
 
                                     Column {
-
-                                        Text(
-                                            text = clube.nome,
-                                            style = MaterialTheme.typography.titleLarge
-                                        )
-
-                                        Text(
-                                            text = "${clube.total_membros} membros • ${clube.genero}",
-                                            style = MaterialTheme.typography.bodySmall
-                                        )
+                                        Text(clube.nome, style = MaterialTheme.typography.titleLarge)
+                                        Text("${clube.total_membros} membros • ${clube.genero}")
                                     }
                                 }
 
                                 Spacer(modifier = Modifier.height(12.dp))
 
-                                Row(
-                                    horizontalArrangement = Arrangement.spacedBy(12.dp)
-                                ) {
-                                    Button(onClick = {}) {
-                                        Text("Editar Clube")
-                                    }
-
-                                    OutlinedButton(onClick = {}) {
-                                        Text("Membros")
-                                    }
+                                Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+                                    Button(onClick = {}) { Text("Editar Clube") }
+                                    OutlinedButton(onClick = {}) { Text("Membros") }
                                 }
                             }
                         }
                     }
                 }
 
-                // Card para criar postagem
                 item {
-                    androidx.compose.material3.Card(
-                        colors = androidx.compose.material3.CardDefaults.cardColors(
-                            containerColor = MaterialTheme.colorScheme.surface
-                        )
-                    ) {
+                    Card {
                         CriarPostcard()
                     }
                 }
 
-                // Divisor visual
                 item {
                     Text(
                         text = "Discussões recentes",
-                        style = MaterialTheme.typography.titleMedium,
-                        color = MaterialTheme.colorScheme.onBackground,
-                        modifier = Modifier.padding(top = 16.dp, bottom = 8.dp)
+                        style = MaterialTheme.typography.titleMedium
                     )
                 }
 
-                // Lista de posts
                 items(postsDoClube) { post ->
 
+                    val usuario = usuariosCache[post.id_usuario]
+
+                    if (usuario == null) {
+                        carregarUsuario(post.id_usuario)
+                    }
+
                     PostClubeCard(
-                        modifier = Modifier
-                            .padding(12.dp),
-                        nomeUsuario = "Usuário",
+                        nomeUsuario = usuario?.nome_usuario ?: "Carregando...",
                         comentario = post.comentario ?: "",
                         imagemUrl = post.arquivo,
-                        data = post.data_postagem
+                        data = formatarData(post.data_postagem)
                     )
                 }
             }

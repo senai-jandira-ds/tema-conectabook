@@ -58,12 +58,11 @@ fun PostClubeCard(
                 style = MaterialTheme.typography.bodyMedium
             )
 
-            imagemUrl?.let {
-
+            if (!imagemUrl.isNullOrEmpty()) {
                 Spacer(modifier = Modifier.height(12.dp))
 
                 AsyncImage(
-                    model = it,
+                    model = imagemUrl,
                     contentDescription = null,
                     modifier = Modifier
                         .fillMaxWidth()
