@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -32,6 +33,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import com.example.conectabook.components.LivroCard
 import com.example.conectabook.components.SecaoResumoEstante
 import com.example.conectabook.data.api.model.Livro
+import com.example.conectabook.data.api.session.UserSession
 import com.example.conectabook.navigation.Routes
 import com.example.conectabook.viewmodel.EstanteViewModel
 import com.example.conectabook.viewmodel.LivroViewModel
@@ -49,30 +51,118 @@ fun LivrosScreen(
 
     val livrosBusca by livroViewModel.livros.collectAsState()
 
-    val livrosLendo by estanteViewModel.lendo.collectAsState()
-    val livrosQueroLer by estanteViewModel.queroLer.collectAsState()
+//    val livrosLendo by estanteViewModel.lendo.collectAsState()
+//    val livrosQueroLer by estanteViewModel.queroLer.collectAsState()
 
-    val idUsuarioLogado = 31 // ID de teste fixado'
+    val livrosLendoFake = listOf(
+        Livro(
+            id = "MPBC001",
+            titulo = "Memórias Póstumas de Brás Cubas",
+            autor = "Machado de Assis",
+            capaUrl = "https://covers.openlibrary.org/b/id/14822565-L.jpg",
+            descricao = null,
+            anoPublicacao = 1994,
+            paginas = null,
+            idioma = "Português"
+        ),
+
+        Livro(
+            id = "SIT001",
+            titulo = "Reinações de Narizinho",
+            autor = "Monteiro Lobato",
+            capaUrl = "https://covers.openlibrary.org/b/id/8316994-L.jpg",
+            descricao = null,
+            anoPublicacao = 2019,
+            paginas = null,
+            idioma = "Português"
+        ),
+        Livro(
+            id = "HARRY001",
+            titulo = "Harry Potter e a Pedra Filosofal",
+            autor = "J.K. Rowling",
+            capaUrl = "https://covers.openlibrary.org/b/id/15155851-L.jpg",
+            descricao = null,
+            anoPublicacao = 2022,
+            paginas = null,
+            idioma = "Português"
+        )
+
+    )
+
+    val livrosQueroLerFake = listOf(
+        Livro(
+            id = "PP001",
+            titulo = "O Pequeno Príncipe",
+            autor = "Antoine de Saint-Exupéry",
+            capaUrl = "https://covers.openlibrary.org/b/id/15096605-L.jpg",
+            descricao = null,
+            anoPublicacao = 2000,
+            paginas = null,
+            idioma = "Português"
+        ),
+        Livro(
+            id = "DOM001",
+            titulo = "Dom Casmurro",
+            autor = "Machado de Assis",
+            capaUrl = "https://covers.openlibrary.org/b/id/10558903-L.jpg",
+            descricao = null,
+            anoPublicacao = 2002,
+            paginas = null,
+            idioma = "Português"
+        ),
+
+        Livro(
+            id = "TOR001",
+            titulo = "Torto Arado",
+            autor = "Itamar Vieira Junior\n",
+            capaUrl = "https://covers.openlibrary.org/b/id/12369648-L.jpg",
+            descricao = null,
+            anoPublicacao = 2019,
+            paginas = null,
+            idioma = "Português"
+        )
+    )
+
+    val livrosLidosFake = listOf(
+
+        Livro(
+            id = "DIA001",
+            titulo = "Diário de um banana",
+            autor = "Jeff Kinney",
+            capaUrl = "https://covers.openlibrary.org/b/id/12390997-L.jpg",
+            descricao = null,
+            anoPublicacao = 2008,
+            paginas = null,
+            idioma = "Português"
+        ),
+
+        Livro(
+            id = "VID001",
+            titulo = "Vidas Secas",
+            autor = "Graciliano Ramos",
+            capaUrl = "https://covers.openlibrary.org/b/id/14603084-L.jpg",
+            descricao = null,
+            anoPublicacao = 2024,
+            paginas = null,
+            idioma = "Português"
+        )
+    )
+
+//    val livrosLidos by estanteViewModel.lidos.collectAsState()
+
+    val idUsuarioLogado = UserSession.usuario?.id ?: return
 
     val lifecycleOwner = LocalLifecycleOwner.current
 
-    LaunchedEffect(lifecycleOwner) {
-        val observer = LifecycleEventObserver { _, event ->
-            // Toda vez que a tela voltar a ficar ativa (onResume), recarrega os dados do Azure
-            if (event == Lifecycle.Event.ON_RESUME) {
-                estanteViewModel.carregarEstante(idUsuarioLogado)
-            }
-        }
-        lifecycleOwner.lifecycle.addObserver(observer)
-    }
-
+//    LaunchedEffect(Unit) {
+//        estanteViewModel.carregarEstante(idUsuarioLogado)
+//    }
 
     Scaffold(
         bottomBar = {
             BottomBar(navController = navController)
         }
-    ) {
-        paddingValues ->
+    ) { paddingValues ->
 
         LazyColumn(
             modifier = Modifier
@@ -92,13 +182,13 @@ fun LivrosScreen(
                         if (it.isNotBlank()) {
                             livroViewModel.buscarLivros(it)
                         }
-                                    },
+                    },
                     onCameraClick = {}
                 )
             }
 
-            // Se o usuário não estiver buscando nada, mostra o Resumo e a Estante Real
             if (busca.isBlank()) {
+
                 item {
                     Text(
                         text = "Resumo",
@@ -108,35 +198,11 @@ fun LivrosScreen(
                     )
                 }
 
-//            item {
-//                Text(
-//                    text = "Resumo",
-//                    fontSize = 18.sp,
-//                    fontWeight = FontWeight.SemiBold,
-//                    color = colors.onBackground
-//                )
-//            }
+                item {
+                    SecaoResumoEstante()
+                }
 
-            item {
-                SecaoResumoEstante()
-            }
-
-//            items(livros) { livro ->
-//
-//                LivroCard(
-//                    capaUrl = livro.capaUrl,
-//                    titulo = livro.titulo,
-//                    autor = livro.autor,
-//                    ano = livro.anoPublicacao,
-//                    onClick = {}
-//                )
-//
-//            }
-
-//            if (busca.isBlank()) {
-
-                // --- SESSÃO: LENDO ---
-                if (livrosLendo.isNotEmpty()) {
+                if (livrosLendoFake.isNotEmpty()) {
                     item {
                         Text(
                             text = "Lendo atualmente",
@@ -145,22 +211,27 @@ fun LivrosScreen(
                         )
                     }
 
-                    items(livrosLendo) { livro ->
-                        LivroCard(
-                            capaUrl = livro.capaUrl,
-                            titulo = livro.titulo,
-                            autor = livro.autor,
-                            ano = livro.anoPublicacao,
-                            onClick = {
-                                livroViewModel.selecionarLivro(livro)
-                                navController.navigate("detalhes_livro/${Uri.encode(livro.id)}")
+                    item {
+                        LazyRow(
+                            horizontalArrangement = Arrangement.spacedBy(12.dp)
+                        ) {
+                            items(livrosLendoFake) { livro ->
+                                LivroCard(
+                                    capaUrl = livro.capaUrl,
+                                    titulo = livro.titulo,
+                                    autor = livro.autor,
+                                    ano = livro.anoPublicacao,
+                                    onClick = {
+                                        livroViewModel.selecionarLivro(livro)
+                                        navController.navigate("detalhes_livro/${Uri.encode(livro.id)}")
+                                    }
+                                )
                             }
-                        )
+                        }
                     }
                 }
 
-                // --- SESSÃO: QUERO LER ---
-                if (livrosQueroLer.isNotEmpty()) {
+                if (livrosQueroLerFake.isNotEmpty()) {
                     item {
                         Text(
                             text = "Quero Ler",
@@ -169,22 +240,57 @@ fun LivrosScreen(
                         )
                     }
 
-                    items(livrosQueroLer) { livro ->
-                        LivroCard(
-                            capaUrl = livro.capaUrl,
-                            titulo = livro.titulo,
-                            autor = livro.autor,
-                            ano = livro.anoPublicacao,
-                            onClick = {
-                                livroViewModel.selecionarLivro(livro)
-                                navController.navigate("detalhes_livro/${Uri.encode(livro.id)}")
+                    item {
+                        LazyRow(
+                            horizontalArrangement = Arrangement.spacedBy(12.dp)
+                        ) {
+                            items(livrosQueroLerFake) { livro ->
+                                LivroCard(
+                                    capaUrl = livro.capaUrl,
+                                    titulo = livro.titulo,
+                                    autor = livro.autor,
+                                    ano = livro.anoPublicacao,
+                                    onClick = {
+                                        livroViewModel.selecionarLivro(livro)
+                                        navController.navigate("detalhes_livro/${Uri.encode(livro.id)}")
+                                    }
+                                )
                             }
+                        }
+                    }
+                }
+
+                if (livrosLidosFake.isNotEmpty()) {
+                    item {
+                        Text(
+                            text = "Lidos",
+                            fontSize = 18.sp,
+                            fontWeight = FontWeight.SemiBold
                         )
+                    }
+
+                    item {
+                        LazyRow(
+                            horizontalArrangement = Arrangement.spacedBy(12.dp)
+                        ) {
+                            items(livrosLidosFake) { livro ->
+                                LivroCard(
+                                    capaUrl = livro.capaUrl,
+                                    titulo = livro.titulo,
+                                    autor = livro.autor,
+                                    ano = livro.anoPublicacao,
+                                    onClick = {
+                                        livroViewModel.selecionarLivro(livro)
+                                        navController.navigate("detalhes_livro/${Uri.encode(livro.id)}")
+                                    }
+                                )
+                            }
+                        }
                     }
                 }
 
             } else {
-                // Se o usuário digitou algo na busca, mostra o resultado da pesquisa
+
                 items(livrosBusca) { livro ->
                     LivroCard(
                         capaUrl = livro.capaUrl,
@@ -193,10 +299,13 @@ fun LivrosScreen(
                         ano = livro.anoPublicacao,
                         onClick = {
                             livroViewModel.selecionarLivro(livro)
-                            navController.navigate("detalhes_livro/${Uri.encode(livro.id)}")
+                            navController.navigate(
+                                "detalhes_livro/${Uri.encode(livro.id)}"
+                            )
                         }
                     )
                 }
+
             }
         }
     }

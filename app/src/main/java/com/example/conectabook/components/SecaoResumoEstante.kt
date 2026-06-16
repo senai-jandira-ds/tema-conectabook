@@ -40,21 +40,21 @@ fun SecaoResumoEstante() {
             ResumoEstanteCard(
                 icon = Icons.Outlined.Book,
                 titulo = "Lidos",
-                quantidade = 12,
+                quantidade = 2,
                 modifier = Modifier.weight(1f)
             )
 
             ResumoEstanteCard(
                 icon = Icons.Outlined.MenuBook,
                 titulo = "Lendo",
-                quantidade = 5,
+                quantidade = 3,
                 modifier = Modifier.weight(1f)
             )
 
             ResumoEstanteCard(
                 icon = Icons.Outlined.Bookmark,
                 titulo = "Quero ler",
-                quantidade = 18,
+                quantidade = 3,
                 modifier = Modifier.weight(1f)
             )
         }

@@ -31,6 +31,22 @@ class EstanteViewModel(
 
     fun carregarEstante(idUsuario: Int) {
         viewModelScope.launch {
+
+            println("USUARIO = $idUsuario")
+
+            val lendoIds = estanteRepository.listarLendo(idUsuario)
+            println("LENDO = $lendoIds")
+
+            val queroLerIds = estanteRepository.listarQueroLer(idUsuario)
+            println("QUERO LER = $queroLerIds")
+
+            val lidosIds = estanteRepository.listarLidos(idUsuario)
+            println("LIDOS = $lidosIds")
+
+            println("LENDO = $lendoIds")
+            println("QUERO LER = $queroLerIds")
+            println("LIDOS = $lidosIds")
+
             try {
                 // Pega os IDs da estante
                 val lendoIds = estanteRepository.listarLendo(idUsuario).map { it.id_livro }
@@ -78,7 +94,9 @@ class EstanteViewModel(
         viewModelScope.launch {
             val sucesso = estanteRepository.adicionarLivro(idUsuario, idStatus, idLivro)
             if (sucesso) {
-                carregarEstante(idUsuario) // Atualiza a tela automaticamente
+                carregarEstante(idUsuario)
+
+            // Atualiza a tela automaticamente
             }
         }
     }

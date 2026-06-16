@@ -6,6 +6,7 @@ import com.example.conectabook.data.api.RetrofitClient
 import com.example.conectabook.data.api.model.Livro
 import com.example.conectabook.data.api.repository.EstanteRepository
 import com.example.conectabook.data.api.repository.LivroRepository
+import com.example.conectabook.data.api.session.UserSession
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
@@ -73,34 +74,31 @@ class LivroViewModel : ViewModel() {
     }
 
     fun adicionarNaEstante(livroId: String, status: String) {
-        // Converte a string do Dialog/UI para o ID numérico que o backend exige
+
         val idStatusLivro = when (status.lowercase()) {
             "quero ler" -> 1
             "lendo" -> 2
             "lido" -> 3
-            else -> 1 // Fallback caso venha algo diferente
+            else -> 1
         }
 
         val cleanId = livroId.replace("/works/", "")
-        val idUsuarioLogado = 31 // ID fixo que você mapeou no seu fluxo para testes
+
+        val idUsuarioLogado = UserSession.usuario?.id ?: return
 
         viewModelScope.launch {
-            try {
-                val sucesso = estanteRepository.adicionarLivro(
-                    idUsuario = idUsuarioLogado,
-                    idStatus = idStatusLivro,
-                    idLivro = cleanId
-                )
 
-                if (sucesso) {
-                    // Opcional: Você pode postar um estado de sucesso para a UI mostrar um Toast
-                    println("Livro adicionado com sucesso à estante!")
-                } else {
-                    println("Falha ao adicionar livro à estante.")
-                }
-            } catch (e: Exception) {
-                e.printStackTrace()
-            }
+            println("USUARIO = $idUsuarioLogado")
+            println("STATUS = $idStatusLivro")
+            println("LIVRO = $cleanId")
+
+            val sucesso = estanteRepository.adicionarLivro(
+                idUsuario = idUsuarioLogado,
+                idStatus = idStatusLivro,
+                idLivro = cleanId
+            )
+
+            println("SUCESSO = $sucesso")
         }
     }
 }

@@ -1,32 +1,40 @@
 package com.example.conectabook.data.api.repository
 
 import android.util.Log
+import android.util.Log.e
 import com.example.conectabook.data.api.ApiService
 import com.example.conectabook.data.api.dto.AdicionarLivroRequest
 import com.example.conectabook.data.api.dto.EstanteResponse
+import kotlin.collections.emptyList
 
 class EstanteRepository (private val apiService: ApiService) {
 
     suspend fun listarLendo(idUsuario: Int): List<EstanteResponse> {
         return try {
-            apiService.listarLendo(idUsuario)
+            apiService.listarLendo(idUsuario).estantes
         } catch (e: Exception) {
+            e.printStackTrace()
+            Log.e("ESTANTE", "ERRO LENDO: ${e.message}")
             emptyList()
         }
     }
 
     suspend fun listarQueroLer(idUsuario: Int): List<EstanteResponse> {
         return try {
-            apiService.listarQueroLer(idUsuario)
+            apiService.listarQueroLer(idUsuario).estantes
         } catch (e: Exception) {
+            e.printStackTrace()
+            Log.e("ESTANTE", "ERRO QUERO LER: ${e.message}")
             emptyList()
         }
     }
 
     suspend fun listarLidos(idUsuario: Int): List<EstanteResponse> {
         return try {
-            apiService.listarLidos(idUsuario)
+            apiService.listarLidos(idUsuario).estantes
         } catch (e: Exception) {
+            e.printStackTrace()
+            Log.e("ESTANTE", "ERRO LIDOS: ${e.message}")
             emptyList()
         }
     }
@@ -40,11 +48,28 @@ class EstanteRepository (private val apiService: ApiService) {
                 id_status_livro = idStatus,
                 id_livro = idLivro
             )
+
             apiService.adicionarLivro(request)
-            true // API respondeu com sucesso (200 OK)
+
+            true
+
+        } catch (e: retrofit2.HttpException) {
+
+            Log.e(
+                "ESTANTE",
+                "HTTP ${e.code()} -> ${e.response()?.errorBody()?.string()}"
+            )
+
+            false
+
         } catch (e: Exception) {
-            Log.e("EstanteRepository", "Erro ao adicionar: ${e.message}")
-            false // Algum erro ocorreu
+
+            Log.e(
+                "ESTANTE",
+                e.stackTraceToString()
+            )
+
+            false
         }
     }
 }

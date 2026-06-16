@@ -3,6 +3,7 @@ package com.example.conectabook.data.api
 
 import com.example.conectabook.data.api.dto.AdicionarLivroRequest
 import com.example.conectabook.data.api.dto.CriarClubeResponse
+import com.example.conectabook.data.api.dto.EstanteApiResponse
 import com.example.conectabook.data.api.model.CadastroRequest
 import com.example.conectabook.data.api.model.CadastroResponse
 import com.example.conectabook.data.api.model.ClubeApiResponse
@@ -65,15 +66,20 @@ interface ApiService {
      @GET("v1/conectaBook/mensagem")
      suspend fun listarMensagens(): MensagemApiResponse
 
-     @GET("v1/conectaBook/estante/usuario/{idUsuario}/lendo")
-     suspend fun listarLendo(@Path("idUsuario") idUsuario: Int): List<EstanteResponse>
+    @GET("v1/conectaBook/estante/usuario/{idUsuario}/lendo")
+    suspend fun listarLendo(
+        @Path("idUsuario") idUsuario: Int
+    ): EstanteApiResponse
 
-     @GET("v1/conectaBook/estante/usuario/{idUsuario}/quero-ler")
-     suspend fun listarQueroLer(@Path("idUsuario") idUsuario: Int): List<EstanteResponse>
+    @GET("v1/conectaBook/estante/usuario/{idUsuario}/quero-ler")
+    suspend fun listarQueroLer(
+        @Path("idUsuario") idUsuario: Int
+    ): EstanteApiResponse
 
-     @GET("v1/conectaBook/estante/usuario/{idUsuario}/lido")
-     suspend fun listarLidos(@Path("idUsuario") idUsuario: Int): List<EstanteResponse>
-
+    @GET("v1/conectaBook/estante/usuario/{idUsuario}/lido")
+    suspend fun listarLidos(
+        @Path("idUsuario") idUsuario: Int
+    ): EstanteApiResponse
      @Headers("Content-Type: application/json")
      @POST("v1/conectaBook/estante")
      suspend fun adicionarLivro(@Body request: AdicionarLivroRequest): EstanteResponse

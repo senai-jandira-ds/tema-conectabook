@@ -63,7 +63,8 @@ fun PerfilScreen(
                     modifier = Modifier
                         .size(96.dp)
                         .clip(CircleShape)
-                        .background(colors.primary.copy(alpha = 0.15f))
+                        .background(colors.primary)
+//                        .background(colors.primary.copy(alpha = 0.15f))
                 )
 
                 Spacer(modifier = Modifier.width(20.dp))
@@ -107,9 +108,9 @@ fun PerfilScreen(
                         .padding(18.dp),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    PerfilResumoItem("18", "Lidos")
-                    PerfilResumoItem("7", "Quero ler")
-                    PerfilResumoItem("9", "Resenhas")
+                    PerfilResumoItem("2", "Lidos")
+                    PerfilResumoItem("3", "Quero ler")
+                    PerfilResumoItem("7", "Resenhas")
                 }
             }
 
