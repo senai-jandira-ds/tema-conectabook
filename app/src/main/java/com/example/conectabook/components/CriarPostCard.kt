@@ -1,76 +1,71 @@
 package com.example.conectabook.components
 
-import androidx.compose.foundation.Image
+import android.net.Uri
+import androidx.activity.compose.rememberLauncherForActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.AccountBox
 import androidx.compose.material.icons.outlined.Book
 import androidx.compose.material.icons.outlined.Edit
-import androidx.compose.material.icons.outlined.Person
 import androidx.compose.material.icons.outlined.PhotoCamera
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.example.conectabook.R
+import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.conectabook.viewmodel.MensagemViewModel
 
 @Composable
-fun CriarPostcard(modifier: Modifier = Modifier) {
+fun CriarPostcard(
+    clubeId: Int,
+    usuarioId: Int,
+    onPostCriado: () -> Unit,
+    viewModel: MensagemViewModel = viewModel()
+) {
+
+    var texto by remember { mutableStateOf("") }
+    var abrirEditor by remember { mutableStateOf(false) }
+    var imagemUri by remember { mutableStateOf<Uri?>(null) }
 
     val colors = MaterialTheme.colorScheme
 
+    val launcher = rememberLauncherForActivityResult(
+        contract = ActivityResultContracts.GetContent()
+    ) { uri ->
+        imagemUri = uri
+    }
+
+    val context = LocalContext.current
+
+    // 🟣 CARD ESTILO ANTIGO (VISUAL LIMPO + CLARO)
     Card(
-        modifier = Modifier.fillMaxWidth(),
+        modifier = Modifier
+            .fillMaxWidth()
+            .clickable { abrirEditor = true },
         shape = RoundedCornerShape(16.dp),
         colors = CardDefaults.cardColors(
             containerColor = colors.surface
         ),
         elevation = CardDefaults.cardElevation(8.dp)
     ) {
+
         Column(
             modifier = Modifier
                 .fillMaxWidth()
                 .padding(20.dp)
         ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-//                Image(
-//                    painter = painterResource(id = R.drawable.moca_lendo),
-//                    contentDescription = "Foto do usuário",
-//                    modifier = Modifier
-//                        .size(42.dp)
-//                        .clip(CircleShape)
-//                        .background(colors.surfaceVariant)
-//                )
 
-                Spacer(modifier = Modifier.width(12.dp))
-
-                Text(
-                    text = "Compartilhe sua leitura...",
-                    fontSize = 16.sp, //antes estava 14.dp
-                    color = colors.onSurfaceVariant
-                )
-            }
+            Text(
+                text = "Compartilhe sua leitura...",
+                fontSize = 16.sp,
+                color = colors.onSurfaceVariant
+            )
 
             Spacer(modifier = Modifier.height(20.dp))
 
@@ -79,63 +74,93 @@ fun CriarPostcard(modifier: Modifier = Modifier) {
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
 
-                Row(
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-
+                Row(verticalAlignment = Alignment.CenterVertically) {
                     Icon(
-                        imageVector = Icons.Outlined.PhotoCamera,
-                        contentDescription = "Foto",
+                        Icons.Outlined.PhotoCamera,
+                        contentDescription = null,
                         tint = colors.primary
                     )
-
-                    Spacer(modifier = Modifier.width(6.dp))
-
-                    Text(
-                        text = "Foto",
-                        fontSize = 13.sp,
-                        color = colors.onSurfaceVariant
-                    )
+                    Spacer(Modifier.width(6.dp))
+                    Text("Foto", fontSize = 13.sp, color = colors.onSurfaceVariant)
                 }
 
-                Row(
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-
+                Row(verticalAlignment = Alignment.CenterVertically) {
                     Icon(
-                        imageVector = Icons.Outlined.Book,
-                        contentDescription = "Livro",
+                        Icons.Outlined.Book,
+                        contentDescription = null,
                         tint = colors.primary
                     )
-
-                    Spacer(modifier = Modifier.width(6.dp))
-
-                    Text(
-                        text = "Livro",
-                        fontSize = 13.sp,
-                        color = colors.onSurfaceVariant
-                    )
+                    Spacer(Modifier.width(6.dp))
+                    Text("Livro", fontSize = 13.sp, color = colors.onSurfaceVariant)
                 }
 
-                Row(
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
-
+                Row(verticalAlignment = Alignment.CenterVertically) {
                     Icon(
-                        imageVector = Icons.Outlined.Edit,
-                        contentDescription = "Review",
+                        Icons.Outlined.Edit,
+                        contentDescription = null,
                         tint = colors.primary
                     )
-
-                    Spacer(modifier = Modifier.width(6.dp))
-
-                    Text(
-                        text = "Review",
-                        fontSize = 13.sp,
-                        color = colors.onSurfaceVariant
-                    )
+                    Spacer(Modifier.width(6.dp))
+                    Text("Review", fontSize = 13.sp, color = colors.onSurfaceVariant)
                 }
             }
         }
+    }
+
+    // 🟡 MODAL DE POSTAGEM (UPLOAD FUNCIONA AQUI)
+    if (abrirEditor) {
+        AlertDialog(
+            onDismissRequest = { abrirEditor = false },
+            title = { Text("Nova publicação") },
+            text = {
+
+                Column {
+
+                    OutlinedTextField(
+                        value = texto,
+                        onValueChange = { texto = it },
+                        modifier = Modifier.fillMaxWidth(),
+                        placeholder = { Text("Escreva algo...") }
+                    )
+
+                    Spacer(Modifier.height(12.dp))
+
+                    Button(onClick = { launcher.launch("image/*") }) {
+                        Text(
+                            if (imagemUri == null)
+                                "Selecionar imagem"
+                            else
+                                "Imagem selecionada"
+                        )
+                    }
+                }
+            },
+            confirmButton = {
+                Button(
+                    enabled = texto.isNotBlank(),
+                    onClick = {
+                        viewModel.criarMensagem(
+                            comentario = texto,
+                            arquivo = imagemUri,
+                            idUsuario = usuarioId,
+                            idClube = clubeId,
+                            context = context
+                        )
+
+                        texto = ""
+                        imagemUri = null
+                        abrirEditor = false
+                        onPostCriado()
+                    }
+                ) {
+                    Text("Publicar")
+                }
+            },
+            dismissButton = {
+                OutlinedButton(onClick = { abrirEditor = false }) {
+                    Text("Cancelar")
+                }
+            }
+        )
     }
 }

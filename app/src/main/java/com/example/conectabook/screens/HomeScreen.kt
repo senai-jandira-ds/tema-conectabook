@@ -1,35 +1,24 @@
 package com.example.conectabook.screens
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import com.example.conectabook.R
-import com.example.conectabook.components.BottomBar
-import com.example.conectabook.components.CriarPostcard
-import com.example.conectabook.components.HomeaHeader
-import com.example.conectabook.components.PostCard
-import com.example.conectabook.components.SecaoClubes
-import com.example.conectabook.components.SecaoTitulosSugeridos
+import com.example.conectabook.components.*
 import com.example.conectabook.viewmodel.SugestoesViewModel
 
 @Composable
 fun HomeScreen(
     navController: NavController,
-    modifier: Modifier = Modifier) {
+    modifier: Modifier = Modifier
+) {
 
     val colors = MaterialTheme.colorScheme
 
@@ -54,6 +43,7 @@ fun HomeScreen(
                 .padding(horizontal = 24.dp),
             verticalArrangement = Arrangement.spacedBy(20.dp)
         ) {
+
             item {
                 Spacer(modifier = Modifier.height(24.dp))
             }
@@ -62,9 +52,14 @@ fun HomeScreen(
                 HomeaHeader()
             }
 
+            // 🔥 Criar post na HOME (pode ser só visual ou geral depois)
             item {
                 CriarPostcard(
-
+                    clubeId = 0, // HOME = feed geral (se quiser usar backend depois)
+                    usuarioId = 31, // mock usuário logado
+                    onPostCriado = {
+                        // opcional: futuramente feed geral
+                    }
                 )
             }
 
@@ -78,6 +73,7 @@ fun HomeScreen(
                 SecaoClubes()
             }
 
+            // 📌 POST ESTÁTICO (mantido como você pediu)
             item {
                 PostCard(
                     nome = "Raissa Soares",
@@ -96,5 +92,4 @@ fun HomeScreen(
             }
         }
     }
-
 }

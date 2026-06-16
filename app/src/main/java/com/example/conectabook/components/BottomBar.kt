@@ -83,8 +83,10 @@ fun BottomBar(
         )
 
         NavigationBarItem(
-            selected = false,
-            onClick = {},
+            selected = rotaAtual == Routes.CAFETERIAS,
+            onClick = {
+                navController.navigate(Routes.CAFETERIAS)
+            },
             icon = {
                 Icon(
                     imageVector = Icons.Outlined.LocalCafe,

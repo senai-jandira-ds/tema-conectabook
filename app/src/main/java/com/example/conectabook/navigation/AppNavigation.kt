@@ -8,6 +8,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.example.conectabook.screens.CadastroScreen
+import com.example.conectabook.screens.CafeteriaScreen
 import com.example.conectabook.screens.ClubeScreen
 import com.example.conectabook.screens.CriarClubeScreen
 import com.example.conectabook.screens.DetalhesLivroScreen
@@ -102,6 +103,10 @@ fun AppNavigation() {
 
         composable(Routes.CRIAR_CLUBE) {
             CriarClubeScreen(navController = navController)
+        }
+
+        composable(Routes.CAFETERIAS) {
+            CafeteriaScreen(navController = navController)
         }
     }
 }

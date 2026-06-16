@@ -89,4 +89,13 @@ interface ApiService {
     suspend fun buscarUsuarioPorId(
         @Path("id") id: Int
     ): UsuarioApiResponse
+
+    @Multipart
+    @POST("v1/conectaBook/mensagem")
+    suspend fun criarMensagem(
+        @Part("comentario") comentario: RequestBody,
+        @Part("id_usuario") idUsuario: RequestBody,
+        @Part("id_clube") idClube: RequestBody,
+        @Part arquivo: MultipartBody.Part?
+    )
 }

@@ -22,8 +22,9 @@ import com.example.conectabook.components.*
 import com.example.conectabook.viewmodel.ClubesViewModel
 import com.example.conectabook.viewmodel.MensagemViewModel
 import com.example.conectabook.viewmodel.UsuarioViewModel
-import java.time.LocalDateTime
+import java.time.ZonedDateTime
 import java.time.format.DateTimeFormatter
+import java.util.Locale
 
 @Composable
 fun FeedClubeScreen(
@@ -40,19 +41,22 @@ fun FeedClubeScreen(
 
     val clubes by clubeViewModel.clubes.collectAsState()
     val mensagens by viewModel.mensagens.collectAsState()
-
-    // ✅ CORRETO: StateFlow precisa ser coletado
     val usuariosCache by usuarioViewModel.usuariosCache.collectAsState()
 
-    fun formatarData(data: String): String {
-        return try {
-            val input = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSS")
-            val output = DateTimeFormatter.ofPattern("dd/MM/yyyy")
+    // 🔥 estado de likes correto (POR POST)
+    val likesMap = remember { mutableStateMapOf<Int, Boolean>() }
+    val countMap = remember { mutableStateMapOf<Int, Int>() }
 
-            val parsed = LocalDateTime.parse(data, input)
-            parsed.format(output)
+    fun formatarData(dataIso: String): String {
+        return try {
+            val data = ZonedDateTime.parse(dataIso)
+            val formatter = DateTimeFormatter.ofPattern(
+                "dd/MM/yyyy HH:mm",
+                Locale("pt", "BR")
+            )
+            data.format(formatter)
         } catch (e: Exception) {
-            data
+            dataIso
         }
     }
 
@@ -70,7 +74,9 @@ fun FeedClubeScreen(
     val clube = clubes.find { it.id_clube == clubeId }
 
     if (clube == null) {
-        Text("Carregando...")
+        Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+            CircularProgressIndicator()
+        }
         return
     }
 
@@ -103,7 +109,6 @@ fun FeedClubeScreen(
                 contentPadding = PaddingValues(top = 20.dp, bottom = 24.dp)
             ) {
 
-                // HEADER
                 item {
                     Box(
                         modifier = Modifier
@@ -125,6 +130,9 @@ fun FeedClubeScreen(
                                 .fillMaxWidth()
                                 .padding(top = 140.dp),
                             shape = RoundedCornerShape(16.dp),
+                            colors = CardDefaults.cardColors(
+                                containerColor = MaterialTheme.colorScheme.surface
+                            ),
                             elevation = CardDefaults.cardElevation(6.dp)
                         ) {
 
@@ -161,9 +169,13 @@ fun FeedClubeScreen(
                 }
 
                 item {
-                    Card {
-                        CriarPostcard()
-                    }
+                    CriarPostcard(
+                        clubeId = clubeId,
+                        usuarioId = 31,
+                        onPostCriado = {
+                            viewModel.carregarMensagens()
+                        }
+                    )
                 }
 
                 item {
@@ -173,7 +185,10 @@ fun FeedClubeScreen(
                     )
                 }
 
-                items(postsDoClube) { post ->
+                items(
+                    items = postsDoClube,
+                    key = { it.id_mensagem }
+                ) { post ->
 
                     val usuario = usuariosCache[post.id_usuario]
 
@@ -181,11 +196,24 @@ fun FeedClubeScreen(
                         carregarUsuario(post.id_usuario)
                     }
 
+                    val curtido = likesMap[post.id_mensagem] ?: false
+                    val likes = countMap[post.id_mensagem] ?: 0
+
                     PostClubeCard(
+                        idMensagem = post.id_mensagem,
                         nomeUsuario = usuario?.nome_usuario ?: "Carregando...",
                         comentario = post.comentario ?: "",
                         imagemUrl = post.arquivo,
-                        data = formatarData(post.data_postagem)
+                        data = formatarData(post.data_postagem),
+                        curtido = curtido,
+                        likes = likes,
+                        onLikeClick = {
+                            val novoEstado = !curtido
+                            likesMap[post.id_mensagem] = novoEstado
+
+                            countMap[post.id_mensagem] =
+                                if (novoEstado) likes + 1 else likes - 1
+                        }
                     )
                 }
             }
