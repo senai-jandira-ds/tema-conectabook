@@ -1,7 +1,5 @@
 package com.example.conectabook.components
 
-import androidx.compose.foundation.BorderStroke
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -9,23 +7,18 @@ import androidx.compose.material.icons.outlined.Edit
 import androidx.compose.material.icons.outlined.LibraryBooks
 import androidx.compose.material.icons.outlined.Star
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
-import com.example.conectabook.R
+import androidx.compose.material3.AssistChip
+import androidx.compose.ui.text.font.FontWeight
 
 @Composable
 fun SecaoHeroLivro(
@@ -34,13 +27,10 @@ fun SecaoHeroLivro(
     capaUrl: String?,
     ano: Int?,
     onAdicionarEstante: (String) -> Unit,
-    modifier: Modifier = Modifier) {
+    modifier: Modifier = Modifier
+) {
 
     val colors = MaterialTheme.colorScheme
-
-    var expandirMenu by remember {
-        mutableStateOf(false)
-    }
 
     Column(
         modifier = modifier.fillMaxWidth()
@@ -56,18 +46,14 @@ fun SecaoHeroLivro(
                 modifier = Modifier
                     .width(130.dp)
                     .height(195.dp)
-                    .shadow(
-                        elevation = 12.dp,
-                        shape = RoundedCornerShape(16.dp)
-                    )
+                    .shadow(12.dp, RoundedCornerShape(16.dp))
                     .clip(RoundedCornerShape(16.dp))
             )
 
             Spacer(modifier = Modifier.width(16.dp))
 
-            Column(
-                modifier = Modifier.weight(1f)
-            ) {
+            Column(modifier = Modifier.weight(1f)) {
+
                 Text(
                     text = titulo,
                     fontSize = 32.sp,
@@ -84,9 +70,7 @@ fun SecaoHeroLivro(
 
                 Spacer(modifier = Modifier.height(8.dp))
 
-                Row(
-                    verticalAlignment = Alignment.CenterVertically
-                ) {
+                Row(verticalAlignment = Alignment.CenterVertically) {
                     repeat(5) {
                         Icon(
                             imageVector = Icons.Outlined.Star,
@@ -114,120 +98,68 @@ fun SecaoHeroLivro(
                     color = colors.onSurfaceVariant
                 )
 
-                Row(
-                    horizontalArrangement = Arrangement.spacedBy(8.dp)
+                Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                    AssistChip(
+                        onClick = { },
+                        label = { Text("Distopia", fontSize = 12.sp) }
+                    )
+
+                    AssistChip(
+                        onClick = { },
+                        label = { Text("Ficção", fontSize = 12.sp) }
+                    )
+                }
+            }
+        }
+
+        Spacer(modifier = Modifier.height(24.dp))
+
+        Card(
+            shape = RoundedCornerShape(16.dp),
+            colors = CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.surface
+            ),
+            elevation = CardDefaults.cardElevation(2.dp),
+            modifier = Modifier.fillMaxWidth()
+        ) {
+
+            Column(
+                modifier = Modifier.padding(12.dp),
+                verticalArrangement = Arrangement.spacedBy(10.dp)
+            ) {
+
+                Button(
+                    onClick = { onAdicionarEstante(titulo) },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(48.dp),
+                    shape = RoundedCornerShape(12.dp)
                 ) {
-                    AssistChip(
-                        onClick = {},
-                        label = {
-                            Text(
-                                text = "Distopia",
-                                fontSize = 12.sp
-                            )
-                        }
+                    Icon(
+                        imageVector = Icons.Outlined.LibraryBooks,
+                        contentDescription = null,
+                        modifier = Modifier.size(18.dp)
                     )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text("Adicionar à estante")
+                }
 
-                    AssistChip(
-                        onClick = {},
-                        label = {
-                            Text(
-                                text = "Ficção",
-                                fontSize = 12.sp
-                            )
-                        }
+                OutlinedButton(
+                    onClick = { },
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(48.dp),
+                    shape = RoundedCornerShape(12.dp)
+                ) {
+                    Icon(
+                        imageVector = Icons.Outlined.Edit,
+                        contentDescription = null,
+                        modifier = Modifier.size(18.dp)
                     )
+                    Spacer(modifier = Modifier.width(8.dp))
+                    Text("Escrever resenha")
                 }
             }
-        }
-
-        Spacer(modifier = Modifier.height(20.dp))
-
-        Button(
-            onClick = {
-                expandirMenu = true
-            },
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(56.dp),
-            shape = RoundedCornerShape(16.dp),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = colors.primary //
-            )
-        ) {
-            Icon(
-                imageVector = Icons.Outlined.LibraryBooks,
-                contentDescription = null,
-                tint = colors.onPrimary,
-                modifier = Modifier.size(20.dp)
-            )
-
-            Spacer(modifier = Modifier.width(8.dp))
-
-            Text(
-                text = "Adicionar à estante",
-                color = colors.onPrimary,
-                fontSize = 14.sp,
-                fontWeight = FontWeight.SemiBold
-            )
-        }
-
-        DropdownMenu(
-            expanded = expandirMenu,
-            onDismissRequest = {
-                expandirMenu = false
-            }
-        ) {
-
-            DropdownMenuItem(
-                text = { Text("Lido") },
-                onClick = {
-                    onAdicionarEstante("LIDO")
-                    expandirMenu = false
-                }
-            )
-
-            DropdownMenuItem(
-                text = { Text("Lendo") },
-                onClick = {
-                    onAdicionarEstante("LENDO")
-                    expandirMenu = false
-                }
-            )
-
-            DropdownMenuItem(
-                text = { Text("Quero Ler") },
-                onClick = {
-                    onAdicionarEstante("QUERO_LER")
-                    expandirMenu = false
-                }
-            )
-        }
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        OutlinedButton(
-            onClick = {},
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(56.dp),
-            shape = RoundedCornerShape(16.dp),
-            border = BorderStroke(1.dp, colors.primary)
-        ) {
-            Icon(
-                imageVector = Icons.Outlined.Edit,
-                contentDescription = null,
-                tint = colors.primary,
-                modifier = Modifier.size(20.dp)
-            )
-
-            Spacer(modifier = Modifier.width(8.dp))
-
-            Text(
-                text = "Escrever resenha",
-                color = colors.primary,
-                fontSize = 14.sp,
-                fontWeight = FontWeight.SemiBold
-            )
         }
     }
 }
